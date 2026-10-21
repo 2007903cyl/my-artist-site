@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>陈燕丽 — 艺术家</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: #121110;
+    color: #ece6da;
+    font-family: "Songti SC", "STSong", "SimSun", "Noto Serif SC", "Source Han Serif SC", serif;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- 导航栏 ---------- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 48px;
+    background: rgba(18, 17, 16, 0.55);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    border-bottom: 1px solid rgba(236, 230, 218, 0.1);
+  }
+  .nav-logo {
+    font-size: 18px;
+    letter-spacing: 4px;
+    font-weight: 700;
+  }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    color: #ece6da;
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: 3px;
+    position: relative;
+    transition: color 0.3s;
+  }
+  .nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: -6px;
+    width: 0; height: 1px;
+    background: #ece6da;
+    transition: width 0.35s ease;
+  }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* ---------- 首屏 ---------- */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 24px;
+  }
+  .hero h1 {
+    font-size: clamp(72px, 15vw, 200px);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    line-height: 1.1;
+    animation: fadeUp 1.2s ease both;
+  }
+  .hero p {
+    margin-top: 32px;
+    font-size: clamp(14px, 1.6vw, 18px);
+    letter-spacing: 8px;
+    color: #9d9587;
+    animation: fadeUp 1.2s 0.3s ease both;
+  }
+  .hero .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    font-size: 12px;
+    letter-spacing: 4px;
+    color: #7d766a;
+    writing-mode: vertical-rl;
+    animation: fadeUp 1.2s 0.8s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---------- 通用板块 ---------- */
+  section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 120px 48px;
+  }
+  .section-title {
+    font-size: 14px;
+    letter-spacing: 8px;
+    color: #9d9587;
+    margin-bottom: 16px;
+  }
+  .section-heading {
+    font-size: clamp(32px, 4vw, 48px);
+    letter-spacing: 6px;
+    margin-bottom: 64px;
+  }
+  .divider {
+    width: 48px; height: 1px;
+    background: #ece6da;
+    margin-bottom: 64px;
+  }
+
+  /* ---------- 关于我 ---------- */
+  .about-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 72px;
+    align-items: center;
+  }
+  .about-portrait {
+    overflow: hidden;
+    background: #1f1c19;
+  }
+  .about-portrait img {
+    width: 100%;
+    display: block;
+    filter: grayscale(15%);
+    transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .about-portrait:hover img { transform: scale(1.05); }
+  .about-text p {
+    font-size: 16px;
+    margin-bottom: 24px;
+    color: #c9c2b5;
+    text-align: justify;
+  }
+  .about-text .signature {
+    margin-top: 8px;
+    font-size: 20px;
+    letter-spacing: 4px;
+    color: #ece6da;
+  }
+
+  /* ---------- 作品画廊 ---------- */
+  .works-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  .work-item { cursor: pointer; }
+  .work-img {
+    overflow: hidden;
+    background: #1f1c19;
+    aspect-ratio: 1 / 1;
+  }
+  .work-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .work-item:hover .work-img img { transform: scale(1.08); }
+  .work-meta {
+    padding-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .work-meta h3 {
+    font-size: 16px;
+    letter-spacing: 2px;
+    font-weight: 700;
+  }
+  .work-meta span {
+    font-size: 13px;
+    color: #9d9587;
+    letter-spacing: 1px;
+  }
+
+  /* ---------- 展览经历 ---------- */
+  .exhibitions { list-style: none; }
+  .exhibitions li {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 32px;
+    padding: 28px 0;
+    border-bottom: 1px solid rgba(236, 230, 218, 0.12);
+    transition: padding-left 0.4s ease;
+  }
+  .exhibitions li:hover { padding-left: 12px; }
+  .exhibitions li:first-child { border-top: 1px solid rgba(236, 230, 218, 0.12); }
+  .exh-year {
+    font-size: 20px;
+    letter-spacing: 2px;
+    color: #9d9587;
+  }
+  .exh-info h3 {
+    font-size: 18px;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+  .exh-info p {
+    font-size: 14px;
+    color: #9d9587;
+    letter-spacing: 1px;
+  }
+
+  /* ---------- 页脚 ---------- */
+  footer {
+    border-top: 1px solid rgba(236, 230, 218, 0.12);
+    padding: 96px 48px 48px;
+    text-align: center;
+  }
+  .footer-heading {
+    font-size: clamp(28px, 3.5vw, 40px);
+    letter-spacing: 6px;
+    margin-bottom: 32px;
+  }
+  .footer-email {
+    display: inline-block;
+    font-size: 16px;
+    letter-spacing: 2px;
+    color: #ece6da;
+    text-decoration: none;
+    border-bottom: 1px solid #ece6da;
+    padding-bottom: 2px;
+    margin-bottom: 48px;
+    transition: opacity 0.3s;
+  }
+  .footer-email:hover { opacity: 0.5; }
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 64px;
+  }
+  .social-links a {
+    color: #c9c2b5;
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: 3px;
+    transition: color 0.3s;
+  }
+  .social-links a:hover { color: #7d766a; }
+  .copyright {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: #7d766a;
+  }
+
+  /* ---------- 响应式 ---------- */
+  @media (max-width: 860px) {
+    nav { padding: 16px 24px; }
+    .nav-links { gap: 20px; }
+    section { padding: 80px 24px; }
+    .about-wrap { grid-template-columns: 1fr; gap: 40px; }
+    .works-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .exhibitions li { grid-template-columns: 80px 1fr; gap: 16px; }
+  }
+  @media (max-width: 520px) {
+    .works-grid { grid-template-columns: 1fr; }
+    .hero p { letter-spacing: 4px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 固定导航栏 -->
+<nav>
+  <div class="nav-logo">陈燕丽</div>
+  <ul class="nav-links">
+    <li><a href="#about">关于</a></li>
+    <li><a href="#works">作品</a></li>
+    <li><a href="#exhibitions">展览</a></li>
+    <li><a href="#contact">联系</a></li>
+  </ul>
+</nav>
+
+<!-- 首屏 -->
+<header class="hero">
+  <h1>陈燕丽</h1>
+  <p>科技艺术 · 生成艺术 · 数字影像</p>
+  <span class="scroll-hint">向下滚动</span>
+</header>
+
+<!-- 关于我 -->
+<section id="about">
+  <p class="section-title">ABOUT</p>
+  <h2 class="section-heading">关于我</h2>
+  <div class="about-wrap">
+    <div class="about-portrait">
+      <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=elegant%20portrait%20of%20a%20young%20Chinese%20female%20artist%20in%20a%20minimal%20sunlit%20studio%2C%20soft%20natural%20window%20light%2C%20film%20photography%2C%20muted%20warm%20tones%2C%20quiet%20contemplative%20mood&image_size=square" alt="陈燕丽肖像">
+    </div>
+    <div class="about-text">
+      <p>我是陈燕丽，天津美术学院大一学生，主攻方向是环境设计。</p>
+      <p>我关注空间与人的关系，热衷于探索材料、光影与场所氛围的表达，正在不断学习与尝试中，希望用设计创造更美好的生活空间。</p>
+      <p class="signature">—— 陈燕丽</p>
+    </div>
+  </div>
+</section>
+
+<!-- 作品画廊 -->
+<section id="works">
+  <p class="section-title">WORKS</p>
+  <h2 class="section-heading">作品画廊</h2>
+  <div class="works-grid">
+    <div class="work-item">
+      <div class="work-img">
+        <img src="images/微信图片_20261021092441_27_204.jpg" alt="作品《流场》">
+      </div>
+      <div class="work-meta"><h3>流场 No.7</h3><span>生成艺术 · 2025</span></div>
+    </div>
+    <div class="work-item">
+      <div class="work-img">
+        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=surreal%20digital%20glitch%20landscape%2C%20mountains%20dissolving%20into%20streams%20of%20data%20and%20pixels%2C%20soft%20pastel%20gradient%20sky%2C%20dreamlike%20atmosphere&image_size=square" alt="作品《山体数据》">
+      </div>
+      <div class="work-meta"><h3>山体数据</h3><span>数字影像 · 2024</span></div>
+    </div>
+    <div class="work-item">
+      <div class="work-img">
+        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=immersive%20light%20installation%20in%20a%20dark%20gallery%20room%2C%20glowing%20geometric%20neon%20structures%20floating%20in%20space%2C%20reflections%20on%20polished%20floor%2C%20cinematic&image_size=square" alt="作品《光之回廊》">
+      </div>
+      <div class="work-meta"><h3>光之回廊</h3><span>交互装置 · 2024</span></div>
+    </div>
+    <div class="work-item">
+      <div class="work-img">
+        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=visualization%20of%20an%20artificial%20neural%20network%2C%20glowing%20golden%20nodes%20connected%20by%20delicate%20threads%20on%20deep%20midnight%20blue%20background%2C%20cosmic%20and%20poetic&image_size=square" alt="作品《神经花园》">
+      </div>
+      <div class="work-meta"><h3>神经花园</h3><span>生成艺术 · 2023</span></div>
+    </div>
+    <div class="work-item">
+      <div class="work-img">
+        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=extreme%20macro%20photography%20of%20LED%20screen%20pixels%2C%20colorful%20abstract%20bokeh%20grid%2C%20RGB%20subpixel%20texture%2C%20shimmering%20digital%20surface&image_size=square" alt="作品《像素呼吸》">
+      </div>
+      <div class="work-meta"><h3>像素呼吸</h3><span>数字影像 · 2023</span></div>
+    </div>
+    <div class="work-item">
+      <div class="work-img">
+        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=fusion%20of%20traditional%20Chinese%20ink%20wash%20painting%20and%20circuit%20board%20patterns%2C%20minimal%20composition%2C%20black%20ink%20mountains%20merging%20with%20fine%20golden%20circuit%20lines%20on%20rice%20paper&image_size=square" alt="作品《山水电路》">
+      </div>
+      <div class="work-meta"><h3>山水电路</h3><span>综合媒介 · 2022</span></div>
+    </div>
+    <div class="work-item">
+      <div class="work-img">
+        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=digital%20reconstruction%20of%20traditional%20Chinese%20auspicious%20cloud%20pattern%2C%20flowing%20spiral%20cloud%20motifs%20rendered%20as%20glowing%20golden%20particle%20lines%20on%20deep%20black%20background%2C%20generative%20art%2C%20elegant%20and%20minimal&image_size=square" alt="作品《云纹·流》">
+      </div>
+      <div class="work-meta"><h3>云纹 · 流</h3><span>生成艺术 · 2025</span></div>
+    </div>
+    <div class="work-item">
+      <div class="work-img">
+        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=traditional%20Chinese%20meander%20key-fret%20pattern%20reimagined%20as%20a%20digital%20glitch%20matrix%2C%20geometric%20leiwen%20motifs%20in%20vermilion%20red%20and%20ink%20black%2C%20precise%20grid%20composition%2C%20contemporary%20minimalism&image_size=square" alt="作品《回纹矩阵》">
+      </div>
+      <div class="work-meta"><h3>回纹矩阵</h3><span>数字影像 · 2025</span></div>
+    </div>
+    <div class="work-item">
+      <div class="work-img">
+        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=digital%20reinterpretation%20of%20Chinese%20lotus%20scroll%20pattern%20from%20blue%20and%20white%20porcelain%2C%20delicate%20floral%20motifs%20dissolving%20into%20streams%20of%20data%20particles%2C%20cobalt%20blue%20on%20dark%20background%2C%20poetic%20and%20refined&image_size=square" alt="作品《缠枝新生》">
+      </div>
+      <div class="work-meta"><h3>缠枝新生</h3><span>生成艺术 · 2024</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 展览经历 -->
+<section id="exhibitions">
+  <p class="section-title">EXHIBITIONS</p>
+  <h2 class="section-heading">展览经历</h2>
+  <ul class="exhibitions">
+    <li>
+      <span class="exh-year">2025</span>
+      <div class="exh-info">
+        <h3>「万物皆可计算」个展</h3>
+        <p>上海当代艺术馆 · 上海</p>
+      </div>
+    </li>
+    <li>
+      <span class="exh-year">2024</span>
+      <div class="exh-info">
+        <h3>「数字山水」群展</h3>
+        <p>东京新媒体艺术中心 · 东京</p>
+      </div>
+    </li>
+    <li>
+      <span class="exh-year">2023</span>
+      <div class="exh-info">
+        <h3>「算法的诗」双人展</h3>
+        <p>柏林格奥尔格画廊 · 柏林</p>
+      </div>
+    </li>
+    <li>
+      <span class="exh-year">2022</span>
+      <div class="exh-info">
+        <h3>「屏幕之外」青年艺术家群展</h3>
+        <p>尤伦斯当代艺术中心 · 北京</p>
+      </div>
+    </li>
+    <li>
+      <span class="exh-year">2021</span>
+      <div class="exh-info">
+        <h3>「第一次呼吸」毕业创作展</h3>
+        <p>中国美术学院美术馆 · 杭州</p>
+      </div>
+    </li>
+  </ul>
+</section>
+
+<!-- 页脚 -->
+<footer id="contact">
+  <h2 class="footer-heading">与我联系</h2>
+  <a class="footer-email" href="mailto:hello@chenyanli.art">hello@chenyanli.art</a>
+  <div class="social-links">
+    <a href="#" target="_blank" rel="noopener">微博</a>
+    <a href="#" target="_blank" rel="noopener">小红书</a>
+    <a href="#" target="_blank" rel="noopener">Instagram</a>
+    <a href="#" target="_blank" rel="noopener">哔哩哔哩</a>
+  </div>
+  <p class="copyright">© 2026 陈燕丽 · 保留所有权利</p>
+</footer>
+
+</body>
+</html>
