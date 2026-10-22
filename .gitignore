@@ -1,2 +1,9 @@
 .trae-html-share-packages/
 images/微信图片_20261021092441_27_204.jpg
+
+# 本地原始素材与打包文件，不公开到仓库
+*.zip
+img/
+画作/
+images/微信图片_*.jpg
+photos/微信图片_*.jpg
