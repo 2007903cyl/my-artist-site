@@ -10,8 +10,8 @@
   html { scroll-behavior: smooth; }
 
   body {
-    background: #121110;
-    color: #ece6da;
+    background: #0f1419;
+    color: #eceff4;
     font-family: "Songti SC", "STSong", "SimSun", "Noto Serif SC", "Source Han Serif SC", serif;
     line-height: 1.8;
     -webkit-font-smoothing: antialiased;
@@ -26,10 +26,10 @@
     justify-content: space-between;
     align-items: center;
     padding: 22px 48px;
-    background: rgba(18, 17, 16, 0.55);
+    background: rgba(15, 20, 25, 0.55);
     backdrop-filter: blur(18px) saturate(160%);
     -webkit-backdrop-filter: blur(18px) saturate(160%);
-    border-bottom: 1px solid rgba(236, 230, 218, 0.1);
+    border-bottom: 1px solid rgba(236, 239, 244, 0.1);
   }
   .nav-logo {
     font-size: 18px;
@@ -38,7 +38,7 @@
   }
   .nav-links { display: flex; gap: 40px; list-style: none; }
   .nav-links a {
-    color: #ece6da;
+    color: #eceff4;
     text-decoration: none;
     font-size: 14px;
     letter-spacing: 3px;
@@ -50,7 +50,7 @@
     position: absolute;
     left: 0; bottom: -6px;
     width: 0; height: 1px;
-    background: #ece6da;
+    background: #eceff4;
     transition: width 0.35s ease;
   }
   .nav-links a:hover::after { width: 100%; }
@@ -76,7 +76,7 @@
     margin-top: 32px;
     font-size: clamp(14px, 1.6vw, 18px);
     letter-spacing: 8px;
-    color: #9d9587;
+    color: #9aa1ad;
     animation: fadeUp 1.2s 0.3s ease both;
   }
   .hero .scroll-hint {
@@ -84,7 +84,7 @@
     bottom: 40px;
     font-size: 12px;
     letter-spacing: 4px;
-    color: #7d766a;
+    color: #757c8a;
     writing-mode: vertical-rl;
     animation: fadeUp 1.2s 0.8s ease both;
   }
@@ -102,7 +102,7 @@
   .section-title {
     font-size: 14px;
     letter-spacing: 8px;
-    color: #9d9587;
+    color: #9aa1ad;
     margin-bottom: 16px;
   }
   .section-heading {
@@ -112,7 +112,7 @@
   }
   .divider {
     width: 48px; height: 1px;
-    background: #ece6da;
+    background: #eceff4;
     margin-bottom: 64px;
   }
 
@@ -125,7 +125,7 @@
   }
   .about-portrait {
     overflow: hidden;
-    background: #1f1c19;
+    background: #19202a;
   }
   .about-portrait img {
     width: 100%;
@@ -137,14 +137,14 @@
   .about-text p {
     font-size: 16px;
     margin-bottom: 24px;
-    color: #c9c2b5;
+    color: #c2c7d0;
     text-align: justify;
   }
   .about-text .signature {
     margin-top: 8px;
     font-size: 20px;
     letter-spacing: 4px;
-    color: #ece6da;
+    color: #eceff4;
   }
 
   /* ---------- 作品画廊 ---------- */
@@ -156,7 +156,7 @@
   .work-item { cursor: pointer; }
   .work-img {
     overflow: hidden;
-    background: #1f1c19;
+    background: #19202a;
     aspect-ratio: 1 / 1;
   }
   .work-img img {
@@ -180,7 +180,7 @@
   }
   .work-meta span {
     font-size: 13px;
-    color: #9d9587;
+    color: #9aa1ad;
     letter-spacing: 1px;
   }
 
@@ -191,15 +191,15 @@
     grid-template-columns: 120px 1fr;
     gap: 32px;
     padding: 28px 0;
-    border-bottom: 1px solid rgba(236, 230, 218, 0.12);
+    border-bottom: 1px solid rgba(236, 239, 244, 0.12);
     transition: padding-left 0.4s ease;
   }
   .exhibitions li:hover { padding-left: 12px; }
-  .exhibitions li:first-child { border-top: 1px solid rgba(236, 230, 218, 0.12); }
+  .exhibitions li:first-child { border-top: 1px solid rgba(236, 239, 244, 0.12); }
   .exh-year {
     font-size: 20px;
     letter-spacing: 2px;
-    color: #9d9587;
+    color: #9aa1ad;
   }
   .exh-info h3 {
     font-size: 18px;
@@ -208,13 +208,13 @@
   }
   .exh-info p {
     font-size: 14px;
-    color: #9d9587;
+    color: #9aa1ad;
     letter-spacing: 1px;
   }
 
   /* ---------- 页脚 ---------- */
   footer {
-    border-top: 1px solid rgba(236, 230, 218, 0.12);
+    border-top: 1px solid rgba(236, 239, 244, 0.12);
     padding: 96px 48px 48px;
     text-align: center;
   }
@@ -227,9 +227,9 @@
     display: inline-block;
     font-size: 16px;
     letter-spacing: 2px;
-    color: #ece6da;
+    color: #eceff4;
     text-decoration: none;
-    border-bottom: 1px solid #ece6da;
+    border-bottom: 1px solid #eceff4;
     padding-bottom: 2px;
     margin-bottom: 48px;
     transition: opacity 0.3s;
@@ -242,17 +242,17 @@
     margin-bottom: 64px;
   }
   .social-links a {
-    color: #c9c2b5;
+    color: #c2c7d0;
     text-decoration: none;
     font-size: 14px;
     letter-spacing: 3px;
     transition: color 0.3s;
   }
-  .social-links a:hover { color: #7d766a; }
+  .social-links a:hover { color: #757c8a; }
   .copyright {
     font-size: 12px;
     letter-spacing: 2px;
-    color: #7d766a;
+    color: #757c8a;
   }
 
   /* ---------- 响应式 ---------- */
