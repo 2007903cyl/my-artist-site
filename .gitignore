@@ -1,2 +1,6 @@
-﻿.trae-html-share-packages/
-images/微信图片_20261021092441_27_204.jpg
+.trae-html-share-packages/
+*.zip
+img/
+# 忽略手机原始大图，仅提交压缩后的版本
+微信图片_*.jpg
+!微信图片_*_small.jpg
