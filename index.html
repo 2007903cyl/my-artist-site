@@ -3,32 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>陈燕丽 — 音乐漫游者</title>
+<title>陈燕丽 — 猫爪与雪花的小宇宙</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   html { scroll-behavior: smooth; }
 
   :root {
-    --bg: #0d0d1a;
-    --text: #f0f0f5;
-    --text-dim: #a8a8c0;
-    --text-faint: #6b6b85;
-    --coral: #ff6b6b;
-    --teal: #4ecdc4;
-    --lavender: #a78bfa;
-    --amber: #fbbf24;
-    --orange: #ff8c42;
-    --pink: #f472b6;
+    --text: #fdf6f9;
+    --text-dim: #b9b3c7;
+    --text-faint: #7d7590;
+    --pink: #ffb3c6;
+    --lavender: #c9b6ff;
+    --mint: #a8e6cf;
+    --cream: #ffe8d6;
+    --yellow: #ffd97d;
   }
 
   body {
     background:
-      radial-gradient(ellipse 80% 50% at 20% 0%, rgba(167, 139, 250, 0.12) 0%, transparent 50%),
-      radial-gradient(ellipse 60% 40% at 80% 20%, rgba(255, 107, 107, 0.08) 0%, transparent 50%),
-      radial-gradient(ellipse 70% 45% at 50% 80%, rgba(78, 205, 196, 0.06) 0%, transparent 50%),
-      radial-gradient(ellipse 50% 30% at 10% 60%, rgba(251, 191, 36, 0.05) 0%, transparent 50%),
-      linear-gradient(180deg, #12121f 0%, #0d0d1a 40%, #0a0a14 100%);
+      radial-gradient(ellipse 70% 45% at 15% 0%, rgba(201, 182, 255, 0.14) 0%, transparent 55%),
+      radial-gradient(ellipse 55% 40% at 85% 18%, rgba(255, 179, 198, 0.10) 0%, transparent 55%),
+      radial-gradient(ellipse 60% 40% at 50% 85%, rgba(168, 230, 207, 0.08) 0%, transparent 55%),
+      radial-gradient(ellipse 45% 30% at 8% 60%, rgba(255, 217, 125, 0.05) 0%, transparent 50%),
+      linear-gradient(180deg, #161427 0%, #12101f 40%, #0d0c17 100%);
     background-attachment: fixed;
     min-height: 100vh;
     color: var(--text);
@@ -38,35 +36,88 @@
     overflow-x: hidden;
   }
 
-  /* ---------- 漂浮音符装饰 ---------- */
-  .music-notes {
+  /* ---------- 开场帘幕 ---------- */
+  #intro {
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    pointer-events: none;
-    z-index: 0;
-    overflow: hidden;
+    inset: 0;
+    z-index: 999;
+    background: linear-gradient(180deg, #1c1933 0%, #141222 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 28px;
+    border-radius: 0 0 50% 50% / 0 0 7% 7%;
+    animation: introLift 0.9s cubic-bezier(0.7, 0, 0.3, 1) 2.5s forwards;
   }
-  .note {
+  @keyframes introLift {
+    to { transform: translateY(-103%); visibility: hidden; }
+  }
+  .intro-paw-wrap { position: relative; }
+  .intro-paw {
+    width: 110px;
+    color: var(--pink);
+    filter: drop-shadow(0 10px 30px rgba(255, 179, 198, 0.35));
+    animation: pawStamp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s both;
+  }
+  @keyframes pawStamp {
+    0%   { transform: scale(2.6) rotate(-28deg); opacity: 0; }
+    60%  { transform: scale(0.9) rotate(5deg); opacity: 1; }
+    80%  { transform: scale(1.08) rotate(-2deg); }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+  .sparkle {
     position: absolute;
-    font-size: 24px;
-    opacity: 0.15;
-    animation: floatNote 12s ease-in-out infinite;
-    user-select: none;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    opacity: 0;
+    animation: spark 0.55s ease-out 1.05s both;
   }
-  .note:nth-child(1) { left: 5%; top: 15%; animation-delay: 0s; color: var(--coral); font-size: 32px; }
-  .note:nth-child(2) { left: 85%; top: 25%; animation-delay: 2s; color: var(--teal); font-size: 20px; }
-  .note:nth-child(3) { left: 12%; top: 55%; animation-delay: 4s; color: var(--lavender); font-size: 28px; }
-  .note:nth-child(4) { left: 90%; top: 65%; animation-delay: 1s; color: var(--amber); font-size: 22px; }
-  .note:nth-child(5) { left: 15%; top: 85%; animation-delay: 3s; color: var(--pink); font-size: 26px; }
-  .note:nth-child(6) { left: 80%; top: 45%; animation-delay: 5s; color: var(--orange); font-size: 18px; }
-  .note:nth-child(7) { left: 50%; top: 10%; animation-delay: 6s; color: var(--teal); font-size: 24px; }
-  .note:nth-child(8) { left: 60%; top: 90%; animation-delay: 2.5s; color: var(--coral); font-size: 20px; }
+  .sparkle:nth-child(2) { background: var(--yellow); top: -14px; left: 8px; }
+  .sparkle:nth-child(3) { background: var(--lavender); top: -20px; right: 4px; animation-delay: 1.12s; }
+  .sparkle:nth-child(4) { background: var(--mint); bottom: -10px; left: -16px; animation-delay: 1.18s; }
+  .sparkle:nth-child(5) { background: var(--pink); bottom: -4px; right: -18px; animation-delay: 1.24s; }
+  .sparkle:nth-child(6) { background: var(--cream); top: 50%; left: -30px; animation-delay: 1.3s; }
+  .sparkle:nth-child(7) { background: var(--yellow); top: 40%; right: -32px; animation-delay: 1.36s; }
+  @keyframes spark {
+    0%   { transform: scale(0); opacity: 0; }
+    55%  { transform: scale(1.4); opacity: 1; }
+    100% { transform: scale(0.2) translateY(-10px); opacity: 0; }
+  }
+  .intro-text {
+    font-size: 14px;
+    letter-spacing: 6px;
+    color: var(--text-dim);
+    opacity: 0;
+    animation: introText 0.6s ease 1.5s both;
+  }
+  .intro-text::after {
+    content: "";
+    animation: dots 1.2s steps(4) 1.5s infinite;
+  }
+  @keyframes introText { to { opacity: 1; } }
+  @keyframes dots {
+    0% { content: ""; } 25% { content: "·"; }
+    50% { content: "··"; } 75% { content: "···"; }
+  }
 
-  @keyframes floatNote {
-    0%, 100% { transform: translateY(0) rotate(-5deg); opacity: 0.12; }
-    25% { opacity: 0.2; }
-    50% { transform: translateY(-20px) rotate(5deg); opacity: 0.18; }
-    75% { opacity: 0.15; }
+  /* ---------- 飘雪 ---------- */
+  .flake {
+    position: fixed;
+    top: -6%;
+    z-index: 40;
+    pointer-events: none;
+    user-select: none;
+    animation-name: fallSway;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  @keyframes fallSway {
+    0%   { transform: translate(0, -8vh) rotate(0deg); }
+    25%  { transform: translate(16px, 22vh) rotate(90deg); }
+    50%  { transform: translate(-12px, 52vh) rotate(180deg); }
+    75%  { transform: translate(14px, 82vh) rotate(270deg); }
+    100% { transform: translate(0, 112vh) rotate(360deg); }
   }
 
   /* ---------- 导航栏 ---------- */
@@ -78,10 +129,10 @@
     justify-content: space-between;
     align-items: center;
     padding: 20px 48px;
-    background: rgba(13, 13, 26, 0.6);
+    background: rgba(18, 16, 31, 0.6);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-bottom: 1px solid rgba(167, 139, 250, 0.1);
+    border-bottom: 1px solid rgba(201, 182, 255, 0.12);
   }
   .nav-logo {
     font-size: 18px;
@@ -91,28 +142,30 @@
     align-items: center;
     gap: 10px;
   }
-  .nav-logo svg { width: 22px; height: 22px; }
-  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-logo svg {
+    width: 24px; height: 24px;
+    color: var(--pink);
+    animation: pawWiggle 3.5s ease-in-out infinite;
+  }
+  @keyframes pawWiggle {
+    0%, 88%, 100% { transform: rotate(0deg); }
+    92% { transform: rotate(-14deg); }
+    96% { transform: rotate(10deg); }
+  }
+  .nav-links { display: flex; gap: 12px; list-style: none; }
   .nav-links a {
     color: var(--text);
     text-decoration: none;
     font-size: 14px;
     letter-spacing: 3px;
-    position: relative;
-    transition: color 0.3s;
-    padding: 4px 0;
+    padding: 6px 14px;
+    border-radius: 999px;
+    transition: background 0.3s, color 0.3s;
   }
-  .nav-links a::after {
-    content: "";
-    position: absolute;
-    left: 0; bottom: -4px;
-    width: 0; height: 2px;
-    background: linear-gradient(90deg, var(--coral), var(--lavender));
-    border-radius: 1px;
-    transition: width 0.35s ease;
+  .nav-links a:hover {
+    background: rgba(201, 182, 255, 0.14);
+    color: var(--lavender);
   }
-  .nav-links a:hover::after { width: 100%; }
-  .nav-links a:hover { color: var(--lavender); }
 
   /* ---------- 首屏 ---------- */
   .hero {
@@ -126,73 +179,130 @@
     position: relative;
     z-index: 1;
   }
-  .hero-guitar {
-    position: absolute;
-    opacity: 0.9;
-    pointer-events: none;
-    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.4));
-  }
-  .hero-guitar.left {
-    left: -3%;
-    top: 50%;
-    transform: translateY(-50%) rotate(-18deg);
-    width: clamp(180px, 22vw, 320px);
-  }
-  .hero-guitar.right {
-    right: -3%;
-    top: 50%;
-    transform: translateY(-50%) rotate(18deg) scaleX(-1);
-    width: clamp(180px, 22vw, 320px);
-  }
-  .hero h1 {
-    font-size: clamp(72px, 15vw, 200px);
+  .hero-name {
+    font-size: clamp(72px, 15vw, 190px);
     font-weight: 700;
     letter-spacing: 0.12em;
     line-height: 1.1;
-    animation: fadeUp 1.2s ease both;
-    background: linear-gradient(135deg, var(--text) 0%, var(--lavender) 50%, var(--coral) 100%);
+    position: relative;
+    background: linear-gradient(135deg, var(--text) 10%, var(--pink) 55%, var(--lavender) 95%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+  .hero-name span {
+    display: inline-block;
+    opacity: 0;
+    animation: letterPop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  .hero-name span:nth-child(1) { animation-delay: 3.0s; }
+  .hero-name span:nth-child(2) { animation-delay: 3.2s; }
+  .hero-name span:nth-child(3) { animation-delay: 3.4s; }
+  @keyframes letterPop {
+    0%   { opacity: 0; transform: translateY(70px) scale(0.3) rotate(-14deg); }
+    60%  { opacity: 1; transform: translateY(-10px) scale(1.16) rotate(5deg); }
+    100% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+  }
+  .hero-name:hover span { animation: letterDance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .hero-name:hover span:nth-child(2) { animation-delay: 0.08s; }
+  .hero-name:hover span:nth-child(3) { animation-delay: 0.16s; }
+  @keyframes letterDance {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    40% { transform: translateY(-18px) rotate(-6deg); }
+    70% { transform: translateY(4px) rotate(3deg); }
+  }
+  .name-paw {
+    position: absolute;
+    right: -18px;
+    top: -30px;
+    width: clamp(34px, 5vw, 54px);
+    color: var(--yellow);
+    opacity: 0;
+    animation: pawStamp 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) 3.75s both;
+    filter: drop-shadow(0 4px 14px rgba(255, 217, 125, 0.45));
+  }
   .hero p {
-    margin-top: 32px;
+    margin-top: 34px;
     font-size: clamp(14px, 1.6vw, 18px);
     letter-spacing: 8px;
     color: var(--text-dim);
-    animation: fadeUp 1.2s 0.3s ease both;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 4.1s both;
   }
-  .hero .vinyl {
+  .hero p::before, .hero p::after {
+    content: "❄";
+    font-size: 0.75em;
+    margin: 0 14px;
+    color: var(--lavender);
+    opacity: 0.8;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* 探头的猫咪 */
+  .peek-cat {
     position: absolute;
-    bottom: 80px;
-    width: 60px;
-    height: 60px;
-    animation: spin 8s linear infinite;
-    opacity: 0.6;
+    bottom: -4px;
+    left: 50%;
+    width: clamp(120px, 16vw, 170px);
+    transform: translate(-50%, 105%);
+    animation: peekUp 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) 4.4s both;
+    pointer-events: none;
   }
-  @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+  @keyframes peekUp {
+    to { transform: translate(-50%, 50%); }
   }
+  .peek-cat .eye {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: blink 4.6s ease-in-out 5.6s infinite;
+  }
+  @keyframes blink {
+    0%, 92%, 100% { transform: scaleY(1); }
+    95.5% { transform: scaleY(0.08); }
+  }
+
   .hero .scroll-hint {
     position: absolute;
-    bottom: 40px;
+    bottom: 34px;
+    right: 48px;
     font-size: 12px;
     letter-spacing: 4px;
     color: var(--text-faint);
     writing-mode: vertical-rl;
-    animation: fadeUp 1.2s 0.8s ease both;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 4.8s both;
   }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to   { opacity: 1; transform: translateY(0); }
+
+  /* ---------- 猫爪步道分隔 ---------- */
+  .paw-trail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(30px, 6vw, 64px);
+    padding: 10px 0 0;
+    opacity: 0.55;
   }
+  .paw-trail svg {
+    width: 26px; height: 26px;
+    animation: trailBob 3s ease-in-out infinite alternate;
+  }
+  .paw-trail svg:nth-child(1) { color: var(--pink); transform: rotate(-24deg); }
+  .paw-trail svg:nth-child(2) { color: var(--lavender); transform: rotate(16deg) translateY(-8px); animation-delay: 0.4s; }
+  .paw-trail svg:nth-child(3) { color: var(--mint); transform: rotate(-14deg); animation-delay: 0.8s; }
+  .paw-trail svg:nth-child(4) { color: var(--yellow); transform: rotate(22deg); animation-delay: 1.2s; }
+  @keyframes trailBob {
+    from { margin-top: 0; } to { margin-top: -8px; }
+  }
+  .paw-trail svg { animation-name: trailBob; }
 
   /* ---------- 通用板块 ---------- */
   section {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 120px 48px;
+    padding: 110px 48px;
     position: relative;
     z-index: 1;
   }
@@ -207,23 +317,14 @@
   }
   .section-title::before {
     content: "";
-    width: 24px;
-    height: 2px;
-    background: linear-gradient(90deg, var(--coral), var(--lavender));
-    border-radius: 1px;
+    width: 26px; height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--pink), var(--lavender));
   }
   .section-heading {
     font-size: clamp(32px, 4vw, 48px);
     letter-spacing: 6px;
-    margin-bottom: 64px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-  .section-heading svg {
-    width: 36px;
-    height: 36px;
-    flex-shrink: 0;
+    margin-bottom: 60px;
   }
 
   /* ---------- 关于我 ---------- */
@@ -235,29 +336,27 @@
   }
   .about-portrait {
     overflow: hidden;
-    background: #1a1a2e;
-    border-radius: 16px;
-    border: 1px solid rgba(167, 139, 250, 0.15);
+    background: #1c1a2e;
+    border-radius: 26px;
+    border: 2px solid rgba(255, 179, 198, 0.18);
     position: relative;
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s;
   }
-  .about-portrait::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(167,139,250,0.08) 0%, transparent 50%, rgba(255,107,107,0.05) 100%);
-    pointer-events: none;
+  .about-portrait:hover {
+    transform: rotate(-1.5deg) scale(1.01);
+    border-color: rgba(255, 179, 198, 0.4);
   }
   .about-portrait img {
     width: 100%;
     display: block;
-    filter: grayscale(10%) saturate(110%);
+    filter: saturate(105%);
     transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .about-portrait:hover img { transform: scale(1.05); }
   .about-text p {
     font-size: 16px;
     margin-bottom: 24px;
-    color: #c8c8dc;
+    color: #cdc7dd;
     text-align: justify;
   }
   .about-text .signature {
@@ -269,7 +368,7 @@
     align-items: center;
     gap: 10px;
   }
-  .about-text .signature svg { width: 20px; height: 20px; }
+  .about-text .signature svg { width: 22px; height: 22px; color: var(--pink); }
 
   /* ---------- 作品画廊 ---------- */
   .works-grid {
@@ -277,25 +376,40 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 28px;
   }
-  .work-item {
-    cursor: pointer;
-    position: relative;
-  }
+  .work-item { cursor: pointer; }
   .work-img {
     overflow: hidden;
-    background: #1a1a2e;
+    background: #1c1a2e;
     aspect-ratio: 1 / 1;
-    border-radius: 12px;
-    border: 1px solid rgba(167, 139, 250, 0.1);
-    transition: border-color 0.3s, box-shadow 0.3s;
+    border-radius: 22px;
+    border: 2px solid transparent;
+    position: relative;
+    transition: border-color 0.3s, box-shadow 0.3s, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-  .work-item:nth-child(3n+1) .work-img { border-color: rgba(255, 107, 107, 0.15); }
-  .work-item:nth-child(3n+2) .work-img { border-color: rgba(78, 205, 196, 0.15); }
-  .work-item:nth-child(3n) .work-img { border-color: rgba(167, 139, 250, 0.15); }
-  .work-item:hover .work-img {
-    border-color: rgba(167, 139, 250, 0.3);
-    box-shadow: 0 8px 32px rgba(167, 139, 250, 0.1);
+  .work-item:nth-child(3n+1) .work-img { border-color: rgba(255, 179, 198, 0.22); }
+  .work-item:nth-child(3n+2) .work-img { border-color: rgba(168, 230, 207, 0.22); }
+  .work-item:nth-child(3n) .work-img { border-color: rgba(201, 182, 255, 0.22); }
+  .work-item:nth-child(3n+1):hover .work-img { box-shadow: 0 12px 36px rgba(255, 179, 198, 0.22); border-color: rgba(255, 179, 198, 0.55); }
+  .work-item:nth-child(3n+2):hover .work-img { box-shadow: 0 12px 36px rgba(168, 230, 207, 0.2); border-color: rgba(168, 230, 207, 0.45); }
+  .work-item:nth-child(3n):hover .work-img { box-shadow: 0 12px 36px rgba(201, 182, 255, 0.22); border-color: rgba(201, 182, 255, 0.4); }
+  .work-item:hover .work-img { transform: translateY(-6px) rotate(-0.6deg); }
+  .work-img::after {
+    content: "";
+    position: absolute;
+    top: 12px; right: 12px;
+    width: 36px; height: 36px;
+    background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><g fill='%23ffb3c6'><ellipse cx='50' cy='66' rx='21' ry='17'/><circle cx='27' cy='43' r='9.5'/><circle cx='50' cy='33' r='9.5'/><circle cx='73' cy='43' r='9.5'/></g></svg>") center / contain no-repeat;
+    opacity: 0;
+    transform: scale(0.4) rotate(-35deg);
+    transition: opacity 0.35s, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
+  .work-item:nth-child(3n+2) .work-img::after {
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><g fill='%23a8e6cf'><ellipse cx='50' cy='66' rx='21' ry='17'/><circle cx='27' cy='43' r='9.5'/><circle cx='50' cy='33' r='9.5'/><circle cx='73' cy='43' r='9.5'/></g></svg>");
+  }
+  .work-item:nth-child(3n) .work-img::after {
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><g fill='%23c9b6ff'><ellipse cx='50' cy='66' rx='21' ry='17'/><circle cx='27' cy='43' r='9.5'/><circle cx='50' cy='33' r='9.5'/><circle cx='73' cy='43' r='9.5'/></g></svg>");
+  }
+  .work-item:hover .work-img::after { opacity: 0.95; transform: scale(1) rotate(0deg); }
   .work-img img {
     width: 100%;
     height: 100%;
@@ -310,18 +424,10 @@
     justify-content: space-between;
     align-items: baseline;
   }
-  .work-meta h3 {
-    font-size: 16px;
-    letter-spacing: 2px;
-    font-weight: 700;
-  }
-  .work-meta span {
-    font-size: 13px;
-    color: var(--text-dim);
-    letter-spacing: 1px;
-  }
-  .work-item:nth-child(3n+1) .work-meta h3 { color: var(--coral); }
-  .work-item:nth-child(3n+2) .work-meta h3 { color: var(--teal); }
+  .work-meta h3 { font-size: 16px; letter-spacing: 2px; font-weight: 700; }
+  .work-meta span { font-size: 13px; color: var(--text-dim); letter-spacing: 1px; }
+  .work-item:nth-child(3n+1) .work-meta h3 { color: var(--pink); }
+  .work-item:nth-child(3n+2) .work-meta h3 { color: var(--mint); }
   .work-item:nth-child(3n) .work-meta h3 { color: var(--lavender); }
 
   /* ---------- 成长历程 ---------- */
@@ -330,30 +436,28 @@
     display: grid;
     grid-template-columns: 120px 1fr;
     gap: 32px;
-    padding: 28px 0;
-    border-bottom: 1px solid rgba(167, 139, 250, 0.1);
-    transition: padding-left 0.4s ease, background 0.3s;
+    padding: 28px 0 28px 44px;
+    border-bottom: 1px solid rgba(201, 182, 255, 0.1);
+    transition: padding-left 0.4s ease;
     position: relative;
   }
   .exhibitions li::before {
     content: "";
     position: absolute;
-    left: -48px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    opacity: 0;
-    transition: opacity 0.3s;
+    left: 0; top: 34px;
+    width: 28px; height: 28px;
+    background: center / contain no-repeat;
+    opacity: 0.35;
+    transform: rotate(-16deg);
+    transition: opacity 0.3s, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-  .exhibitions li:nth-child(1)::before { background: var(--coral); }
-  .exhibitions li:nth-child(2)::before { background: var(--teal); }
-  .exhibitions li:nth-child(3)::before { background: var(--amber); }
-  .exhibitions li:nth-child(4)::before { background: var(--lavender); }
-  .exhibitions li:hover::before { opacity: 1; }
-  .exhibitions li:hover { padding-left: 12px; }
-  .exhibitions li:first-child { border-top: 1px solid rgba(167, 139, 250, 0.1); }
+  .exhibitions li:nth-child(1)::before { background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><g fill='%23ffb3c6'><ellipse cx='50' cy='66' rx='21' ry='17'/><circle cx='27' cy='43' r='9.5'/><circle cx='50' cy='33' r='9.5'/><circle cx='73' cy='43' r='9.5'/></g></svg>"); }
+  .exhibitions li:nth-child(2)::before { background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><g fill='%23a8e6cf'><ellipse cx='50' cy='66' rx='21' ry='17'/><circle cx='27' cy='43' r='9.5'/><circle cx='50' cy='33' r='9.5'/><circle cx='73' cy='43' r='9.5'/></g></svg>"); }
+  .exhibitions li:nth-child(3)::before { background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><g fill='%23ffd97d'><ellipse cx='50' cy='66' rx='21' ry='17'/><circle cx='27' cy='43' r='9.5'/><circle cx='50' cy='33' r='9.5'/><circle cx='73' cy='43' r='9.5'/></g></svg>"); }
+  .exhibitions li:nth-child(4)::before { background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><g fill='%23c9b6ff'><ellipse cx='50' cy='66' rx='21' ry='17'/><circle cx='27' cy='43' r='9.5'/><circle cx='50' cy='33' r='9.5'/><circle cx='73' cy='43' r='9.5'/></g></svg>"); }
+  .exhibitions li:hover { padding-left: 56px; }
+  .exhibitions li:hover::before { opacity: 1; transform: rotate(0deg) scale(1.15); }
+  .exhibitions li:first-child { border-top: 1px solid rgba(201, 182, 255, 0.1); }
   .exh-year {
     font-size: 24px;
     letter-spacing: 2px;
@@ -363,38 +467,24 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-  .exh-info h3 {
-    font-size: 21px;
-    letter-spacing: 2px;
-    margin-bottom: 8px;
-    font-weight: 700;
-  }
-  .exh-info p {
-    font-size: 16px;
-    color: #b8b8d0;
-    letter-spacing: 1px;
-    line-height: 1.9;
-  }
+  .exh-info h3 { font-size: 21px; letter-spacing: 2px; margin-bottom: 8px; font-weight: 700; }
+  .exh-info p { font-size: 16px; color: #bcb6d0; letter-spacing: 1px; line-height: 1.9; }
 
   /* ---------- 页脚 ---------- */
   footer {
-    border-top: 1px solid rgba(167, 139, 250, 0.1);
+    border-top: 1px solid rgba(201, 182, 255, 0.1);
     padding: 96px 48px 48px;
     text-align: center;
     position: relative;
     z-index: 1;
   }
-  .footer-guitar {
-    width: 48px;
-    height: 48px;
-    margin-bottom: 24px;
-    opacity: 0.8;
+  .footer-paw {
+    width: 44px; height: 44px;
+    color: var(--pink);
+    margin-bottom: 22px;
+    animation: pawWiggle 3.5s ease-in-out infinite;
   }
-  .footer-heading {
-    font-size: clamp(28px, 3.5vw, 40px);
-    letter-spacing: 6px;
-    margin-bottom: 32px;
-  }
+  .footer-heading { font-size: clamp(28px, 3.5vw, 40px); letter-spacing: 6px; margin-bottom: 32px; }
   .footer-email {
     display: inline-block;
     font-size: 16px;
@@ -402,7 +492,7 @@
     color: var(--text);
     text-decoration: none;
     border-bottom: 2px solid transparent;
-    border-image: linear-gradient(90deg, var(--coral), var(--lavender)) 1;
+    border-image: linear-gradient(90deg, var(--pink), var(--lavender)) 1;
     padding-bottom: 4px;
     margin-bottom: 48px;
     transition: opacity 0.3s;
@@ -411,64 +501,91 @@
   .social-links {
     display: flex;
     justify-content: center;
-    gap: 40px;
+    gap: 16px;
     margin-bottom: 64px;
   }
   .social-links a {
-    color: #c8c8dc;
+    color: #cdc7dd;
     text-decoration: none;
     font-size: 14px;
     letter-spacing: 3px;
-    transition: color 0.3s;
+    padding: 8px 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(201, 182, 255, 0.18);
+    transition: color 0.3s, border-color 0.3s, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-  .social-links a:hover { color: var(--lavender); }
-  .copyright {
-    font-size: 12px;
-    letter-spacing: 2px;
-    color: var(--text-faint);
+  .social-links a:hover {
+    color: var(--pink);
+    border-color: rgba(255, 179, 198, 0.45);
+    transform: translateY(-3px);
   }
+  .copyright { font-size: 12px; letter-spacing: 2px; color: var(--text-faint); }
 
   /* ---------- 响应式 ---------- */
   @media (max-width: 860px) {
     nav { padding: 16px 24px; }
-    .nav-links { gap: 20px; }
+    .nav-links { gap: 4px; }
+    .nav-links a { padding: 6px 10px; }
     section { padding: 80px 24px; }
     .about-wrap { grid-template-columns: 1fr; gap: 40px; }
     .works-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
-    .exhibitions li { grid-template-columns: 80px 1fr; gap: 16px; }
-    .hero-guitar.left, .hero-guitar.right { width: 120px; opacity: 0.5; }
+    .exhibitions li { grid-template-columns: 80px 1fr; gap: 16px; padding-left: 38px; }
+    .exhibitions li::before { width: 24px; height: 24px; }
+    .hero .scroll-hint { right: 24px; }
   }
   @media (max-width: 520px) {
     .works-grid { grid-template-columns: 1fr; }
     .hero p { letter-spacing: 4px; }
-    .hero-guitar.left, .hero-guitar.right { display: none; }
-    .exhibitions li::before { left: -24px; }
+    .peek-cat { width: 110px; }
   }
 </style>
 </head>
 <body>
 
-<!-- 漂浮音符 -->
-<div class="music-notes">
-  <span class="note">&#9835;</span>
-  <span class="note">&#9834;</span>
-  <span class="note">&#9836;</span>
-  <span class="note">&#9833;</span>
-  <span class="note">&#9835;</span>
-  <span class="note">&#9834;</span>
-  <span class="note">&#9836;</span>
-  <span class="note">&#9833;</span>
+<!-- 猫爪形状定义 -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="paw">
+      <ellipse cx="50" cy="66" rx="21" ry="17"/>
+      <circle cx="27" cy="43" r="9.5"/>
+      <circle cx="50" cy="33" r="9.5"/>
+      <circle cx="73" cy="43" r="9.5"/>
+    </g>
+  </defs>
+</svg>
+
+<!-- 开场帘幕 -->
+<div id="intro" aria-hidden="true">
+  <div class="intro-paw-wrap">
+    <svg class="intro-paw" viewBox="0 0 100 100" fill="currentColor"><use href="#paw"/></svg>
+    <span class="sparkle"></span><span class="sparkle"></span><span class="sparkle"></span>
+    <span class="sparkle"></span><span class="sparkle"></span><span class="sparkle"></span>
+  </div>
+  <p class="intro-text">正在打开燕丽的小世界</p>
 </div>
+
+<!-- 飘雪 -->
+<span class="flake" style="left:4%;font-size:14px;color:#ffffff;opacity:.5;animation-duration:12s;animation-delay:-2s">❄</span>
+<span class="flake" style="left:12%;font-size:20px;color:#ffc2d4;opacity:.4;animation-duration:15s;animation-delay:-7s">❄</span>
+<span class="flake" style="left:20%;font-size:12px;color:#c9b6ff;opacity:.45;animation-duration:10s;animation-delay:-4s">❄</span>
+<span class="flake" style="left:28%;font-size:17px;color:#ffffff;opacity:.35;animation-duration:16s;animation-delay:-9s">❄</span>
+<span class="flake" style="left:35%;font-size:13px;color:#a8e6cf;opacity:.4;animation-duration:11s;animation-delay:-1s">❄</span>
+<span class="flake" style="left:42%;font-size:22px;color:#ffd97d;opacity:.3;animation-duration:17s;animation-delay:-12s">❄</span>
+<span class="flake" style="left:50%;font-size:15px;color:#ffffff;opacity:.5;animation-duration:13s;animation-delay:-5s">❄</span>
+<span class="flake" style="left:57%;font-size:11px;color:#ffc2d4;opacity:.4;animation-duration:9s;animation-delay:-3s">❄</span>
+<span class="flake" style="left:64%;font-size:19px;color:#c9b6ff;opacity:.35;animation-duration:14s;animation-delay:-8s">❄</span>
+<span class="flake" style="left:71%;font-size:13px;color:#ffffff;opacity:.45;animation-duration:12s;animation-delay:-6s">❄</span>
+<span class="flake" style="left:78%;font-size:16px;color:#a8e6cf;opacity:.35;animation-duration:15s;animation-delay:-10s">❄</span>
+<span class="flake" style="left:85%;font-size:12px;color:#ffd97d;opacity:.4;animation-duration:10s;animation-delay:-2.5s">❄</span>
+<span class="flake" style="left:92%;font-size:18px;color:#ffffff;opacity:.4;animation-duration:16s;animation-delay:-8s">❄</span>
+<span class="flake" style="left:8%;font-size:11px;color:#c9b6ff;opacity:.35;animation-duration:14s;animation-delay:-11s">❄</span>
+<span class="flake" style="left:32%;font-size:14px;color:#ffc2d4;opacity:.3;animation-duration:18s;animation-delay:-6.5s">❄</span>
+<span class="flake" style="left:68%;font-size:12px;color:#ffffff;opacity:.45;animation-duration:11s;animation-delay:-9.5s">❄</span>
 
 <!-- 固定导航栏 -->
 <nav>
   <div class="nav-logo">
-    <svg viewBox="0 0 24 24" fill="none" stroke="url(#navGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <defs><linearGradient id="navGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ff6b6b"/><stop offset="100%" stop-color="#a78bfa"/></linearGradient></defs>
-      <path d="M9 18V5l12-2v13"/>
-      <circle cx="6" cy="18" r="3"/>
-      <circle cx="18" cy="16" r="3"/>
-    </svg>
+    <svg viewBox="0 0 100 100" fill="currentColor"><use href="#paw"/></svg>
     陈燕丽
   </div>
   <ul class="nav-links">
@@ -481,109 +598,27 @@
 
 <!-- 首屏 -->
 <header class="hero">
-  <!-- 左侧卡通吉他 -->
-  <svg class="hero-guitar left" viewBox="0 0 200 320" fill="none">
-    <!-- 吉他身体 -->
-    <ellipse cx="100" cy="200" rx="55" ry="75" fill="#ff6b6b"/>
-    <ellipse cx="100" cy="200" rx="55" ry="75" fill="url(#guitarGrad1)" opacity="0.3"/>
-    <ellipse cx="100" cy="145" rx="38" ry="42" fill="#ff8c42"/>
-    <!-- 音孔 -->
-    <circle cx="100" cy="175" r="18" fill="#0d0d1a"/>
-    <circle cx="100" cy="175" r="14" fill="#1a1a2e"/>
-    <circle cx="100" cy="175" r="6" fill="#4ecdc4"/>
-    <!-- 琴桥 -->
-    <rect x="75" y="235" width="50" height="10" rx="3" fill="#2d2d44"/>
-    <rect x="78" y="237" width="44" height="6" rx="2" fill="#fbbf24"/>
-    <!-- 琴颈 -->
-    <rect x="85" y="30" width="30" height="120" rx="4" fill="#8b5a2b"/>
-    <rect x="87" y="32" width="26" height="116" rx="3" fill="#a0522d"/>
-    <!-- 品格线 -->
-    <line x1="87" y1="55" x2="113" y2="55" stroke="#d4a574" stroke-width="1.5"/>
-    <line x1="87" y1="78" x2="113" y2="78" stroke="#d4a574" stroke-width="1.5"/>
-    <line x1="87" y1="100" x2="113" y2="100" stroke="#d4a574" stroke-width="1.5"/>
-    <line x1="87" y1="120" x2="113" y2="120" stroke="#d4a574" stroke-width="1.5"/>
-    <!-- 琴头 -->
-    <rect x="80" y="5" width="40" height="30" rx="6" fill="#6b4c93"/>
-    <circle cx="90" cy="15" r="4" fill="#f0f0f5"/>
-    <circle cx="110" cy="15" r="4" fill="#f0f0f5"/>
-    <circle cx="90" cy="28" r="4" fill="#f0f0f5"/>
-    <circle cx="110" cy="28" r="4" fill="#f0f0f5"/>
-    <!-- 琴弦 -->
-    <line x1="92" y1="35" x2="92" y2="240" stroke="#e8e8e8" stroke-width="1"/>
-    <line x1="97" y1="35" x2="97" y2="240" stroke="#e8e8e8" stroke-width="1"/>
-    <line x1="103" y1="35" x2="103" y2="240" stroke="#e8e8e8" stroke-width="1"/>
-    <line x1="108" y1="35" x2="108" y2="240" stroke="#e8e8e8" stroke-width="1"/>
-    <!-- 装饰星星 -->
-    <path d="M60 80 L63 90 L73 90 L65 97 L68 107 L60 100 L52 107 L55 97 L47 90 L57 90 Z" fill="#fbbf24"/>
-    <path d="M140 120 L142 127 L149 127 L143 132 L146 139 L140 134 L134 139 L137 132 L131 127 L138 127 Z" fill="#4ecdc4"/>
-    <path d="M150 60 L152 126 L156 126 L158 60 Z" fill="#a78bfa" transform="rotate(15 150 90)"/>
-    <defs>
-      <linearGradient id="guitarGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#fff" stop-opacity="0.3"/>
-        <stop offset="100%" stop-color="#000" stop-opacity="0.2"/>
-      </linearGradient>
-    </defs>
-  </svg>
-
-  <!-- 右侧卡通吉他 -->
-  <svg class="hero-guitar right" viewBox="0 0 200 320" fill="none">
-    <!-- 吉他身体 -->
-    <ellipse cx="100" cy="200" rx="55" ry="75" fill="#4ecdc4"/>
-    <ellipse cx="100" cy="200" rx="55" ry="75" fill="url(#guitarGrad2)" opacity="0.3"/>
-    <ellipse cx="100" cy="145" rx="38" ry="42" fill="#45b7aa"/>
-    <!-- 音孔 -->
-    <circle cx="100" cy="175" r="18" fill="#0d0d1a"/>
-    <circle cx="100" cy="175" r="14" fill="#1a1a2e"/>
-    <circle cx="100" cy="175" r="6" fill="#ff6b6b"/>
-    <!-- 琴桥 -->
-    <rect x="75" y="235" width="50" height="10" rx="3" fill="#2d2d44"/>
-    <rect x="78" y="237" width="44" height="6" rx="2" fill="#f472b6"/>
-    <!-- 琴颈 -->
-    <rect x="85" y="30" width="30" height="120" rx="4" fill="#8b5a2b"/>
-    <rect x="87" y="32" width="26" height="116" rx="3" fill="#a0522d"/>
-    <!-- 品格线 -->
-    <line x1="87" y1="55" x2="113" y2="55" stroke="#d4a574" stroke-width="1.5"/>
-    <line x1="87" y1="78" x2="113" y2="78" stroke="#d4a574" stroke-width="1.5"/>
-    <line x1="87" y1="100" x2="113" y2="100" stroke="#d4a574" stroke-width="1.5"/>
-    <line x1="87" y1="120" x2="113" y2="120" stroke="#d4a574" stroke-width="1.5"/>
-    <!-- 琴头 -->
-    <rect x="80" y="5" width="40" height="30" rx="6" fill="#ff6b6b"/>
-    <circle cx="90" cy="15" r="4" fill="#f0f0f5"/>
-    <circle cx="110" cy="15" r="4" fill="#f0f0f5"/>
-    <circle cx="90" cy="28" r="4" fill="#f0f0f5"/>
-    <circle cx="110" cy="28" r="4" fill="#f0f0f5"/>
-    <!-- 琴弦 -->
-    <line x1="92" y1="35" x2="92" y2="240" stroke="#e8e8e8" stroke-width="1"/>
-    <line x1="97" y1="35" x2="97" y2="240" stroke="#e8e8e8" stroke-width="1"/>
-    <line x1="103" y1="35" x2="103" y2="240" stroke="#e8e8e8" stroke-width="1"/>
-    <line x1="108" y1="35" x2="108" y2="240" stroke="#e8e8e8" stroke-width="1"/>
-    <!-- 装饰音符 -->
-    <text x="55" y="100" font-size="24" fill="#fbbf24">&#9835;</text>
-    <text x="135" y="90" font-size="20" fill="#ff6b6b">&#9834;</text>
-    <text x="145" y="140" font-size="18" fill="#a78bfa">&#9836;</text>
-    <defs>
-      <linearGradient id="guitarGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#fff" stop-opacity="0.3"/>
-        <stop offset="100%" stop-color="#000" stop-opacity="0.2"/>
-      </linearGradient>
-    </defs>
-  </svg>
-
-  <h1>陈燕丽</h1>
+  <h1 class="hero-name">
+    <span>陈</span><span>燕</span><span>丽</span>
+    <svg class="name-paw" viewBox="0 0 100 100" fill="currentColor"><use href="#paw"/></svg>
+  </h1>
   <p>个人艺术 · 数字影像</p>
 
-  <!-- 旋转黑胶 -->
-  <svg class="vinyl" viewBox="0 0 60 60" fill="none">
-    <circle cx="30" cy="30" r="28" fill="#1a1a2e" stroke="#a78bfa" stroke-width="1.5"/>
-    <circle cx="30" cy="30" r="22" fill="#0d0d1a"/>
-    <circle cx="30" cy="30" r="16" fill="none" stroke="#a78bfa" stroke-width="0.5" opacity="0.4"/>
-    <circle cx="30" cy="30" r="12" fill="none" stroke="#ff6b6b" stroke-width="0.5" opacity="0.4"/>
-    <circle cx="30" cy="30" r="8" fill="none" stroke="#4ecdc4" stroke-width="0.5" opacity="0.4"/>
-    <circle cx="30" cy="30" r="4" fill="#fbbf24"/>
-    <circle cx="30" cy="30" r="2" fill="#0d0d1a"/>
-    <line x1="30" y1="30" x2="30" y2="8" stroke="#a78bfa" stroke-width="1" opacity="0.3"/>
-    <line x1="30" y1="30" x2="52" y2="30" stroke="#ff6b6b" stroke-width="1" opacity="0.2"/>
-  </svg>
+  <!-- 探头的猫咪 -->
+  <div class="peek-cat">
+    <svg viewBox="0 0 160 110" fill="none">
+      <path d="M30 52 L40 12 L64 32 Z" fill="#ffe8d6"/>
+      <path d="M130 52 L120 12 L96 32 Z" fill="#ffe8d6"/>
+      <path d="M37 46 L43 23 L56 34 Z" fill="#ffb3c6"/>
+      <path d="M123 46 L117 23 L104 34 Z" fill="#ffb3c6"/>
+      <ellipse cx="80" cy="80" rx="46" ry="34" fill="#ffe8d6"/>
+      <g class="eye"><circle cx="62" cy="76" r="5" fill="#2b2440"/></g>
+      <g class="eye"><circle cx="98" cy="76" r="5" fill="#2b2440"/></g>
+      <ellipse cx="50" cy="90" rx="7" ry="4" fill="#ffb3c6" opacity="0.55"/>
+      <ellipse cx="110" cy="90" rx="7" ry="4" fill="#ffb3c6" opacity="0.55"/>
+      <path d="M76 86 q4 4 8 0" stroke="#2b2440" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </div>
 
   <span class="scroll-hint">向下滚动</span>
 </header>
@@ -591,13 +626,7 @@
 <!-- 关于我 -->
 <section id="about">
   <p class="section-title">ABOUT</p>
-  <h2 class="section-heading">
-    <svg viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-      <circle cx="12" cy="7" r="4"/>
-    </svg>
-    关于我
-  </h2>
+  <h2 class="section-heading">关于我</h2>
   <div class="about-wrap">
     <div class="about-portrait">
       <img src="photos/微信图片_20261021231436_32_204_small.jpg" alt="陈燕丽肖像">
@@ -608,28 +637,25 @@
       <p>现在我正系统地学习环境设计，从素描基础到空间构成，每一门课都让我兴奋不已。我喜欢泡画室，也喜欢拉着朋友去看展、逛老建筑；我相信好的设计不是冷冰冰的图纸，而是能让人走进去就忍不住微笑的温度。</p>
       <p>未来的路还很长，我希望保持这份好奇与热爱，慢慢成长为一个能为他人创造美好生活空间的设计师。如果你也喜欢艺术与设计，欢迎和我聊聊，我很乐意认识每一位路过的朋友。</p>
       <p class="signature">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#4ecdc4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M9 18V5l12-2v13"/>
-          <circle cx="6" cy="18" r="3"/>
-          <circle cx="18" cy="16" r="3"/>
-        </svg>
+        <svg viewBox="0 0 100 100" fill="currentColor"><use href="#paw"/></svg>
         —— 陈燕丽
       </p>
     </div>
   </div>
 </section>
 
+<!-- 猫爪步道 -->
+<div class="paw-trail" aria-hidden="true">
+  <svg viewBox="0 0 100 100" fill="currentColor"><use href="#paw"/></svg>
+  <svg viewBox="0 0 100 100" fill="currentColor"><use href="#paw"/></svg>
+  <svg viewBox="0 0 100 100" fill="currentColor"><use href="#paw"/></svg>
+  <svg viewBox="0 0 100 100" fill="currentColor"><use href="#paw"/></svg>
+</div>
+
 <!-- 作品画廊 -->
 <section id="works">
   <p class="section-title">WORKS</p>
-  <h2 class="section-heading">
-    <svg viewBox="0 0 24 24" fill="none" stroke="#4ecdc4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-      <circle cx="8.5" cy="8.5" r="1.5"/>
-      <polyline points="21 15 16 10 5 21"/>
-    </svg>
-    作品画廊
-  </h2>
+  <h2 class="section-heading">作品画廊</h2>
   <div class="works-grid">
     <div class="work-item">
       <div class="work-img">
@@ -688,16 +714,18 @@
   </div>
 </section>
 
+<!-- 猫爪步道 -->
+<div class="paw-trail" aria-hidden="true">
+  <svg viewBox="0 0 100 100" fill="currentColor"><use href="#paw"/></svg>
+  <svg viewBox="0 0 100 100" fill="currentColor"><use href="#paw"/></svg>
+  <svg viewBox="0 0 100 100" fill="currentColor"><use href="#paw"/></svg>
+  <svg viewBox="0 0 100 100" fill="currentColor"><use href="#paw"/></svg>
+</div>
+
 <!-- 成长历程 -->
 <section id="exhibitions">
   <p class="section-title">JOURNEY</p>
-  <h2 class="section-heading">
-    <svg viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="10"/>
-      <polyline points="12 6 12 12 16 14"/>
-    </svg>
-    成长历程
-  </h2>
+  <h2 class="section-heading">成长历程</h2>
   <ul class="exhibitions">
     <li>
       <span class="exh-year">2016</span>
@@ -732,30 +760,7 @@
 
 <!-- 页脚 -->
 <footer id="contact">
-  <svg class="footer-guitar" viewBox="0 0 200 320" fill="none">
-    <ellipse cx="100" cy="200" rx="55" ry="75" fill="#a78bfa"/>
-    <ellipse cx="100" cy="145" rx="38" ry="42" fill="#8b5cf6"/>
-    <circle cx="100" cy="175" r="18" fill="#0d0d1a"/>
-    <circle cx="100" cy="175" r="14" fill="#1a1a2e"/>
-    <circle cx="100" cy="175" r="6" fill="#fbbf24"/>
-    <rect x="75" y="235" width="50" height="10" rx="3" fill="#2d2d44"/>
-    <rect x="78" y="237" width="44" height="6" rx="2" fill="#ff6b6b"/>
-    <rect x="85" y="30" width="30" height="120" rx="4" fill="#8b5a2b"/>
-    <rect x="87" y="32" width="26" height="116" rx="3" fill="#a0522d"/>
-    <line x1="87" y1="55" x2="113" y2="55" stroke="#d4a574" stroke-width="1.5"/>
-    <line x1="87" y1="78" x2="113" y2="78" stroke="#d4a574" stroke-width="1.5"/>
-    <line x1="87" y1="100" x2="113" y2="100" stroke="#d4a574" stroke-width="1.5"/>
-    <line x1="87" y1="120" x2="113" y2="120" stroke="#d4a574" stroke-width="1.5"/>
-    <rect x="80" y="5" width="40" height="30" rx="6" fill="#ff6b6b"/>
-    <circle cx="90" cy="15" r="4" fill="#f0f0f5"/>
-    <circle cx="110" cy="15" r="4" fill="#f0f0f5"/>
-    <circle cx="90" cy="28" r="4" fill="#f0f0f5"/>
-    <circle cx="110" cy="28" r="4" fill="#f0f0f5"/>
-    <line x1="92" y1="35" x2="92" y2="240" stroke="#e8e8e8" stroke-width="1"/>
-    <line x1="97" y1="35" x2="97" y2="240" stroke="#e8e8e8" stroke-width="1"/>
-    <line x1="103" y1="35" x2="103" y2="240" stroke="#e8e8e8" stroke-width="1"/>
-    <line x1="108" y1="35" x2="108" y2="240" stroke="#e8e8e8" stroke-width="1"/>
-  </svg>
+  <svg class="footer-paw" viewBox="0 0 100 100" fill="currentColor"><use href="#paw"/></svg>
   <h2 class="footer-heading">与我联系</h2>
   <a class="footer-email" href="mailto:cyl2007903@qq.com">cyl2007903@qq.com</a>
   <div class="social-links">
