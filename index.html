@@ -3,23 +3,70 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>陈燕丽 — 艺术家</title>
+<title>陈燕丽 — 音乐漫游者</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   html { scroll-behavior: smooth; }
 
+  :root {
+    --bg: #0d0d1a;
+    --text: #f0f0f5;
+    --text-dim: #a8a8c0;
+    --text-faint: #6b6b85;
+    --coral: #ff6b6b;
+    --teal: #4ecdc4;
+    --lavender: #a78bfa;
+    --amber: #fbbf24;
+    --orange: #ff8c42;
+    --pink: #f472b6;
+  }
+
   body {
     background:
-      radial-gradient(120% 60% at 50% -10%, rgba(201, 169, 106, 0.18) 0%, rgba(80, 130, 190, 0) 55%),
-      url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240' fill='none' stroke='%23987c4b' stroke-width='1.4' stroke-linecap='round'><path d='M70 90 q 22 -28 48 -8 q 26 22 8 44 q -20 22 -44 2 q -14 -12 -12 -38z' stroke-opacity='0.3'/><path d='M90 96 q 10 -14 22 -4 q 12 12 2 22 q -12 10 -20 0 q -6 -7 -4 -18z' stroke-opacity='0.24'/><path d='M160 50 h40 v40 M170 60 h20 v20 h-10 v-10 h-10z' stroke-opacity='0.24'/><path d='M40 160 v40 h40 M50 170 v20 h20 v-10 h-10 v-10z' stroke-opacity='0.24'/><path d='M170 170 q 14 -10 24 4 q 8 16 -10 22 q -18 4 -20 -14 q -1 -16 6 -12z' stroke-opacity='0.27'/><path d='M118 118 q 16 -10 26 4 q 10 18 -8 22 q -20 4 -22 -16 q -2 -14 10 -16 q 12 -2 12 10 q 0 10 -10 8' stroke-opacity='0.21'/><circle cx='120' cy='120' r='3' stroke-opacity='0.19'/></svg>") 0 0 / 240px 240px repeat,
-      linear-gradient(180deg, #1c3558 0%, #13223d 25%, #0c1830 55%, #080f20 80%, #050a14 100%);
+      radial-gradient(ellipse 80% 50% at 20% 0%, rgba(167, 139, 250, 0.12) 0%, transparent 50%),
+      radial-gradient(ellipse 60% 40% at 80% 20%, rgba(255, 107, 107, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse 70% 45% at 50% 80%, rgba(78, 205, 196, 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse 50% 30% at 10% 60%, rgba(251, 191, 36, 0.05) 0%, transparent 50%),
+      linear-gradient(180deg, #12121f 0%, #0d0d1a 40%, #0a0a14 100%);
     background-attachment: fixed;
     min-height: 100vh;
-    color: #f7fbff;
+    color: var(--text);
     font-family: "Songti SC", "STSong", "SimSun", "Noto Serif SC", "Source Han Serif SC", serif;
     line-height: 1.8;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ---------- 漂浮音符装饰 ---------- */
+  .music-notes {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .note {
+    position: absolute;
+    font-size: 24px;
+    opacity: 0.15;
+    animation: floatNote 12s ease-in-out infinite;
+    user-select: none;
+  }
+  .note:nth-child(1) { left: 5%; top: 15%; animation-delay: 0s; color: var(--coral); font-size: 32px; }
+  .note:nth-child(2) { left: 85%; top: 25%; animation-delay: 2s; color: var(--teal); font-size: 20px; }
+  .note:nth-child(3) { left: 12%; top: 55%; animation-delay: 4s; color: var(--lavender); font-size: 28px; }
+  .note:nth-child(4) { left: 90%; top: 65%; animation-delay: 1s; color: var(--amber); font-size: 22px; }
+  .note:nth-child(5) { left: 15%; top: 85%; animation-delay: 3s; color: var(--pink); font-size: 26px; }
+  .note:nth-child(6) { left: 80%; top: 45%; animation-delay: 5s; color: var(--orange); font-size: 18px; }
+  .note:nth-child(7) { left: 50%; top: 10%; animation-delay: 6s; color: var(--teal); font-size: 24px; }
+  .note:nth-child(8) { left: 60%; top: 90%; animation-delay: 2.5s; color: var(--coral); font-size: 20px; }
+
+  @keyframes floatNote {
+    0%, 100% { transform: translateY(0) rotate(-5deg); opacity: 0.12; }
+    25% { opacity: 0.2; }
+    50% { transform: translateY(-20px) rotate(5deg); opacity: 0.18; }
+    75% { opacity: 0.15; }
   }
 
   /* ---------- 导航栏 ---------- */
@@ -30,35 +77,42 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 22px 48px;
-    background: rgba(14, 24, 40, 0.55);
-    backdrop-filter: blur(18px) saturate(160%);
-    -webkit-backdrop-filter: blur(18px) saturate(160%);
-    border-bottom: 1px solid rgba(236, 239, 244, 0.1);
+    padding: 20px 48px;
+    background: rgba(13, 13, 26, 0.6);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(167, 139, 250, 0.1);
   }
   .nav-logo {
     font-size: 18px;
     letter-spacing: 4px;
     font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
+  .nav-logo svg { width: 22px; height: 22px; }
   .nav-links { display: flex; gap: 40px; list-style: none; }
   .nav-links a {
-    color: #f7fbff;
+    color: var(--text);
     text-decoration: none;
     font-size: 14px;
     letter-spacing: 3px;
     position: relative;
     transition: color 0.3s;
+    padding: 4px 0;
   }
   .nav-links a::after {
     content: "";
     position: absolute;
-    left: 0; bottom: -6px;
-    width: 0; height: 1px;
-    background: #f7fbff;
+    left: 0; bottom: -4px;
+    width: 0; height: 2px;
+    background: linear-gradient(90deg, var(--coral), var(--lavender));
+    border-radius: 1px;
     transition: width 0.35s ease;
   }
   .nav-links a:hover::after { width: 100%; }
+  .nav-links a:hover { color: var(--lavender); }
 
   /* ---------- 首屏 ---------- */
   .hero {
@@ -69,6 +123,26 @@
     align-items: center;
     text-align: center;
     padding: 0 24px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-guitar {
+    position: absolute;
+    opacity: 0.9;
+    pointer-events: none;
+    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.4));
+  }
+  .hero-guitar.left {
+    left: -3%;
+    top: 50%;
+    transform: translateY(-50%) rotate(-18deg);
+    width: clamp(180px, 22vw, 320px);
+  }
+  .hero-guitar.right {
+    right: -3%;
+    top: 50%;
+    transform: translateY(-50%) rotate(18deg) scaleX(-1);
+    width: clamp(180px, 22vw, 320px);
   }
   .hero h1 {
     font-size: clamp(72px, 15vw, 200px);
@@ -76,20 +150,36 @@
     letter-spacing: 0.12em;
     line-height: 1.1;
     animation: fadeUp 1.2s ease both;
+    background: linear-gradient(135deg, var(--text) 0%, var(--lavender) 50%, var(--coral) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
   .hero p {
     margin-top: 32px;
     font-size: clamp(14px, 1.6vw, 18px);
     letter-spacing: 8px;
-    color: #adc0d8;
+    color: var(--text-dim);
     animation: fadeUp 1.2s 0.3s ease both;
+  }
+  .hero .vinyl {
+    position: absolute;
+    bottom: 80px;
+    width: 60px;
+    height: 60px;
+    animation: spin 8s linear infinite;
+    opacity: 0.6;
+  }
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
   }
   .hero .scroll-hint {
     position: absolute;
     bottom: 40px;
     font-size: 12px;
     letter-spacing: 4px;
-    color: #8fa2bb;
+    color: var(--text-faint);
     writing-mode: vertical-rl;
     animation: fadeUp 1.2s 0.8s ease both;
   }
@@ -103,22 +193,37 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 120px 48px;
+    position: relative;
+    z-index: 1;
   }
   .section-title {
-    font-size: 14px;
+    font-size: 13px;
     letter-spacing: 8px;
-    color: #adc0d8;
+    color: var(--text-dim);
     margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-title::before {
+    content: "";
+    width: 24px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--coral), var(--lavender));
+    border-radius: 1px;
   }
   .section-heading {
     font-size: clamp(32px, 4vw, 48px);
     letter-spacing: 6px;
     margin-bottom: 64px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
   }
-  .divider {
-    width: 48px; height: 1px;
-    background: #f7fbff;
-    margin-bottom: 64px;
+  .section-heading svg {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
   }
 
   /* ---------- 关于我 ---------- */
@@ -130,39 +235,66 @@
   }
   .about-portrait {
     overflow: hidden;
-    background: #1a2740;
+    background: #1a1a2e;
+    border-radius: 16px;
+    border: 1px solid rgba(167, 139, 250, 0.15);
+    position: relative;
+  }
+  .about-portrait::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(167,139,250,0.08) 0%, transparent 50%, rgba(255,107,107,0.05) 100%);
+    pointer-events: none;
   }
   .about-portrait img {
     width: 100%;
     display: block;
-    filter: grayscale(15%);
+    filter: grayscale(10%) saturate(110%);
     transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .about-portrait:hover img { transform: scale(1.05); }
   .about-text p {
     font-size: 16px;
     margin-bottom: 24px;
-    color: #d6e2f0;
+    color: #c8c8dc;
     text-align: justify;
   }
   .about-text .signature {
     margin-top: 8px;
     font-size: 20px;
     letter-spacing: 4px;
-    color: #f7fbff;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
+  .about-text .signature svg { width: 20px; height: 20px; }
 
   /* ---------- 作品画廊 ---------- */
   .works-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
+    gap: 28px;
   }
-  .work-item { cursor: pointer; }
+  .work-item {
+    cursor: pointer;
+    position: relative;
+  }
   .work-img {
     overflow: hidden;
-    background: #1a2740;
+    background: #1a1a2e;
     aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    border: 1px solid rgba(167, 139, 250, 0.1);
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .work-item:nth-child(3n+1) .work-img { border-color: rgba(255, 107, 107, 0.15); }
+  .work-item:nth-child(3n+2) .work-img { border-color: rgba(78, 205, 196, 0.15); }
+  .work-item:nth-child(3n) .work-img { border-color: rgba(167, 139, 250, 0.15); }
+  .work-item:hover .work-img {
+    border-color: rgba(167, 139, 250, 0.3);
+    box-shadow: 0 8px 32px rgba(167, 139, 250, 0.1);
   }
   .work-img img {
     width: 100%;
@@ -173,7 +305,7 @@
   }
   .work-item:hover .work-img img { transform: scale(1.08); }
   .work-meta {
-    padding-top: 16px;
+    padding-top: 14px;
     display: flex;
     justify-content: space-between;
     align-items: baseline;
@@ -185,9 +317,12 @@
   }
   .work-meta span {
     font-size: 13px;
-    color: #adc0d8;
+    color: var(--text-dim);
     letter-spacing: 1px;
   }
+  .work-item:nth-child(3n+1) .work-meta h3 { color: var(--coral); }
+  .work-item:nth-child(3n+2) .work-meta h3 { color: var(--teal); }
+  .work-item:nth-child(3n) .work-meta h3 { color: var(--lavender); }
 
   /* ---------- 成长历程 ---------- */
   .exhibitions { list-style: none; }
@@ -196,16 +331,37 @@
     grid-template-columns: 120px 1fr;
     gap: 32px;
     padding: 28px 0;
-    border-bottom: 1px solid rgba(236, 239, 244, 0.12);
-    transition: padding-left 0.4s ease;
+    border-bottom: 1px solid rgba(167, 139, 250, 0.1);
+    transition: padding-left 0.4s ease, background 0.3s;
+    position: relative;
   }
+  .exhibitions li::before {
+    content: "";
+    position: absolute;
+    left: -48px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .exhibitions li:nth-child(1)::before { background: var(--coral); }
+  .exhibitions li:nth-child(2)::before { background: var(--teal); }
+  .exhibitions li:nth-child(3)::before { background: var(--amber); }
+  .exhibitions li:nth-child(4)::before { background: var(--lavender); }
+  .exhibitions li:hover::before { opacity: 1; }
   .exhibitions li:hover { padding-left: 12px; }
-  .exhibitions li:first-child { border-top: 1px solid rgba(236, 239, 244, 0.12); }
+  .exhibitions li:first-child { border-top: 1px solid rgba(167, 139, 250, 0.1); }
   .exh-year {
-    font-size: 23px;
+    font-size: 24px;
     letter-spacing: 2px;
-    color: #e6eefa;
     font-weight: 700;
+    background: linear-gradient(135deg, var(--text) 0%, var(--text-dim) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
   .exh-info h3 {
     font-size: 21px;
@@ -215,16 +371,24 @@
   }
   .exh-info p {
     font-size: 16px;
-    color: #cddbec;
+    color: #b8b8d0;
     letter-spacing: 1px;
     line-height: 1.9;
   }
 
   /* ---------- 页脚 ---------- */
   footer {
-    border-top: 1px solid rgba(236, 239, 244, 0.12);
+    border-top: 1px solid rgba(167, 139, 250, 0.1);
     padding: 96px 48px 48px;
     text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  .footer-guitar {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 24px;
+    opacity: 0.8;
   }
   .footer-heading {
     font-size: clamp(28px, 3.5vw, 40px);
@@ -235,14 +399,15 @@
     display: inline-block;
     font-size: 16px;
     letter-spacing: 2px;
-    color: #f7fbff;
+    color: var(--text);
     text-decoration: none;
-    border-bottom: 1px solid #f7fbff;
-    padding-bottom: 2px;
+    border-bottom: 2px solid transparent;
+    border-image: linear-gradient(90deg, var(--coral), var(--lavender)) 1;
+    padding-bottom: 4px;
     margin-bottom: 48px;
     transition: opacity 0.3s;
   }
-  .footer-email:hover { opacity: 0.5; }
+  .footer-email:hover { opacity: 0.7; }
   .social-links {
     display: flex;
     justify-content: center;
@@ -250,17 +415,17 @@
     margin-bottom: 64px;
   }
   .social-links a {
-    color: #d6e2f0;
+    color: #c8c8dc;
     text-decoration: none;
     font-size: 14px;
     letter-spacing: 3px;
     transition: color 0.3s;
   }
-  .social-links a:hover { color: #8fa2bb; }
+  .social-links a:hover { color: var(--lavender); }
   .copyright {
     font-size: 12px;
     letter-spacing: 2px;
-    color: #8fa2bb;
+    color: var(--text-faint);
   }
 
   /* ---------- 响应式 ---------- */
@@ -271,18 +436,41 @@
     .about-wrap { grid-template-columns: 1fr; gap: 40px; }
     .works-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
     .exhibitions li { grid-template-columns: 80px 1fr; gap: 16px; }
+    .hero-guitar.left, .hero-guitar.right { width: 120px; opacity: 0.5; }
   }
   @media (max-width: 520px) {
     .works-grid { grid-template-columns: 1fr; }
     .hero p { letter-spacing: 4px; }
+    .hero-guitar.left, .hero-guitar.right { display: none; }
+    .exhibitions li::before { left: -24px; }
   }
 </style>
 </head>
 <body>
 
+<!-- 漂浮音符 -->
+<div class="music-notes">
+  <span class="note">&#9835;</span>
+  <span class="note">&#9834;</span>
+  <span class="note">&#9836;</span>
+  <span class="note">&#9833;</span>
+  <span class="note">&#9835;</span>
+  <span class="note">&#9834;</span>
+  <span class="note">&#9836;</span>
+  <span class="note">&#9833;</span>
+</div>
+
 <!-- 固定导航栏 -->
 <nav>
-  <div class="nav-logo">陈燕丽</div>
+  <div class="nav-logo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="url(#navGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <defs><linearGradient id="navGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ff6b6b"/><stop offset="100%" stop-color="#a78bfa"/></linearGradient></defs>
+      <path d="M9 18V5l12-2v13"/>
+      <circle cx="6" cy="18" r="3"/>
+      <circle cx="18" cy="16" r="3"/>
+    </svg>
+    陈燕丽
+  </div>
   <ul class="nav-links">
     <li><a href="#about">关于</a></li>
     <li><a href="#works">作品</a></li>
@@ -293,15 +481,123 @@
 
 <!-- 首屏 -->
 <header class="hero">
+  <!-- 左侧卡通吉他 -->
+  <svg class="hero-guitar left" viewBox="0 0 200 320" fill="none">
+    <!-- 吉他身体 -->
+    <ellipse cx="100" cy="200" rx="55" ry="75" fill="#ff6b6b"/>
+    <ellipse cx="100" cy="200" rx="55" ry="75" fill="url(#guitarGrad1)" opacity="0.3"/>
+    <ellipse cx="100" cy="145" rx="38" ry="42" fill="#ff8c42"/>
+    <!-- 音孔 -->
+    <circle cx="100" cy="175" r="18" fill="#0d0d1a"/>
+    <circle cx="100" cy="175" r="14" fill="#1a1a2e"/>
+    <circle cx="100" cy="175" r="6" fill="#4ecdc4"/>
+    <!-- 琴桥 -->
+    <rect x="75" y="235" width="50" height="10" rx="3" fill="#2d2d44"/>
+    <rect x="78" y="237" width="44" height="6" rx="2" fill="#fbbf24"/>
+    <!-- 琴颈 -->
+    <rect x="85" y="30" width="30" height="120" rx="4" fill="#8b5a2b"/>
+    <rect x="87" y="32" width="26" height="116" rx="3" fill="#a0522d"/>
+    <!-- 品格线 -->
+    <line x1="87" y1="55" x2="113" y2="55" stroke="#d4a574" stroke-width="1.5"/>
+    <line x1="87" y1="78" x2="113" y2="78" stroke="#d4a574" stroke-width="1.5"/>
+    <line x1="87" y1="100" x2="113" y2="100" stroke="#d4a574" stroke-width="1.5"/>
+    <line x1="87" y1="120" x2="113" y2="120" stroke="#d4a574" stroke-width="1.5"/>
+    <!-- 琴头 -->
+    <rect x="80" y="5" width="40" height="30" rx="6" fill="#6b4c93"/>
+    <circle cx="90" cy="15" r="4" fill="#f0f0f5"/>
+    <circle cx="110" cy="15" r="4" fill="#f0f0f5"/>
+    <circle cx="90" cy="28" r="4" fill="#f0f0f5"/>
+    <circle cx="110" cy="28" r="4" fill="#f0f0f5"/>
+    <!-- 琴弦 -->
+    <line x1="92" y1="35" x2="92" y2="240" stroke="#e8e8e8" stroke-width="1"/>
+    <line x1="97" y1="35" x2="97" y2="240" stroke="#e8e8e8" stroke-width="1"/>
+    <line x1="103" y1="35" x2="103" y2="240" stroke="#e8e8e8" stroke-width="1"/>
+    <line x1="108" y1="35" x2="108" y2="240" stroke="#e8e8e8" stroke-width="1"/>
+    <!-- 装饰星星 -->
+    <path d="M60 80 L63 90 L73 90 L65 97 L68 107 L60 100 L52 107 L55 97 L47 90 L57 90 Z" fill="#fbbf24"/>
+    <path d="M140 120 L142 127 L149 127 L143 132 L146 139 L140 134 L134 139 L137 132 L131 127 L138 127 Z" fill="#4ecdc4"/>
+    <path d="M150 60 L152 126 L156 126 L158 60 Z" fill="#a78bfa" transform="rotate(15 150 90)"/>
+    <defs>
+      <linearGradient id="guitarGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#fff" stop-opacity="0.3"/>
+        <stop offset="100%" stop-color="#000" stop-opacity="0.2"/>
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <!-- 右侧卡通吉他 -->
+  <svg class="hero-guitar right" viewBox="0 0 200 320" fill="none">
+    <!-- 吉他身体 -->
+    <ellipse cx="100" cy="200" rx="55" ry="75" fill="#4ecdc4"/>
+    <ellipse cx="100" cy="200" rx="55" ry="75" fill="url(#guitarGrad2)" opacity="0.3"/>
+    <ellipse cx="100" cy="145" rx="38" ry="42" fill="#45b7aa"/>
+    <!-- 音孔 -->
+    <circle cx="100" cy="175" r="18" fill="#0d0d1a"/>
+    <circle cx="100" cy="175" r="14" fill="#1a1a2e"/>
+    <circle cx="100" cy="175" r="6" fill="#ff6b6b"/>
+    <!-- 琴桥 -->
+    <rect x="75" y="235" width="50" height="10" rx="3" fill="#2d2d44"/>
+    <rect x="78" y="237" width="44" height="6" rx="2" fill="#f472b6"/>
+    <!-- 琴颈 -->
+    <rect x="85" y="30" width="30" height="120" rx="4" fill="#8b5a2b"/>
+    <rect x="87" y="32" width="26" height="116" rx="3" fill="#a0522d"/>
+    <!-- 品格线 -->
+    <line x1="87" y1="55" x2="113" y2="55" stroke="#d4a574" stroke-width="1.5"/>
+    <line x1="87" y1="78" x2="113" y2="78" stroke="#d4a574" stroke-width="1.5"/>
+    <line x1="87" y1="100" x2="113" y2="100" stroke="#d4a574" stroke-width="1.5"/>
+    <line x1="87" y1="120" x2="113" y2="120" stroke="#d4a574" stroke-width="1.5"/>
+    <!-- 琴头 -->
+    <rect x="80" y="5" width="40" height="30" rx="6" fill="#ff6b6b"/>
+    <circle cx="90" cy="15" r="4" fill="#f0f0f5"/>
+    <circle cx="110" cy="15" r="4" fill="#f0f0f5"/>
+    <circle cx="90" cy="28" r="4" fill="#f0f0f5"/>
+    <circle cx="110" cy="28" r="4" fill="#f0f0f5"/>
+    <!-- 琴弦 -->
+    <line x1="92" y1="35" x2="92" y2="240" stroke="#e8e8e8" stroke-width="1"/>
+    <line x1="97" y1="35" x2="97" y2="240" stroke="#e8e8e8" stroke-width="1"/>
+    <line x1="103" y1="35" x2="103" y2="240" stroke="#e8e8e8" stroke-width="1"/>
+    <line x1="108" y1="35" x2="108" y2="240" stroke="#e8e8e8" stroke-width="1"/>
+    <!-- 装饰音符 -->
+    <text x="55" y="100" font-size="24" fill="#fbbf24">&#9835;</text>
+    <text x="135" y="90" font-size="20" fill="#ff6b6b">&#9834;</text>
+    <text x="145" y="140" font-size="18" fill="#a78bfa">&#9836;</text>
+    <defs>
+      <linearGradient id="guitarGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#fff" stop-opacity="0.3"/>
+        <stop offset="100%" stop-color="#000" stop-opacity="0.2"/>
+      </linearGradient>
+    </defs>
+  </svg>
+
   <h1>陈燕丽</h1>
   <p>个人艺术 · 数字影像</p>
+
+  <!-- 旋转黑胶 -->
+  <svg class="vinyl" viewBox="0 0 60 60" fill="none">
+    <circle cx="30" cy="30" r="28" fill="#1a1a2e" stroke="#a78bfa" stroke-width="1.5"/>
+    <circle cx="30" cy="30" r="22" fill="#0d0d1a"/>
+    <circle cx="30" cy="30" r="16" fill="none" stroke="#a78bfa" stroke-width="0.5" opacity="0.4"/>
+    <circle cx="30" cy="30" r="12" fill="none" stroke="#ff6b6b" stroke-width="0.5" opacity="0.4"/>
+    <circle cx="30" cy="30" r="8" fill="none" stroke="#4ecdc4" stroke-width="0.5" opacity="0.4"/>
+    <circle cx="30" cy="30" r="4" fill="#fbbf24"/>
+    <circle cx="30" cy="30" r="2" fill="#0d0d1a"/>
+    <line x1="30" y1="30" x2="30" y2="8" stroke="#a78bfa" stroke-width="1" opacity="0.3"/>
+    <line x1="30" y1="30" x2="52" y2="30" stroke="#ff6b6b" stroke-width="1" opacity="0.2"/>
+  </svg>
+
   <span class="scroll-hint">向下滚动</span>
 </header>
 
 <!-- 关于我 -->
 <section id="about">
   <p class="section-title">ABOUT</p>
-  <h2 class="section-heading">关于我</h2>
+  <h2 class="section-heading">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+      <circle cx="12" cy="7" r="4"/>
+    </svg>
+    关于我
+  </h2>
   <div class="about-wrap">
     <div class="about-portrait">
       <img src="photos/微信图片_20261021231436_32_204_small.jpg" alt="陈燕丽肖像">
@@ -311,7 +607,14 @@
       <p>西北的辽阔天地是我最早的美学启蒙：黄土高原的沟壑、敦煌壁画的斑斓、大漠落日的光影，都悄悄刻进了我的眼睛里。而我和设计的正式缘分始于速写本，从第一次拿起铅笔对着静物发呆开始，我就迷上了用线条和光影记录世界的感觉：一扇窗透进来的午后阳光、老巷子里斑驳的墙面、咖啡馆里桌椅之间刚刚好的距离……这些看似普通的场景，在我眼里都藏着关于"人如何生活"的答案。</p>
       <p>现在我正系统地学习环境设计，从素描基础到空间构成，每一门课都让我兴奋不已。我喜欢泡画室，也喜欢拉着朋友去看展、逛老建筑；我相信好的设计不是冷冰冰的图纸，而是能让人走进去就忍不住微笑的温度。</p>
       <p>未来的路还很长，我希望保持这份好奇与热爱，慢慢成长为一个能为他人创造美好生活空间的设计师。如果你也喜欢艺术与设计，欢迎和我聊聊，我很乐意认识每一位路过的朋友。</p>
-      <p class="signature">—— 陈燕丽</p>
+      <p class="signature">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4ecdc4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 18V5l12-2v13"/>
+          <circle cx="6" cy="18" r="3"/>
+          <circle cx="18" cy="16" r="3"/>
+        </svg>
+        —— 陈燕丽
+      </p>
     </div>
   </div>
 </section>
@@ -319,7 +622,14 @@
 <!-- 作品画廊 -->
 <section id="works">
   <p class="section-title">WORKS</p>
-  <h2 class="section-heading">作品画廊</h2>
+  <h2 class="section-heading">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#4ecdc4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+      <circle cx="8.5" cy="8.5" r="1.5"/>
+      <polyline points="21 15 16 10 5 21"/>
+    </svg>
+    作品画廊
+  </h2>
   <div class="works-grid">
     <div class="work-item">
       <div class="work-img">
@@ -381,7 +691,13 @@
 <!-- 成长历程 -->
 <section id="exhibitions">
   <p class="section-title">JOURNEY</p>
-  <h2 class="section-heading">成长历程</h2>
+  <h2 class="section-heading">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <polyline points="12 6 12 12 16 14"/>
+    </svg>
+    成长历程
+  </h2>
   <ul class="exhibitions">
     <li>
       <span class="exh-year">2016</span>
@@ -416,6 +732,30 @@
 
 <!-- 页脚 -->
 <footer id="contact">
+  <svg class="footer-guitar" viewBox="0 0 200 320" fill="none">
+    <ellipse cx="100" cy="200" rx="55" ry="75" fill="#a78bfa"/>
+    <ellipse cx="100" cy="145" rx="38" ry="42" fill="#8b5cf6"/>
+    <circle cx="100" cy="175" r="18" fill="#0d0d1a"/>
+    <circle cx="100" cy="175" r="14" fill="#1a1a2e"/>
+    <circle cx="100" cy="175" r="6" fill="#fbbf24"/>
+    <rect x="75" y="235" width="50" height="10" rx="3" fill="#2d2d44"/>
+    <rect x="78" y="237" width="44" height="6" rx="2" fill="#ff6b6b"/>
+    <rect x="85" y="30" width="30" height="120" rx="4" fill="#8b5a2b"/>
+    <rect x="87" y="32" width="26" height="116" rx="3" fill="#a0522d"/>
+    <line x1="87" y1="55" x2="113" y2="55" stroke="#d4a574" stroke-width="1.5"/>
+    <line x1="87" y1="78" x2="113" y2="78" stroke="#d4a574" stroke-width="1.5"/>
+    <line x1="87" y1="100" x2="113" y2="100" stroke="#d4a574" stroke-width="1.5"/>
+    <line x1="87" y1="120" x2="113" y2="120" stroke="#d4a574" stroke-width="1.5"/>
+    <rect x="80" y="5" width="40" height="30" rx="6" fill="#ff6b6b"/>
+    <circle cx="90" cy="15" r="4" fill="#f0f0f5"/>
+    <circle cx="110" cy="15" r="4" fill="#f0f0f5"/>
+    <circle cx="90" cy="28" r="4" fill="#f0f0f5"/>
+    <circle cx="110" cy="28" r="4" fill="#f0f0f5"/>
+    <line x1="92" y1="35" x2="92" y2="240" stroke="#e8e8e8" stroke-width="1"/>
+    <line x1="97" y1="35" x2="97" y2="240" stroke="#e8e8e8" stroke-width="1"/>
+    <line x1="103" y1="35" x2="103" y2="240" stroke="#e8e8e8" stroke-width="1"/>
+    <line x1="108" y1="35" x2="108" y2="240" stroke="#e8e8e8" stroke-width="1"/>
+  </svg>
   <h2 class="footer-heading">与我联系</h2>
   <a class="footer-email" href="mailto:cyl2007903@qq.com">cyl2007903@qq.com</a>
   <div class="social-links">
