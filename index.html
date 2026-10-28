@@ -3,122 +3,131 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>陈燕丽 — 猫爪与雪花的小宇宙</title>
+<title>陈燕丽 — 旅行手账</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   html { scroll-behavior: smooth; }
 
   :root {
-    --text: #fdf6f9;
-    --text-dim: #b9b3c7;
-    --text-faint: #7d7590;
-    --pink: #ffb3c6;
-    --lavender: #c9b6ff;
-    --mint: #a8e6cf;
-    --cream: #ffe8d6;
-    --yellow: #ffd97d;
+    --ink: #4a4039;
+    --ink-dim: #8a7d72;
+    --ink-faint: #b5a99d;
+    --coral: #ff8fa3;
+    --mint: #7fd8be;
+    --lavender: #b8a7e8;
+    --sunny: #ffc94d;
+    --sky: #7ec8e3;
+    --paper: #fffdf8;
   }
 
   body {
-    background:
-      radial-gradient(ellipse 70% 45% at 15% 0%, rgba(201, 182, 255, 0.14) 0%, transparent 55%),
-      radial-gradient(ellipse 55% 40% at 85% 18%, rgba(255, 179, 198, 0.10) 0%, transparent 55%),
-      radial-gradient(ellipse 60% 40% at 50% 85%, rgba(168, 230, 207, 0.08) 0%, transparent 55%),
-      radial-gradient(ellipse 45% 30% at 8% 60%, rgba(255, 217, 125, 0.05) 0%, transparent 50%),
-      linear-gradient(180deg, #161427 0%, #12101f 40%, #0d0c17 100%);
+    background-color: #fff8f0;
+    background-image:
+      radial-gradient(circle, #ffd6e0 6px, transparent 7px),
+      radial-gradient(circle, #c9ecdc 5px, transparent 6px),
+      radial-gradient(circle, #ddd5f5 5px, transparent 6px),
+      radial-gradient(circle, #ffe9b8 5px, transparent 6px);
+    background-size: 130px 130px;
+    background-position: 0 0, 65px 65px, 32px 96px, 96px 32px;
     background-attachment: fixed;
     min-height: 100vh;
-    color: var(--text);
-    font-family: "Songti SC", "STSong", "SimSun", "Noto Serif SC", "Source Han Serif SC", serif;
+    color: var(--ink);
+    font-family: "Yuanti SC", "YouYuan", "幼圆", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
     line-height: 1.8;
     -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
+    overflow: hidden;
+    animation: unlockScroll 0s 7.9s forwards;
   }
+  @keyframes unlockScroll { to { overflow: auto; } }
 
-  /* ---------- 开场帘幕 ---------- */
-  #intro {
+  /* ---------- 夜空舞台 ---------- */
+  .stage-sky {
     position: fixed;
     inset: 0;
-    z-index: 999;
-    background: linear-gradient(180deg, #1c1933 0%, #141222 100%);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 28px;
-    border-radius: 0 0 50% 50% / 0 0 7% 7%;
-    animation: introLift 0.9s cubic-bezier(0.7, 0, 0.3, 1) 2.5s forwards;
-  }
-  @keyframes introLift {
-    to { transform: translateY(-103%); visibility: hidden; }
-  }
-  .intro-paw-wrap { position: relative; }
-  .intro-paw {
-    width: 110px;
-    color: var(--pink);
-    filter: drop-shadow(0 10px 30px rgba(255, 179, 198, 0.35));
-    animation: pawStamp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s both;
-  }
-  @keyframes pawStamp {
-    0%   { transform: scale(2.6) rotate(-28deg); opacity: 0; }
-    60%  { transform: scale(0.9) rotate(5deg); opacity: 1; }
-    80%  { transform: scale(1.08) rotate(-2deg); }
-    100% { transform: scale(1) rotate(0deg); opacity: 1; }
-  }
-  .sparkle {
-    position: absolute;
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    opacity: 0;
-    animation: spark 0.55s ease-out 1.05s both;
-  }
-  .sparkle:nth-child(2) { background: var(--yellow); top: -14px; left: 8px; }
-  .sparkle:nth-child(3) { background: var(--lavender); top: -20px; right: 4px; animation-delay: 1.12s; }
-  .sparkle:nth-child(4) { background: var(--mint); bottom: -10px; left: -16px; animation-delay: 1.18s; }
-  .sparkle:nth-child(5) { background: var(--pink); bottom: -4px; right: -18px; animation-delay: 1.24s; }
-  .sparkle:nth-child(6) { background: var(--cream); top: 50%; left: -30px; animation-delay: 1.3s; }
-  .sparkle:nth-child(7) { background: var(--yellow); top: 40%; right: -32px; animation-delay: 1.36s; }
-  @keyframes spark {
-    0%   { transform: scale(0); opacity: 0; }
-    55%  { transform: scale(1.4); opacity: 1; }
-    100% { transform: scale(0.2) translateY(-10px); opacity: 0; }
-  }
-  .intro-text {
-    font-size: 14px;
-    letter-spacing: 6px;
-    color: var(--text-dim);
-    opacity: 0;
-    animation: introText 0.6s ease 1.5s both;
-  }
-  .intro-text::after {
-    content: "";
-    animation: dots 1.2s steps(4) 1.5s infinite;
-  }
-  @keyframes introText { to { opacity: 1; } }
-  @keyframes dots {
-    0% { content: ""; } 25% { content: "·"; }
-    50% { content: "··"; } 75% { content: "···"; }
-  }
-
-  /* ---------- 飘雪 ---------- */
-  .flake {
-    position: fixed;
-    top: -6%;
-    z-index: 40;
+    z-index: 1;
+    background: linear-gradient(180deg, #2b2a4e 0%, #1e1d38 55%, #171628 100%);
+    animation: skyOut 1s ease 6.7s forwards;
     pointer-events: none;
-    user-select: none;
-    animation-name: fallSway;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
   }
-  @keyframes fallSway {
-    0%   { transform: translate(0, -8vh) rotate(0deg); }
-    25%  { transform: translate(16px, 22vh) rotate(90deg); }
-    50%  { transform: translate(-12px, 52vh) rotate(180deg); }
-    75%  { transform: translate(14px, 82vh) rotate(270deg); }
-    100% { transform: translate(0, 112vh) rotate(360deg); }
+  @keyframes skyOut { to { opacity: 0; visibility: hidden; } }
+  .star {
+    position: absolute;
+    border-radius: 50%;
+    background: #fff;
+    animation: twinkle 2.2s ease-in-out infinite alternate;
   }
+  @keyframes twinkle { from { opacity: 0.25; transform: scale(0.8); } to { opacity: 1; transform: scale(1.25); } }
+
+  /* ---------- 幕布 ---------- */
+  .curtain {
+    position: fixed;
+    top: 0; bottom: 0;
+    width: 42vw;
+    z-index: 60;
+    background-color: #ff8fa3;
+    background-image:
+      radial-gradient(circle, rgba(255,255,255,0.30) 3.5px, transparent 4.5px),
+      repeating-linear-gradient(90deg, rgba(0,0,0,0.10) 0 12px, rgba(255,255,255,0.07) 12px 26px, rgba(0,0,0,0.12) 26px 40px);
+    background-size: 36px 36px, auto;
+    box-shadow: inset 0 -30px 50px rgba(0,0,0,0.18);
+    pointer-events: none;
+  }
+  .curtain.left {
+    left: 0;
+    animation: openL 1.15s cubic-bezier(0.7, 0, 0.3, 1) 6.7s forwards;
+  }
+  .curtain.right {
+    right: 0;
+    animation: openR 1.15s cubic-bezier(0.7, 0, 0.3, 1) 6.7s forwards;
+  }
+  .curtain.left::after {
+    content: "";
+    position: absolute; top: 0; bottom: 0; right: -13px;
+    width: 26px;
+    background-image: radial-gradient(circle at 12px 15px, #ff8fa3 14px, transparent 15px);
+    background-size: 24px 30px;
+    background-repeat: repeat-y;
+  }
+  .curtain.right::after {
+    content: "";
+    position: absolute; top: 0; bottom: 0; left: -13px;
+    width: 24px;
+    background-image: radial-gradient(circle at 12px 15px, #ff8fa3 14px, transparent 15px);
+    background-size: 24px 30px;
+    background-repeat: repeat-y;
+  }
+  @keyframes openL { to { transform: translateX(-106%); visibility: hidden; } }
+  @keyframes openR { to { transform: translateX(106%); visibility: hidden; } }
+
+  .valance {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 80px;
+    z-index: 61;
+    background-color: #ff7d96;
+    background-image:
+      radial-gradient(circle, rgba(255,255,255,0.28) 3px, transparent 4px),
+      repeating-linear-gradient(90deg, rgba(0,0,0,0.08) 0 14px, rgba(255,255,255,0.05) 14px 28px);
+    background-size: 30px 30px, auto;
+    pointer-events: none;
+    animation: valUp 1.05s cubic-bezier(0.7, 0, 0.3, 1) 6.7s forwards;
+  }
+  .valance::before {
+    content: "";
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 9px;
+    background: linear-gradient(180deg, #ffd166, #f0b429);
+  }
+  .valance::after {
+    content: "";
+    position: absolute; top: 100%; left: 0; right: 0;
+    height: 22px;
+    background-image: radial-gradient(circle at 15px 0, #ff7d96 14px, transparent 15px);
+    background-size: 30px 22px;
+    background-repeat: repeat-x;
+  }
+  @keyframes valUp { to { transform: translateY(-115%); visibility: hidden; } }
 
   /* ---------- 导航栏 ---------- */
   nav {
@@ -128,46 +137,39 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 48px;
-    background: rgba(18, 16, 31, 0.6);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-bottom: 1px solid rgba(201, 182, 255, 0.12);
+    padding: 16px 40px;
+    background: rgba(255, 248, 240, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 2px dashed rgba(255, 143, 163, 0.35);
+    opacity: 0;
+    animation: navDown 0.7s ease 7.4s forwards;
   }
+  @keyframes navDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
   .nav-logo {
     font-size: 18px;
-    letter-spacing: 4px;
+    letter-spacing: 3px;
     font-weight: 700;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
+    color: var(--ink);
   }
-  .nav-logo svg {
-    width: 24px; height: 24px;
-    color: var(--pink);
-    animation: pawWiggle 3.5s ease-in-out infinite;
-  }
-  @keyframes pawWiggle {
-    0%, 88%, 100% { transform: rotate(0deg); }
-    92% { transform: rotate(-14deg); }
-    96% { transform: rotate(10deg); }
-  }
-  .nav-links { display: flex; gap: 12px; list-style: none; }
+  .nav-logo .fp-emoji { display: inline-block; animation: hop 1.6s ease-in-out infinite; }
+  @keyframes hop { 0%,100% { transform: translateY(0) rotate(-8deg); } 50% { transform: translateY(-4px) rotate(6deg); } }
+  .nav-links { display: flex; gap: 10px; list-style: none; }
   .nav-links a {
-    color: var(--text);
+    color: var(--ink);
     text-decoration: none;
     font-size: 14px;
-    letter-spacing: 3px;
-    padding: 6px 14px;
+    letter-spacing: 2px;
+    padding: 6px 16px;
     border-radius: 999px;
-    transition: background 0.3s, color 0.3s;
+    transition: background 0.3s, color 0.3s, transform 0.3s;
   }
-  .nav-links a:hover {
-    background: rgba(201, 182, 255, 0.14);
-    color: var(--lavender);
-  }
+  .nav-links a:hover { background: var(--coral); color: #fff; transform: translateY(-2px); }
 
-  /* ---------- 首屏 ---------- */
+  /* ---------- 首屏舞台 ---------- */
   .hero {
     min-height: 100vh;
     display: flex;
@@ -175,593 +177,626 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 0 24px;
+    padding: 110px 24px 40px;
     position: relative;
-    z-index: 1;
+    z-index: 2;
   }
-  .hero-name {
-    font-size: clamp(72px, 15vw, 190px);
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    line-height: 1.1;
+  .hero-stage {
     position: relative;
-    background: linear-gradient(135deg, var(--text) 10%, var(--pink) 55%, var(--lavender) 95%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .hero-name span {
-    display: inline-block;
-    opacity: 0;
-    animation: letterPop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-  }
-  .hero-name span:nth-child(1) { animation-delay: 3.0s; }
-  .hero-name span:nth-child(2) { animation-delay: 3.2s; }
-  .hero-name span:nth-child(3) { animation-delay: 3.4s; }
-  @keyframes letterPop {
-    0%   { opacity: 0; transform: translateY(70px) scale(0.3) rotate(-14deg); }
-    60%  { opacity: 1; transform: translateY(-10px) scale(1.16) rotate(5deg); }
-    100% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
-  }
-  .hero-name:hover span { animation: letterDance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
-  .hero-name:hover span:nth-child(2) { animation-delay: 0.08s; }
-  .hero-name:hover span:nth-child(3) { animation-delay: 0.16s; }
-  @keyframes letterDance {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    40% { transform: translateY(-18px) rotate(-6deg); }
-    70% { transform: translateY(4px) rotate(3deg); }
-  }
-  .name-paw {
-    position: absolute;
-    right: -18px;
-    top: -30px;
-    width: clamp(34px, 5vw, 54px);
-    color: var(--yellow);
-    opacity: 0;
-    animation: pawStamp 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) 3.75s both;
-    filter: drop-shadow(0 4px 14px rgba(255, 217, 125, 0.45));
-  }
-  .hero p {
-    margin-top: 34px;
-    font-size: clamp(14px, 1.6vw, 18px);
-    letter-spacing: 8px;
-    color: var(--text-dim);
-    opacity: 0;
-    animation: fadeUp 0.9s ease 4.1s both;
-  }
-  .hero p::before, .hero p::after {
-    content: "❄";
-    font-size: 0.75em;
-    margin: 0 14px;
-    color: var(--lavender);
-    opacity: 0.8;
-  }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  /* 探头的猫咪 */
-  .peek-cat {
-    position: absolute;
-    bottom: -4px;
-    left: 50%;
-    width: clamp(120px, 16vw, 170px);
-    transform: translate(-50%, 105%);
-    animation: peekUp 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) 4.4s both;
-    pointer-events: none;
-  }
-  @keyframes peekUp {
-    to { transform: translate(-50%, 50%); }
-  }
-  .peek-cat .eye {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: blink 4.6s ease-in-out 5.6s infinite;
-  }
-  @keyframes blink {
-    0%, 92%, 100% { transform: scaleY(1); }
-    95.5% { transform: scaleY(0.08); }
-  }
-
-  .hero .scroll-hint {
-    position: absolute;
-    bottom: 34px;
-    right: 48px;
-    font-size: 12px;
-    letter-spacing: 4px;
-    color: var(--text-faint);
-    writing-mode: vertical-rl;
-    opacity: 0;
-    animation: fadeUp 0.9s ease 4.8s both;
-  }
-
-  /* ---------- 猫爪步道分隔 ---------- */
-  .paw-trail {
+    width: clamp(320px, 62vw, 620px);
+    height: clamp(260px, 42vh, 380px);
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: clamp(30px, 6vw, 64px);
-    padding: 10px 0 0;
-    opacity: 0.55;
   }
-  .paw-trail svg {
-    width: 26px; height: 26px;
-    animation: trailBob 3s ease-in-out infinite alternate;
+
+  /* 地球场景 */
+  .earth-scene {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: earthPop 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s both,
+               earthZoom 1.4s cubic-bezier(0.6, 0, 0.8, 0.4) 3.2s forwards;
   }
-  .paw-trail svg:nth-child(1) { color: var(--pink); transform: rotate(-24deg); }
-  .paw-trail svg:nth-child(2) { color: var(--lavender); transform: rotate(16deg) translateY(-8px); animation-delay: 0.4s; }
-  .paw-trail svg:nth-child(3) { color: var(--mint); transform: rotate(-14deg); animation-delay: 0.8s; }
-  .paw-trail svg:nth-child(4) { color: var(--yellow); transform: rotate(22deg); animation-delay: 1.2s; }
-  @keyframes trailBob {
-    from { margin-top: 0; } to { margin-top: -8px; }
+  @keyframes earthPop {
+    from { transform: scale(0.15); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
   }
-  .paw-trail svg { animation-name: trailBob; }
+  @keyframes earthZoom {
+    from { transform: scale(1); opacity: 1; }
+    to { transform: scale(2.6) translateY(10%); opacity: 0; }
+  }
+  .earth { width: clamp(190px, 30vh, 250px); filter: drop-shadow(0 18px 40px rgba(0,0,0,0.45)); }
+  .cloud {
+    position: absolute;
+    background: #fff;
+    border-radius: 999px;
+    opacity: 0.9;
+    animation: cloudDrift 9s ease-in-out infinite alternate;
+  }
+  .cloud::before, .cloud::after {
+    content: "";
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+  }
+  .cloud.c1 { width: 58px; height: 18px; top: 18%; left: 12%; }
+  .cloud.c1::before { width: 24px; height: 24px; top: -13px; left: 9px; }
+  .cloud.c1::after { width: 17px; height: 17px; top: -9px; left: 29px; }
+  .cloud.c2 { width: 46px; height: 15px; top: 30%; right: 12%; animation-delay: 1.6s; }
+  .cloud.c2::before { width: 19px; height: 19px; top: -10px; left: 7px; }
+  .cloud.c2::after { width: 14px; height: 14px; top: -7px; left: 21px; }
+  .cloud.c3 { width: 40px; height: 13px; bottom: 20%; left: 18%; animation-delay: 3s; opacity: 0.7; }
+  .cloud.c3::before { width: 16px; height: 16px; top: -8px; left: 6px; }
+  .cloud.c3::after { width: 12px; height: 12px; top: -6px; left: 18px; }
+  @keyframes cloudDrift { from { transform: translateX(0); } to { transform: translateX(34px); } }
+
+  /* 小女孩 */
+  .girl {
+    position: absolute;
+    left: 50%;
+    top: calc(50% - clamp(190px, 30vh, 250px) / 2 - 64px);
+    transform: translateX(-50%);
+    width: 58px;
+    z-index: 3;
+  }
+  .girl-inner { animation: girlBob 0.5s ease-in-out infinite alternate; }
+  @keyframes girlBob { from { transform: translateY(0); } to { transform: translateY(-5px); } }
+  .leg { transform-box: fill-box; transform-origin: 50% 0%; }
+  .leg-l { animation: legSwing 0.5s ease-in-out infinite alternate; }
+  .leg-r { animation: legSwing 0.5s ease-in-out infinite alternate-reverse; }
+  @keyframes legSwing { from { transform: rotate(20deg); } to { transform: rotate(-20deg); } }
+  .arm-wave { transform-box: fill-box; transform-origin: 10% 90%; animation: wave 1.1s ease-in-out infinite; }
+  @keyframes wave { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(-24deg); } }
+
+  /* 中国地图场景 */
+  .map-scene {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transform: scale(0.25);
+    animation: mapZoom 1.5s cubic-bezier(0.34, 1.3, 0.5, 1) 3.5s forwards;
+  }
+  @keyframes mapZoom {
+    from { opacity: 0; transform: scale(0.25); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .china-map { width: clamp(300px, 56vw, 540px); filter: drop-shadow(0 16px 34px rgba(255, 143, 163, 0.35)); }
+  .fp { opacity: 0; transform-box: fill-box; transform-origin: center; animation: fpPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+  @keyframes fpPop { from { opacity: 0; transform: scale(0.15); } to { opacity: 1; transform: scale(1); } }
+  .fp-label {
+    font-size: 15px;
+    font-weight: 700;
+    fill: var(--ink);
+    opacity: 0;
+    animation: labelUp 0.5s ease both;
+  }
+  @keyframes fpLabelUp { from { opacity: 0; } to { opacity: 1; } }
+  .fp-label { animation-name: fpLabelUp; }
+  .fp-dot { opacity: 0; animation: fpLabelUp 0.4s ease both; }
+
+  /* 首屏标题 */
+  .hero-title {
+    margin-top: 30px;
+    font-size: clamp(44px, 9vw, 108px);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+  .hero-title span {
+    display: inline-block;
+    opacity: 0;
+    animation: letterPop 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  .hero-title span:nth-child(1) { animation-delay: 7.15s; color: var(--coral); }
+  .hero-title span:nth-child(2) { animation-delay: 7.3s; color: var(--ink); }
+  .hero-title span:nth-child(3) { animation-delay: 7.45s; color: var(--lavender); }
+  @keyframes letterPop {
+    0% { opacity: 0; transform: translateY(56px) scale(0.3) rotate(-12deg); }
+    60% { opacity: 1; transform: translateY(-8px) scale(1.14) rotate(4deg); }
+    100% { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
+  }
+  .hero-sub {
+    margin-top: 20px;
+    font-size: clamp(14px, 1.8vw, 19px);
+    letter-spacing: 6px;
+    color: var(--ink-dim);
+    opacity: 0;
+    animation: fadeUp 0.9s ease 7.7s both;
+  }
+  .hero-sub .fp-emoji { margin: 0 8px; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+  .scroll-hint {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 13px;
+    letter-spacing: 4px;
+    color: var(--ink-faint);
+    opacity: 0;
+    animation: fadeUp 0.9s ease 7.9s both, hop 1.8s ease-in-out 8.2s infinite;
+  }
 
   /* ---------- 通用板块 ---------- */
   section {
-    max-width: 1200px;
+    max-width: 1080px;
     margin: 0 auto;
-    padding: 110px 48px;
+    padding: 100px 40px 40px;
     position: relative;
-    z-index: 1;
+    z-index: 2;
   }
-  .section-title {
+  .section-tag {
     font-size: 13px;
-    letter-spacing: 8px;
-    color: var(--text-dim);
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .section-title::before {
-    content: "";
-    width: 26px; height: 2px;
-    border-radius: 2px;
-    background: linear-gradient(90deg, var(--pink), var(--lavender));
+    letter-spacing: 6px;
+    color: var(--ink-faint);
+    margin-bottom: 6px;
   }
   .section-heading {
-    font-size: clamp(32px, 4vw, 48px);
-    letter-spacing: 6px;
-    margin-bottom: 60px;
+    font-size: clamp(30px, 4.5vw, 44px);
+    letter-spacing: 5px;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  .squiggle {
+    display: block;
+    width: 130px;
+    height: 12px;
+    margin-bottom: 48px;
   }
 
   /* ---------- 关于我 ---------- */
   .about-wrap {
     display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: 72px;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 60px;
     align-items: center;
   }
-  .about-portrait {
-    overflow: hidden;
-    background: #1c1a2e;
-    border-radius: 26px;
-    border: 2px solid rgba(255, 179, 198, 0.18);
+  .polaroid {
+    background: #fff;
+    padding: 16px 16px 54px;
+    border-radius: 8px;
+    box-shadow: 0 14px 34px rgba(74, 64, 57, 0.16);
+    transform: rotate(-2.5deg);
     position: relative;
-    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s;
+    transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-  .about-portrait:hover {
-    transform: rotate(-1.5deg) scale(1.01);
-    border-color: rgba(255, 179, 198, 0.4);
+  .polaroid:hover { transform: rotate(0deg) scale(1.03); }
+  .polaroid::before, .polaroid::after {
+    content: "";
+    position: absolute;
+    width: 92px; height: 26px;
+    background: rgba(127, 216, 190, 0.55);
+    top: -13px;
+    border-radius: 3px;
   }
-  .about-portrait img {
-    width: 100%;
-    display: block;
-    filter: saturate(105%);
-    transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  .polaroid::before { left: -20px; transform: rotate(-38deg); }
+  .polaroid::after { right: -20px; transform: rotate(38deg); background: rgba(255, 143, 163, 0.5); }
+  .polaroid img { width: 100%; display: block; border-radius: 4px; }
+  .polaroid .cap {
+    position: absolute;
+    bottom: 14px; left: 0; right: 0;
+    text-align: center;
+    font-size: 14px;
+    letter-spacing: 3px;
+    color: var(--ink-dim);
   }
-  .about-portrait:hover img { transform: scale(1.05); }
   .about-text p {
-    font-size: 16px;
-    margin-bottom: 24px;
-    color: #cdc7dd;
+    font-size: 15.5px;
+    margin-bottom: 20px;
+    color: #6b6055;
     text-align: justify;
   }
   .about-text .signature {
-    margin-top: 8px;
-    font-size: 20px;
-    letter-spacing: 4px;
-    color: var(--text);
+    margin-top: 6px;
+    font-size: 19px;
+    letter-spacing: 3px;
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  /* ---------- 足迹邮票卡 ---------- */
+  .stamps {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 34px;
+  }
+  .stamp {
+    background: var(--paper);
+    border: 2.5px solid var(--coral);
+    border-radius: 18px;
+    padding: 28px 28px 24px;
+    position: relative;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s;
+  }
+  .stamp::after {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border: 2px dashed rgba(74, 64, 57, 0.18);
+    border-radius: 12px;
+    pointer-events: none;
+  }
+  .stamp:nth-child(1) { transform: rotate(-1.6deg); border-color: var(--coral); }
+  .stamp:nth-child(2) { transform: rotate(1.4deg); border-color: var(--mint); }
+  .stamp:nth-child(3) { transform: rotate(1.8deg); border-color: var(--lavender); }
+  .stamp:nth-child(4) { transform: rotate(-1.5deg); border-color: var(--sunny); }
+  .stamp:hover { transform: rotate(0deg) translateY(-6px); box-shadow: 0 16px 34px rgba(74, 64, 57, 0.14); }
+  .stamp .place {
+    font-size: 23px;
+    font-weight: 700;
+    letter-spacing: 2px;
     display: flex;
     align-items: center;
     gap: 10px;
   }
-  .about-text .signature svg { width: 22px; height: 22px; color: var(--pink); }
+  .stamp .emoji { font-size: 26px; }
+  .stamp .date {
+    display: inline-block;
+    margin: 12px 0 10px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: #fff;
+    background: var(--ink);
+    padding: 3px 14px;
+    border-radius: 999px;
+  }
+  .stamp:nth-child(1) .date { background: var(--coral); }
+  .stamp:nth-child(2) .date { background: var(--mint); }
+  .stamp:nth-child(3) .date { background: var(--lavender); }
+  .stamp:nth-child(4) .date { background: var(--sunny); }
+  .stamp p { font-size: 15px; color: #6b6055; }
 
-  /* ---------- 作品画廊 ---------- */
-  .works-grid {
+  /* ---------- 心得手账卡 ---------- */
+  .journal {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
+    gap: 30px;
   }
-  .work-item { cursor: pointer; }
-  .work-img {
-    overflow: hidden;
-    background: #1c1a2e;
-    aspect-ratio: 1 / 1;
-    border-radius: 22px;
-    border: 2px solid transparent;
+  .note-card {
+    background:
+      repeating-linear-gradient(#fffdf8 0 30px, #f4eee3 30px 31px);
+    border-radius: 14px;
+    padding: 44px 24px 26px;
     position: relative;
-    transition: border-color 0.3s, box-shadow 0.3s, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 10px 26px rgba(74, 64, 57, 0.12);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-  .work-item:nth-child(3n+1) .work-img { border-color: rgba(255, 179, 198, 0.22); }
-  .work-item:nth-child(3n+2) .work-img { border-color: rgba(168, 230, 207, 0.22); }
-  .work-item:nth-child(3n) .work-img { border-color: rgba(201, 182, 255, 0.22); }
-  .work-item:nth-child(3n+1):hover .work-img { box-shadow: 0 12px 36px rgba(255, 179, 198, 0.22); border-color: rgba(255, 179, 198, 0.55); }
-  .work-item:nth-child(3n+2):hover .work-img { box-shadow: 0 12px 36px rgba(168, 230, 207, 0.2); border-color: rgba(168, 230, 207, 0.45); }
-  .work-item:nth-child(3n):hover .work-img { box-shadow: 0 12px 36px rgba(201, 182, 255, 0.22); border-color: rgba(201, 182, 255, 0.4); }
-  .work-item:hover .work-img { transform: translateY(-6px) rotate(-0.6deg); }
-  .work-img::after {
+  .note-card::before {
     content: "";
     position: absolute;
-    top: 12px; right: 12px;
-    width: 36px; height: 36px;
-    background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><g fill='%23ffb3c6'><ellipse cx='50' cy='66' rx='21' ry='17'/><circle cx='27' cy='43' r='9.5'/><circle cx='50' cy='33' r='9.5'/><circle cx='73' cy='43' r='9.5'/></g></svg>") center / contain no-repeat;
-    opacity: 0;
-    transform: scale(0.4) rotate(-35deg);
-    transition: opacity 0.35s, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    top: -13px; left: 50%;
+    width: 96px; height: 28px;
+    transform: translateX(-50%) rotate(-3deg);
+    border-radius: 3px;
+    background: rgba(255, 201, 77, 0.55);
   }
-  .work-item:nth-child(3n+2) .work-img::after {
-    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><g fill='%23a8e6cf'><ellipse cx='50' cy='66' rx='21' ry='17'/><circle cx='27' cy='43' r='9.5'/><circle cx='50' cy='33' r='9.5'/><circle cx='73' cy='43' r='9.5'/></g></svg>");
-  }
-  .work-item:nth-child(3n) .work-img::after {
-    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><g fill='%23c9b6ff'><ellipse cx='50' cy='66' rx='21' ry='17'/><circle cx='27' cy='43' r='9.5'/><circle cx='50' cy='33' r='9.5'/><circle cx='73' cy='43' r='9.5'/></g></svg>");
-  }
-  .work-item:hover .work-img::after { opacity: 0.95; transform: scale(1) rotate(0deg); }
-  .work-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 1.4s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .work-item:hover .work-img img { transform: scale(1.08); }
-  .work-meta {
-    padding-top: 14px;
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-  }
-  .work-meta h3 { font-size: 16px; letter-spacing: 2px; font-weight: 700; }
-  .work-meta span { font-size: 13px; color: var(--text-dim); letter-spacing: 1px; }
-  .work-item:nth-child(3n+1) .work-meta h3 { color: var(--pink); }
-  .work-item:nth-child(3n+2) .work-meta h3 { color: var(--mint); }
-  .work-item:nth-child(3n) .work-meta h3 { color: var(--lavender); }
-
-  /* ---------- 成长历程 ---------- */
-  .exhibitions { list-style: none; }
-  .exhibitions li {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    gap: 32px;
-    padding: 28px 0 28px 44px;
-    border-bottom: 1px solid rgba(201, 182, 255, 0.1);
-    transition: padding-left 0.4s ease;
-    position: relative;
-  }
-  .exhibitions li::before {
-    content: "";
+  .note-card:nth-child(1) { transform: rotate(-1.8deg); }
+  .note-card:nth-child(1)::before { background: rgba(255, 143, 163, 0.5); }
+  .note-card:nth-child(2) { transform: rotate(1.2deg); }
+  .note-card:nth-child(2)::before { background: rgba(127, 216, 190, 0.55); }
+  .note-card:nth-child(3) { transform: rotate(-1deg); }
+  .note-card:nth-child(3)::before { background: rgba(184, 167, 232, 0.5); }
+  .note-card:hover { transform: rotate(0deg) translateY(-6px); }
+  .note-card .weather {
     position: absolute;
-    left: 0; top: 34px;
-    width: 28px; height: 28px;
-    background: center / contain no-repeat;
-    opacity: 0.35;
-    transform: rotate(-16deg);
-    transition: opacity 0.3s, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    top: 12px; right: 14px;
+    font-size: 22px;
   }
-  .exhibitions li:nth-child(1)::before { background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><g fill='%23ffb3c6'><ellipse cx='50' cy='66' rx='21' ry='17'/><circle cx='27' cy='43' r='9.5'/><circle cx='50' cy='33' r='9.5'/><circle cx='73' cy='43' r='9.5'/></g></svg>"); }
-  .exhibitions li:nth-child(2)::before { background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><g fill='%23a8e6cf'><ellipse cx='50' cy='66' rx='21' ry='17'/><circle cx='27' cy='43' r='9.5'/><circle cx='50' cy='33' r='9.5'/><circle cx='73' cy='43' r='9.5'/></g></svg>"); }
-  .exhibitions li:nth-child(3)::before { background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><g fill='%23ffd97d'><ellipse cx='50' cy='66' rx='21' ry='17'/><circle cx='27' cy='43' r='9.5'/><circle cx='50' cy='33' r='9.5'/><circle cx='73' cy='43' r='9.5'/></g></svg>"); }
-  .exhibitions li:nth-child(4)::before { background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><g fill='%23c9b6ff'><ellipse cx='50' cy='66' rx='21' ry='17'/><circle cx='27' cy='43' r='9.5'/><circle cx='50' cy='33' r='9.5'/><circle cx='73' cy='43' r='9.5'/></g></svg>"); }
-  .exhibitions li:hover { padding-left: 56px; }
-  .exhibitions li:hover::before { opacity: 1; transform: rotate(0deg) scale(1.15); }
-  .exhibitions li:first-child { border-top: 1px solid rgba(201, 182, 255, 0.1); }
-  .exh-year {
-    font-size: 24px;
+  .note-card h3 {
+    font-size: 17px;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    color: var(--ink);
+  }
+  .note-card .note-date {
+    font-size: 12px;
     letter-spacing: 2px;
-    font-weight: 700;
-    background: linear-gradient(135deg, var(--text) 0%, var(--text-dim) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--ink-faint);
+    display: block;
+    margin-bottom: 10px;
   }
-  .exh-info h3 { font-size: 21px; letter-spacing: 2px; margin-bottom: 8px; font-weight: 700; }
-  .exh-info p { font-size: 16px; color: #bcb6d0; letter-spacing: 1px; line-height: 1.9; }
+  .note-card p { font-size: 14px; color: #6b6055; line-height: 1.95; }
 
   /* ---------- 页脚 ---------- */
   footer {
-    border-top: 1px solid rgba(201, 182, 255, 0.1);
-    padding: 96px 48px 48px;
+    margin-top: 90px;
+    padding: 80px 40px 44px;
     text-align: center;
+    background: rgba(255, 255, 255, 0.55);
+    border-top: 2px dashed rgba(255, 143, 163, 0.35);
     position: relative;
-    z-index: 1;
+    z-index: 2;
   }
-  .footer-paw {
-    width: 44px; height: 44px;
-    color: var(--pink);
-    margin-bottom: 22px;
-    animation: pawWiggle 3.5s ease-in-out infinite;
-  }
-  .footer-heading { font-size: clamp(28px, 3.5vw, 40px); letter-spacing: 6px; margin-bottom: 32px; }
+  .footer-heading { font-size: clamp(26px, 3.4vw, 38px); letter-spacing: 5px; margin-bottom: 26px; }
   .footer-email {
     display: inline-block;
     font-size: 16px;
     letter-spacing: 2px;
-    color: var(--text);
+    color: var(--ink);
     text-decoration: none;
-    border-bottom: 2px solid transparent;
-    border-image: linear-gradient(90deg, var(--pink), var(--lavender)) 1;
-    padding-bottom: 4px;
-    margin-bottom: 48px;
-    transition: opacity 0.3s;
+    border-bottom: 2px solid var(--coral);
+    padding-bottom: 3px;
+    margin-bottom: 40px;
+    transition: color 0.3s;
   }
-  .footer-email:hover { opacity: 0.7; }
+  .footer-email:hover { color: var(--coral); }
   .social-links {
     display: flex;
     justify-content: center;
-    gap: 16px;
-    margin-bottom: 64px;
+    gap: 14px;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
   }
   .social-links a {
-    color: #cdc7dd;
+    color: var(--ink);
     text-decoration: none;
     font-size: 14px;
-    letter-spacing: 3px;
-    padding: 8px 18px;
+    letter-spacing: 2px;
+    padding: 8px 20px;
     border-radius: 999px;
-    border: 1px solid rgba(201, 182, 255, 0.18);
-    transition: color 0.3s, border-color 0.3s, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 2px solid rgba(74, 64, 57, 0.2);
+    background: #fff;
+    transition: all 0.3s;
   }
   .social-links a:hover {
-    color: var(--pink);
-    border-color: rgba(255, 179, 198, 0.45);
+    border-color: var(--coral);
+    color: var(--coral);
     transform: translateY(-3px);
   }
-  .copyright { font-size: 12px; letter-spacing: 2px; color: var(--text-faint); }
+  .copyright { font-size: 12px; letter-spacing: 2px; color: var(--ink-faint); }
 
   /* ---------- 响应式 ---------- */
   @media (max-width: 860px) {
-    nav { padding: 16px 24px; }
-    .nav-links { gap: 4px; }
-    .nav-links a { padding: 6px 10px; }
-    section { padding: 80px 24px; }
-    .about-wrap { grid-template-columns: 1fr; gap: 40px; }
-    .works-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
-    .exhibitions li { grid-template-columns: 80px 1fr; gap: 16px; padding-left: 38px; }
-    .exhibitions li::before { width: 24px; height: 24px; }
-    .hero .scroll-hint { right: 24px; }
-  }
-  @media (max-width: 520px) {
-    .works-grid { grid-template-columns: 1fr; }
-    .hero p { letter-spacing: 4px; }
-    .peek-cat { width: 110px; }
+    nav { padding: 12px 20px; }
+    .nav-links { gap: 2px; }
+    .nav-links a { padding: 6px 10px; font-size: 13px; }
+    section { padding: 70px 22px 30px; }
+    .about-wrap { grid-template-columns: 1fr; gap: 44px; }
+    .stamps { grid-template-columns: 1fr; }
+    .journal { grid-template-columns: 1fr; }
+    .curtain { width: 47vw; }
+    .girl { top: calc(50% - clamp(190px, 30vh, 250px) / 2 - 56px); width: 50px; }
   }
 </style>
 </head>
 <body>
 
-<!-- 猫爪形状定义 -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <g id="paw">
-      <ellipse cx="50" cy="66" rx="21" ry="17"/>
-      <circle cx="27" cy="43" r="9.5"/>
-      <circle cx="50" cy="33" r="9.5"/>
-      <circle cx="73" cy="43" r="9.5"/>
-    </g>
-  </defs>
-</svg>
-
-<!-- 开场帘幕 -->
-<div id="intro" aria-hidden="true">
-  <div class="intro-paw-wrap">
-    <svg class="intro-paw" viewBox="0 0 100 100" fill="currentColor"><use href="#paw"/></svg>
-    <span class="sparkle"></span><span class="sparkle"></span><span class="sparkle"></span>
-    <span class="sparkle"></span><span class="sparkle"></span><span class="sparkle"></span>
-  </div>
-  <p class="intro-text">正在打开燕丽的小世界</p>
+<!-- 夜空舞台 -->
+<div class="stage-sky" aria-hidden="true">
+  <span class="star" style="width:4px;height:4px;top:12%;left:18%"></span>
+  <span class="star" style="width:3px;height:3px;top:22%;left:34%;animation-delay:0.6s"></span>
+  <span class="star" style="width:5px;height:5px;top:9%;left:52%;animation-delay:1.1s"></span>
+  <span class="star" style="width:3px;height:3px;top:18%;left:68%;animation-delay:0.3s"></span>
+  <span class="star" style="width:4px;height:4px;top:26%;left:84%;animation-delay:1.5s"></span>
+  <span class="star" style="width:3px;height:3px;top:38%;left:9%;animation-delay:0.9s"></span>
+  <span class="star" style="width:4px;height:4px;top:33%;left:91%;animation-delay:1.9s"></span>
+  <span class="star" style="width:3px;height:3px;top:48%;left:24%;animation-delay:1.3s"></span>
 </div>
 
-<!-- 飘雪 -->
-<span class="flake" style="left:4%;font-size:14px;color:#ffffff;opacity:.5;animation-duration:12s;animation-delay:-2s">❄</span>
-<span class="flake" style="left:12%;font-size:20px;color:#ffc2d4;opacity:.4;animation-duration:15s;animation-delay:-7s">❄</span>
-<span class="flake" style="left:20%;font-size:12px;color:#c9b6ff;opacity:.45;animation-duration:10s;animation-delay:-4s">❄</span>
-<span class="flake" style="left:28%;font-size:17px;color:#ffffff;opacity:.35;animation-duration:16s;animation-delay:-9s">❄</span>
-<span class="flake" style="left:35%;font-size:13px;color:#a8e6cf;opacity:.4;animation-duration:11s;animation-delay:-1s">❄</span>
-<span class="flake" style="left:42%;font-size:22px;color:#ffd97d;opacity:.3;animation-duration:17s;animation-delay:-12s">❄</span>
-<span class="flake" style="left:50%;font-size:15px;color:#ffffff;opacity:.5;animation-duration:13s;animation-delay:-5s">❄</span>
-<span class="flake" style="left:57%;font-size:11px;color:#ffc2d4;opacity:.4;animation-duration:9s;animation-delay:-3s">❄</span>
-<span class="flake" style="left:64%;font-size:19px;color:#c9b6ff;opacity:.35;animation-duration:14s;animation-delay:-8s">❄</span>
-<span class="flake" style="left:71%;font-size:13px;color:#ffffff;opacity:.45;animation-duration:12s;animation-delay:-6s">❄</span>
-<span class="flake" style="left:78%;font-size:16px;color:#a8e6cf;opacity:.35;animation-duration:15s;animation-delay:-10s">❄</span>
-<span class="flake" style="left:85%;font-size:12px;color:#ffd97d;opacity:.4;animation-duration:10s;animation-delay:-2.5s">❄</span>
-<span class="flake" style="left:92%;font-size:18px;color:#ffffff;opacity:.4;animation-duration:16s;animation-delay:-8s">❄</span>
-<span class="flake" style="left:8%;font-size:11px;color:#c9b6ff;opacity:.35;animation-duration:14s;animation-delay:-11s">❄</span>
-<span class="flake" style="left:32%;font-size:14px;color:#ffc2d4;opacity:.3;animation-duration:18s;animation-delay:-6.5s">❄</span>
-<span class="flake" style="left:68%;font-size:12px;color:#ffffff;opacity:.45;animation-duration:11s;animation-delay:-9.5s">❄</span>
+<!-- 幕布 -->
+<div class="curtain left" aria-hidden="true"></div>
+<div class="curtain right" aria-hidden="true"></div>
+<div class="valance" aria-hidden="true"></div>
 
-<!-- 固定导航栏 -->
+<!-- 导航栏 -->
 <nav>
-  <div class="nav-logo">
-    <svg viewBox="0 0 100 100" fill="currentColor"><use href="#paw"/></svg>
-    陈燕丽
-  </div>
+  <div class="nav-logo"><span class="fp-emoji">👣</span>陈燕丽的手账</div>
   <ul class="nav-links">
     <li><a href="#about">关于</a></li>
-    <li><a href="#works">作品</a></li>
-    <li><a href="#exhibitions">成长</a></li>
+    <li><a href="#footprints">足迹</a></li>
+    <li><a href="#journal">心得</a></li>
     <li><a href="#contact">联系</a></li>
   </ul>
 </nav>
 
 <!-- 首屏 -->
 <header class="hero">
-  <h1 class="hero-name">
-    <span>陈</span><span>燕</span><span>丽</span>
-    <svg class="name-paw" viewBox="0 0 100 100" fill="currentColor"><use href="#paw"/></svg>
-  </h1>
-  <p>个人艺术 · 数字影像</p>
+  <div class="hero-stage">
 
-  <!-- 探头的猫咪 -->
-  <div class="peek-cat">
-    <svg viewBox="0 0 160 110" fill="none">
-      <path d="M30 52 L40 12 L64 32 Z" fill="#ffe8d6"/>
-      <path d="M130 52 L120 12 L96 32 Z" fill="#ffe8d6"/>
-      <path d="M37 46 L43 23 L56 34 Z" fill="#ffb3c6"/>
-      <path d="M123 46 L117 23 L104 34 Z" fill="#ffb3c6"/>
-      <ellipse cx="80" cy="80" rx="46" ry="34" fill="#ffe8d6"/>
-      <g class="eye"><circle cx="62" cy="76" r="5" fill="#2b2440"/></g>
-      <g class="eye"><circle cx="98" cy="76" r="5" fill="#2b2440"/></g>
-      <ellipse cx="50" cy="90" rx="7" ry="4" fill="#ffb3c6" opacity="0.55"/>
-      <ellipse cx="110" cy="90" rx="7" ry="4" fill="#ffb3c6" opacity="0.55"/>
-      <path d="M76 86 q4 4 8 0" stroke="#2b2440" stroke-width="2" stroke-linecap="round"/>
-    </svg>
+    <!-- 地球 + 小女孩 -->
+    <div class="earth-scene" aria-hidden="true">
+      <svg class="earth" viewBox="0 0 260 260">
+        <defs>
+          <radialGradient id="ocean" cx="35%" cy="30%" r="80%">
+            <stop offset="0%" stop-color="#9fdcf5"/>
+            <stop offset="60%" stop-color="#5aa7de"/>
+            <stop offset="100%" stop-color="#3d7bc8"/>
+          </radialGradient>
+          <clipPath id="earthClip"><circle cx="130" cy="130" r="108"/></clipPath>
+        </defs>
+        <circle cx="130" cy="130" r="108" fill="url(#ocean)"/>
+        <g clip-path="url(#earthClip)">
+          <g fill="#9adf9f">
+            <g>
+              <ellipse cx="60" cy="80" rx="34" ry="22"/>
+              <ellipse cx="110" cy="150" rx="26" ry="30"/>
+              <ellipse cx="185" cy="95" rx="30" ry="26"/>
+              <ellipse cx="215" cy="170" rx="22" ry="16"/>
+              <ellipse cx="45" cy="185" rx="20" ry="14"/>
+              <ellipse cx="150" cy="60" rx="18" ry="10"/>
+              <ellipse cx="320" cy="80" rx="34" ry="22"/>
+              <ellipse cx="370" cy="150" rx="26" ry="26"/>
+              <ellipse cx="445" cy="95" rx="30" ry="26"/>
+              <ellipse cx="475" cy="170" rx="22" ry="16"/>
+              <ellipse cx="305" cy="185" rx="20" ry="14"/>
+              <ellipse cx="410" cy="60" rx="18" ry="10"/>
+            </g>
+            <animateTransform attributeName="transform" type="translate" from="0 0" to="-260 0" dur="11s" repeatCount="indefinite"/>
+          </g>
+        </g>
+        <circle cx="130" cy="130" r="108" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="3"/>
+        <ellipse cx="92" cy="72" rx="46" ry="26" fill="rgba(255,255,255,0.28)" transform="rotate(-24 92 72)"/>
+      </svg>
+
+      <div class="cloud c1"></div>
+      <div class="cloud c2"></div>
+      <div class="cloud c3"></div>
+
+      <!-- 小女孩 -->
+      <div class="girl">
+        <div class="girl-inner">
+          <svg viewBox="0 0 60 92">
+            <!-- 背包 -->
+            <rect x="40" y="34" width="13" height="19" rx="5" fill="#7fd8be"/>
+            <!-- 腿 -->
+            <g class="leg leg-l">
+              <rect x="23" y="64" width="6" height="17" rx="3" fill="#ffd9b3"/>
+              <ellipse cx="26" cy="84" rx="6.5" ry="4" fill="#ff8fa3"/>
+            </g>
+            <g class="leg leg-r">
+              <rect x="33" y="64" width="6" height="17" rx="3" fill="#ffd9b3"/>
+              <ellipse cx="36" cy="84" rx="6.5" ry="4" fill="#ff8fa3"/>
+            </g>
+            <!-- 连衣裙 -->
+            <path d="M22 36 Q31 30 40 36 L45 64 Q31 70 17 64 Z" fill="#ff8fa3"/>
+            <circle cx="31" cy="44" r="2.2" fill="#fff"/>
+            <circle cx="31" cy="53" r="2.2" fill="#fff"/>
+            <!-- 挥手的手臂 -->
+            <g class="arm-wave">
+              <rect x="42" y="26" width="5" height="15" rx="2.5" fill="#ffd9b3" transform="rotate(28 44 38)"/>
+              <circle cx="49" cy="25" r="3.4" fill="#ffd9b3"/>
+            </g>
+            <rect x="12" y="38" width="5" height="14" rx="2.5" fill="#ffd9b3" transform="rotate(14 14 45)"/>
+            <!-- 头 -->
+            <circle cx="31" cy="19" r="13" fill="#ffd9b3"/>
+            <!-- 头发 -->
+            <path d="M18 19 a13 13 0 0 1 26 0 l0 4 q-4 -6 -13 -6 q-9 0 -13 6 Z" fill="#5b4033"/>
+            <circle cx="16" cy="14" r="4.5" fill="#5b4033"/>
+            <circle cx="46" cy="14" r="4.5" fill="#5b4033"/>
+            <circle cx="16" cy="10.5" r="2" fill="#ff8fa3"/>
+            <circle cx="46" cy="10.5" r="2" fill="#ff8fa3"/>
+            <!-- 五官 -->
+            <circle cx="26" cy="20" r="1.7" fill="#4a4039"/>
+            <circle cx="36" cy="20" r="1.7" fill="#4a4039"/>
+            <ellipse cx="22.5" cy="24" rx="2.4" ry="1.4" fill="#ffb3c1"/>
+            <ellipse cx="39.5" cy="24" rx="2.4" ry="1.4" fill="#ffb3c1"/>
+            <path d="M28 24.5 q3 2.5 6 0" stroke="#4a4039" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- 中国地图 + 脚印 -->
+    <div class="map-scene">
+      <svg class="china-map" viewBox="0 0 400 300">
+        <!-- 简笔画风格中国轮廓 -->
+        <path d="M70 62 L112 46 L152 56 L192 40 L232 32 L266 46 L286 74 L302 96 L286 120 L302 146 L276 162 L262 186 L226 196 L236 220 L206 236 L180 226 L150 236 L120 216 L94 220 L80 196 L54 180 L60 154 L40 134 L56 110 L46 84 Z"
+          fill="#ffe1a8" stroke="#ff8fa3" stroke-width="4" stroke-linejoin="round"/>
+        <!-- 海南岛 -->
+        <ellipse cx="212" cy="258" rx="11" ry="8" fill="#ffe1a8" stroke="#ff8fa3" stroke-width="3"/>
+        <!-- 脚印 -->
+        <g transform="translate(102,152) rotate(-14)"><g class="fp" style="animation-delay:5.0s" fill="#ff8fa3">
+          <ellipse cx="0" cy="-4" rx="4.6" ry="7"/><ellipse cx="1" cy="6.5" rx="3.6" ry="4.4"/></g></g>
+        <g transform="translate(140,148) rotate(10)"><g class="fp" style="animation-delay:5.35s" fill="#b8a7e8">
+          <ellipse cx="0" cy="-4" rx="4.6" ry="7"/><ellipse cx="1" cy="6.5" rx="3.6" ry="4.4"/></g></g>
+        <g transform="translate(178,162) rotate(-10)"><g class="fp" style="animation-delay:5.7s" fill="#7fd8be">
+          <ellipse cx="0" cy="-4" rx="4.6" ry="7"/><ellipse cx="1" cy="6.5" rx="3.6" ry="4.4"/></g></g>
+        <g transform="translate(216,144) rotate(12)"><g class="fp" style="animation-delay:6.05s" fill="#ffc94d">
+          <ellipse cx="0" cy="-4" rx="4.6" ry="7"/><ellipse cx="1" cy="6.5" rx="3.6" ry="4.4"/></g></g>
+        <g transform="translate(252,126) rotate(-8)"><g class="fp" style="animation-delay:6.4s" fill="#ff8fa3">
+          <ellipse cx="0" cy="-4" rx="4.6" ry="7"/><ellipse cx="1" cy="6.5" rx="3.6" ry="4.4"/></g></g>
+        <!-- 地标小旗 -->
+        <circle class="fp-dot" style="animation-delay:5.05s" cx="102" cy="140" r="4.5" fill="#ff8fa3"/>
+        <circle class="fp-dot" style="animation-delay:5.75s" cx="140" cy="136" r="4.5" fill="#b8a7e8"/>
+        <circle class="fp-dot" style="animation-delay:6.45s" cx="252" cy="114" r="4.5" fill="#ff8fa3"/>
+        <!-- 地点标签 -->
+        <text class="fp-label" style="animation-delay:5.1s" x="102" y="188" text-anchor="middle">甘肃 · 家</text>
+        <text class="fp-label" style="animation-delay:5.8s" x="146" y="206" text-anchor="middle">兰州 · 集训</text>
+        <text class="fp-label" style="animation-delay:6.5s" x="256" y="162" text-anchor="middle">天津 · 求学</text>
+      </svg>
+    </div>
   </div>
 
-  <span class="scroll-hint">向下滚动</span>
+  <h1 class="hero-title"><span>陈</span><span>燕</span><span>丽</span></h1>
+  <p class="hero-sub"><span class="fp-emoji">👣</span>旅行手账 · 带着画笔和好奇心慢慢走<span class="fp-emoji">👣</span></p>
+  <span class="scroll-hint">👣 向下滚动</span>
 </header>
 
 <!-- 关于我 -->
 <section id="about">
-  <p class="section-title">ABOUT</p>
+  <p class="section-tag">ABOUT</p>
   <h2 class="section-heading">关于我</h2>
+  <svg class="squiggle" viewBox="0 0 130 12"><path d="M3 8 Q 13 2 23 8 T 43 8 T 63 8 T 63 8 T 83 8 T 103 8 T 123 8" stroke="#ff8fa3" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg>
   <div class="about-wrap">
-    <div class="about-portrait">
+    <div class="polaroid">
       <img src="photos/微信图片_20261021231436_32_204_small.jpg" alt="陈燕丽肖像">
+      <span class="cap">📍 摄于出发之前</span>
     </div>
     <div class="about-text">
       <p>你好呀，我是陈燕丽，来自甘肃，现在是天津美术学院环境设计专业的大一学生。如果用一句话介绍自己，大概就是——一个总是在观察空间、也被空间治愈着的人。</p>
-      <p>西北的辽阔天地是我最早的美学启蒙：黄土高原的沟壑、敦煌壁画的斑斓、大漠落日的光影，都悄悄刻进了我的眼睛里。而我和设计的正式缘分始于速写本，从第一次拿起铅笔对着静物发呆开始，我就迷上了用线条和光影记录世界的感觉：一扇窗透进来的午后阳光、老巷子里斑驳的墙面、咖啡馆里桌椅之间刚刚好的距离……这些看似普通的场景，在我眼里都藏着关于"人如何生活"的答案。</p>
-      <p>现在我正系统地学习环境设计，从素描基础到空间构成，每一门课都让我兴奋不已。我喜欢泡画室，也喜欢拉着朋友去看展、逛老建筑；我相信好的设计不是冷冰冰的图纸，而是能让人走进去就忍不住微笑的温度。</p>
-      <p>未来的路还很长，我希望保持这份好奇与热爱，慢慢成长为一个能为他人创造美好生活空间的设计师。如果你也喜欢艺术与设计，欢迎和我聊聊，我很乐意认识每一位路过的朋友。</p>
-      <p class="signature">
-        <svg viewBox="0 0 100 100" fill="currentColor"><use href="#paw"/></svg>
-        —— 陈燕丽
-      </p>
+      <p>西北的辽阔天地是我最早的美学启蒙：黄土高原的沟壑、敦煌壁画的斑斓、大漠落日的光影，都悄悄刻进了我的眼睛里。而我和设计的正式缘分始于速写本，从第一次拿起铅笔对着静物发呆开始，我就迷上了用线条和光影记录世界的感觉。</p>
+      <p>我喜欢泡画室，也喜欢拉着朋友去看展、逛老建筑；我相信好的设计不是冷冰冰的图纸，而是能让人走进去就忍不住微笑的温度。旅行对我来说，就是把速写本带到更远的地方。</p>
+      <p class="signature">—— 陈燕丽</p>
     </div>
   </div>
 </section>
 
-<!-- 猫爪步道 -->
-<div class="paw-trail" aria-hidden="true">
-  <svg viewBox="0 0 100 100" fill="currentColor"><use href="#paw"/></svg>
-  <svg viewBox="0 0 100 100" fill="currentColor"><use href="#paw"/></svg>
-  <svg viewBox="0 0 100 100" fill="currentColor"><use href="#paw"/></svg>
-  <svg viewBox="0 0 100 100" fill="currentColor"><use href="#paw"/></svg>
-</div>
-
-<!-- 作品画廊 -->
-<section id="works">
-  <p class="section-title">WORKS</p>
-  <h2 class="section-heading">作品画廊</h2>
-  <div class="works-grid">
-    <div class="work-item">
-      <div class="work-img">
-        <img src="images/work-01.jpg" alt="作品《凝视》" loading="lazy" decoding="async">
-      </div>
-      <div class="work-meta"><h3>凝视</h3><span>纸本素描 · 2025</span></div>
+<!-- 足迹 -->
+<section id="footprints">
+  <p class="section-tag">FOOTPRINTS</p>
+  <h2 class="section-heading">我的足迹</h2>
+  <svg class="squiggle" viewBox="0 0 130 12"><path d="M3 8 Q 13 2 23 8 T 43 8 T 63 8 T 63 8 T 83 8 T 103 8 T 123 8" stroke="#7fd8be" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg>
+  <div class="stamps">
+    <div class="stamp">
+      <div class="place"><span class="emoji">🏜️</span>甘肃 · 家乡</div>
+      <span class="date">起点</span>
+      <p>黄土高原的风和大漠落日，是我审美的底色。每次回去，都觉得天比在别处高一点点。</p>
     </div>
-    <div class="work-item">
-      <div class="work-img">
-        <img src="images/work-02.jpg" alt="作品《旧物集》" loading="lazy" decoding="async">
-      </div>
-      <div class="work-meta"><h3>旧物集</h3><span>纸本素描 · 2024</span></div>
+    <div class="stamp">
+      <div class="place"><span class="emoji">🎨</span>敦煌 · 壁画之旅</div>
+      <span class="date">审美启蒙</span>
+      <p>在洞窟里屏住呼吸看千年的色彩——原来颜料可以比时间更长久，那一刻决定要好好画画。</p>
     </div>
-    <div class="work-item">
-      <div class="work-img">
-        <img src="images/work-03.jpg" alt="作品《少年》" loading="lazy" decoding="async">
-      </div>
-      <div class="work-meta"><h3>少年</h3><span>纸本素描 · 2024</span></div>
+    <div class="stamp">
+      <div class="place"><span class="emoji">🍜</span>兰州 · 集训时光</div>
+      <span class="date">2025</span>
+      <p>黄河边的画室，铅笔灰和牛肉面的香气混在一起。省考 272 分，是那段日子的句号。</p>
     </div>
-    <div class="work-item">
-      <div class="work-img">
-        <img src="images/work-04.jpg" alt="作品《壶与果》" loading="lazy" decoding="async">
-      </div>
-      <div class="work-meta"><h3>壶与果</h3><span>纸本素描 · 2024</span></div>
-    </div>
-    <div class="work-item">
-      <div class="work-img">
-        <img src="images/work-05.jpg" alt="作品《岁月》" loading="lazy" decoding="async">
-      </div>
-      <div class="work-meta"><h3>岁月</h3><span>纸本素描 · 2026</span></div>
-    </div>
-    <div class="work-item">
-      <div class="work-img">
-        <img src="images/work-06.jpg" alt="作品《雪径》" loading="lazy" decoding="async">
-      </div>
-      <div class="work-meta"><h3>雪径</h3><span>黑白版画 · 2024</span></div>
-    </div>
-    <div class="work-item">
-      <div class="work-img">
-        <img src="images/work-07.jpg" alt="作品《揭面》" loading="lazy" decoding="async">
-      </div>
-      <div class="work-meta"><h3>揭面</h3><span>综合材料 · 2025</span></div>
-    </div>
-    <div class="work-item">
-      <div class="work-img">
-        <img src="images/work-08.jpg" alt="作品《艾轩·素描》" loading="lazy" decoding="async">
-      </div>
-      <div class="work-meta"><h3>艾轩·素描</h3><span>取自艾轩.素描</span></div>
-    </div>
-    <div class="work-item">
-      <div class="work-img">
-        <img src="images/work-09.jpg" alt="作品《夜渡》" loading="lazy" decoding="async">
-      </div>
-      <div class="work-meta"><h3>夜渡</h3><span>数字绘画 · 2025</span></div>
+    <div class="stamp">
+      <div class="place"><span class="emoji">🏛️</span>天津 · 求学新篇</div>
+      <span class="date">2026 至今</span>
+      <p>考入天津美院环境设计专业。五大道的老建筑在等我慢慢逛，新故事才刚刚开始。</p>
     </div>
   </div>
 </section>
 
-<!-- 猫爪步道 -->
-<div class="paw-trail" aria-hidden="true">
-  <svg viewBox="0 0 100 100" fill="currentColor"><use href="#paw"/></svg>
-  <svg viewBox="0 0 100 100" fill="currentColor"><use href="#paw"/></svg>
-  <svg viewBox="0 0 100 100" fill="currentColor"><use href="#paw"/></svg>
-  <svg viewBox="0 0 100 100" fill="currentColor"><use href="#paw"/></svg>
-</div>
-
-<!-- 成长历程 -->
-<section id="exhibitions">
-  <p class="section-title">JOURNEY</p>
-  <h2 class="section-heading">成长历程</h2>
-  <ul class="exhibitions">
-    <li>
-      <span class="exh-year">2016</span>
-      <div class="exh-info">
-        <h3>初识绘笔</h3>
-        <p>小学三年级结缘绘画，种下艺术初心。</p>
-      </div>
-    </li>
-    <li>
-      <span class="exh-year">2023</span>
-      <div class="exh-info">
-        <h3>笃定方向</h3>
-        <p>高一选定美术特长，锚定艺考目标。</p>
-      </div>
-    </li>
-    <li>
-      <span class="exh-year">2025</span>
-      <div class="exh-info">
-        <h3>淬火砺行</h3>
-        <p>兰州集训深耕苦练，省考取得 272 分。</p>
-      </div>
-    </li>
-    <li>
-      <span class="exh-year">2026</span>
-      <div class="exh-info">
-        <h3>逐梦上岸</h3>
-        <p>考入天津美院环设，奔赴环境设计之路。</p>
-      </div>
-    </li>
-  </ul>
+<!-- 旅游心得 -->
+<section id="journal">
+  <p class="section-tag">JOURNAL</p>
+  <h2 class="section-heading">旅游心得</h2>
+  <svg class="squiggle" viewBox="0 0 130 12"><path d="M3 8 Q 13 2 23 8 T 43 8 T 63 8 T 63 8 T 83 8 T 103 8 T 123 8" stroke="#b8a7e8" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg>
+  <div class="journal">
+    <div class="note-card">
+      <span class="weather">☀️</span>
+      <h3>在敦煌看壁画的那天</h3>
+      <span class="note-date">晴 · 西北风</span>
+      <p>色彩在黑暗里睡了千年，醒来看见我，还是鲜亮的。站在洞窟里不敢大声呼吸，怕惊扰了飞天的裙摆。回来的路上一直在想：美原来可以这样有耐心。</p>
+    </div>
+    <div class="note-card">
+      <span class="weather">🍜</span>
+      <h3>兰州清晨的牛肉面馆</h3>
+      <span class="note-date">集训日记</span>
+      <p>热气把窗户糊成毛玻璃，辣子油红得像颜料盘里最正的那格朱红。画了一整夜速写的我们，在清晨六点的面馆里满血复活。</p>
+    </div>
+    <div class="note-card">
+      <span class="weather">🏛️</span>
+      <h3>天津老街的午后</h3>
+      <span class="note-date">开学以后</span>
+      <p>转角遇到一栋会讲故事的老房子：砖缝里有百年前的阳光，窗棂上还留着旧时光的秩序感。作为环设学生，我掏出速写本的手比脑子还快。</p>
+    </div>
+  </div>
 </section>
 
 <!-- 页脚 -->
 <footer id="contact">
-  <svg class="footer-paw" viewBox="0 0 100 100" fill="currentColor"><use href="#paw"/></svg>
-  <h2 class="footer-heading">与我联系</h2>
+  <h2 class="footer-heading">下一站，一起吗 👣</h2>
   <a class="footer-email" href="mailto:cyl2007903@qq.com">cyl2007903@qq.com</a>
   <div class="social-links">
     <a href="#" target="_blank" rel="noopener">微博</a>
