@@ -175,6 +175,209 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
+  /* ---------- 首屏装饰：蕾丝 / 拼贴 / 亮晶晶 / 柔光 ---------- */
+  .hero { overflow: hidden; }
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.65));
+  }
+
+  /* 白色蕾丝边 */
+  .hero-lace {
+    position: absolute;
+    left: 0; right: 0;
+    height: 30px;
+    z-index: 1;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='30' viewBox='0 0 96 30'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='1.5' stroke-linecap='round'%3E%3Cpath d='M0 4 Q12 26 24 4 Q36 26 48 4 Q60 26 72 4 Q84 26 96 4'/%3E%3Cpath d='M0 4 Q12 20 24 4 Q36 20 48 4 Q60 20 72 4 Q84 20 96 4' opacity='.5'/%3E%3C/g%3E%3Cg fill='%23ffffff'%3E%3Ccircle cx='12' cy='13' r='1.5'/%3E%3Ccircle cx='36' cy='13' r='1.5'/%3E%3Ccircle cx='60' cy='13' r='1.5'/%3E%3Ccircle cx='84' cy='13' r='1.5'/%3E%3Ccircle cx='24' cy='5.5' r='1.1'/%3E%3Ccircle cx='48' cy='5.5' r='1.1'/%3E%3Ccircle cx='72' cy='5.5' r='1.1'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+    background-position: left top;
+    opacity: 0;
+    filter: drop-shadow(0 1px 3px rgba(185, 135, 140, 0.35));
+    animation: laceIn 2.2s ease 8.8s forwards;
+  }
+  .hero-lace-top { top: 66px; }
+  .hero-lace-bottom { bottom: 18px; transform: scaleY(-1); }
+  @keyframes laceIn { to { opacity: 0.9; } }
+
+  /* 朦胧柔光雾 */
+  .hero-haze { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+  .haze {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(42px);
+    opacity: 0;
+  }
+  .haze-1 {
+    width: 340px; height: 340px;
+    left: 6%; top: 18%;
+    background: rgba(255, 214, 222, 0.6);
+    animation: hazeIn 2.4s ease 8.8s forwards,
+               hazeFloat 11s ease-in-out 11.2s infinite;
+  }
+  .haze-2 {
+    width: 300px; height: 300px;
+    right: 4%; top: 30%;
+    background: rgba(255, 238, 222, 0.9);
+    animation: hazeIn 2.4s ease 9.2s forwards,
+               hazeFloat2 13s ease-in-out 11.6s infinite;
+  }
+  .haze-3 {
+    width: 420px; height: 260px;
+    left: 30%; bottom: 4%;
+    background: rgba(248, 214, 220, 0.8);
+    animation: hazeIn 2.6s ease 9.5s forwards,
+               hazeFloat 15s ease-in-out 12.1s infinite;
+  }
+  @keyframes hazeIn { to { opacity: 0.55; } }
+  @keyframes hazeFloat {
+    0%, 100% { transform: translate(0, 0); }
+    50%      { transform: translate(14px, -18px); }
+  }
+  @keyframes hazeFloat2 {
+    0%, 100% { transform: translate(0, 0); }
+    50%      { transform: translate(-16px, -14px); }
+  }
+
+  /* 法式复古拼贴 */
+  .collage {
+    position: absolute;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
+    animation: collageIn 1.8s ease forwards;
+  }
+  .collage-tl { top: 15%; left: 6%;  transform: rotate(-6deg); animation-delay: 9.0s; }
+  .collage-tr { top: 13%; right: 7%; transform: rotate(4deg);  animation-delay: 9.2s; }
+  .collage-bl { bottom: 12%; left: 8%; animation-delay: 9.4s; }
+  .collage-br { bottom: 13%; right: 6%; transform: rotate(5deg); animation-delay: 9.6s; }
+  @keyframes collageIn { to { opacity: 0.95; } }
+
+  .paper {
+    position: relative;
+    width: 128px;
+    padding: 12px 14px 14px;
+    background: linear-gradient(180deg, #fffdf8, #fbf2e8);
+    border: 1px solid rgba(190, 150, 150, 0.28);
+    border-radius: 2px;
+    box-shadow: 0 8px 20px rgba(160, 110, 120, 0.18);
+  }
+  .paper-word {
+    font-family: Georgia, "Palatino Linotype", serif;
+    font-style: italic;
+    font-size: 15px;
+    letter-spacing: 0.14em;
+    color: #a87e84;
+  }
+  .paper-lines {
+    display: block;
+    margin-top: 8px;
+    height: 20px;
+    background: repeating-linear-gradient(180deg, rgba(178, 140, 144, 0) 0 5px, rgba(178, 140, 144, 0.28) 5px 6px);
+  }
+  .tape {
+    position: absolute;
+    width: 84px; height: 24px;
+    background: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.6) 0 6px, rgba(244, 196, 202, 0.6) 6px 12px);
+    box-shadow: 0 2px 5px rgba(170, 120, 130, 0.18);
+    clip-path: polygon(3% 0, 97% 5%, 100% 90%, 4% 100%, 0 12%);
+    opacity: 0.85;
+  }
+  .tape-a { top: -12px; left: -22px; transform: rotate(-10deg); }
+  .tape-b {
+    top: -12px; right: -18px;
+    transform: rotate(8deg);
+    background: repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.55) 0 6px, rgba(238, 210, 180, 0.55) 6px 12px);
+  }
+  .rose-a {
+    position: absolute;
+    left: -24px; bottom: -18px;
+    width: 56px;
+    transform: rotate(-8deg);
+    filter: drop-shadow(0 3px 5px rgba(160, 100, 110, 0.25));
+  }
+  .stamp {
+    width: 74px;
+    padding: 8px 8px 6px;
+    background: #fffdf9;
+    border: 1px solid rgba(185, 140, 145, 0.35);
+    border-radius: 3px;
+    box-shadow: 0 5px 14px rgba(160, 110, 120, 0.2);
+    transform: rotate(7deg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  .stamp .rose { width: 44px; height: 44px; }
+  .stamp-text {
+    font-family: Georgia, serif;
+    font-size: 9px;
+    letter-spacing: 0.28em;
+    text-indent: 0.28em;
+    color: #a87e84;
+  }
+  .doily {
+    width: 150px;
+    opacity: 0.9;
+    filter: drop-shadow(0 4px 10px rgba(180, 130, 140, 0.25));
+  }
+  .seal {
+    position: absolute;
+    right: -10px; bottom: -8px;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #dfa0a8, #b96f79 70%);
+    box-shadow: inset 0 0 4px rgba(120, 60, 70, 0.5), 0 2px 5px rgba(150, 90, 100, 0.3);
+  }
+
+  /* 闪烁亮晶晶 */
+  .sp {
+    position: absolute;
+    left: var(--x); top: var(--y);
+    width: var(--s, 10px); height: var(--s, 10px);
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0;
+    animation: spTwinkle var(--d, 2.8s) ease-in-out var(--dl, 0s) infinite;
+  }
+  .sp::before {
+    content: "";
+    position: absolute;
+    inset: -60%;
+    background: radial-gradient(circle, #ffffff 0%, rgba(255, 255, 255, 0.9) 30%, rgba(255, 255, 255, 0) 70%);
+    clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%);
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.95));
+  }
+  .sp-pink::before {
+    background: radial-gradient(circle, #ffd9de 0%, rgba(255, 190, 198, 0.85) 40%, rgba(255, 190, 198, 0) 75%);
+  }
+  .sp-gold::before {
+    background: radial-gradient(circle, #ffedcb 0%, rgba(247, 220, 170, 0.85) 40%, rgba(247, 220, 170, 0) 75%);
+  }
+  @keyframes spTwinkle {
+    0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+    50%      { opacity: 1; transform: scale(1) rotate(20deg); }
+  }
+
+  /* 柔光滤镜层 */
+  .hero-glow {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    background:
+      radial-gradient(40% 32% at 24% 22%, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0) 70%),
+      radial-gradient(44% 36% at 76% 26%, rgba(255, 229, 234, 0.75), rgba(255, 229, 234, 0) 70%),
+      radial-gradient(60% 42% at 50% 90%, rgba(255, 244, 234, 0.7), rgba(255, 244, 234, 0) 72%);
+    mix-blend-mode: screen;
+    filter: blur(4px);
+    opacity: 0;
+    animation: glowIn 2.6s ease 8.6s forwards;
+  }
+  @keyframes glowIn { to { opacity: 0.85; } }
+
   /* ---------- 通用板块 ---------- */
   section {
     max-width: 1200px;
@@ -348,9 +551,17 @@
     .about-wrap { grid-template-columns: 1fr; gap: 40px; }
     .works-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
     .exhibitions li { grid-template-columns: 80px 1fr; gap: 16px; }
+    .hero-lace-top { top: 58px; }
+    .collage-tl { left: 2%; top: 12%; transform: rotate(-6deg) scale(0.8); }
+    .collage-tr { right: 2%; top: 12%; transform: rotate(4deg) scale(0.85); }
+    .collage-bl { left: 3%; bottom: 9%; }
+    .doily { width: 110px; }
+    .collage-br { right: 3%; bottom: 12%; transform: rotate(5deg) scale(0.8); }
   }
   @media (max-width: 520px) {
     .works-grid { grid-template-columns: 1fr; }
+    .collage-bl, .collage-br { display: none; }
+    .paper { width: 108px; }
   }
 </style>
 </head>
@@ -369,11 +580,102 @@
 
 <!-- 首屏 -->
 <header class="hero">
-  <p class="hero-eyebrow">Carnet de douceur</p>
-  <h1 class="hero-title">把温柔<br>慢慢画给你看</h1>
-  <div class="hero-ornament"><i></i><b></b><i></i></div>
-  <p class="hero-en">Chen Yanli</p>
-  <p class="hero-fr">Un peu de douceur, chaque jour.</p>
+  <!-- 白色蕾丝边 -->
+  <div class="hero-lace hero-lace-top" aria-hidden="true"></div>
+  <div class="hero-lace hero-lace-bottom" aria-hidden="true"></div>
+
+  <!-- 朦胧柔光雾 -->
+  <div class="hero-haze" aria-hidden="true">
+    <i class="haze haze-1"></i>
+    <i class="haze haze-2"></i>
+    <i class="haze haze-3"></i>
+  </div>
+
+  <!-- 法式复古拼贴 -->
+  <div class="collage collage-tl" aria-hidden="true">
+    <div class="paper">
+      <span class="paper-word">souvenir</span>
+      <span class="paper-lines"></span>
+    </div>
+    <span class="tape tape-a"></span>
+    <svg class="rose rose-a" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+      <path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/>
+      <path d="M46 40 q9 0 12 9 q-9 1 -14 -5" fill="#9bb292"/>
+      <circle cx="30" cy="30" r="16" fill="#e9b9bf"/>
+      <circle cx="24" cy="25" r="9" fill="#f2cdd2"/>
+      <circle cx="36" cy="33" r="8" fill="#f6dade"/>
+      <path d="M30 22 q7 4 3 10 q-6 5 -9 -1 q-1 -8 6 -9" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <div class="collage collage-tr" aria-hidden="true">
+    <div class="stamp">
+      <svg class="rose" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/>
+        <circle cx="30" cy="28" r="15" fill="#e9b9bf"/>
+        <circle cx="24" cy="24" r="8" fill="#f2cdd2"/>
+        <path d="M30 21 q6 4 2 9 q-6 4 -8 -1 q0 -7 6 -8" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <span class="stamp-text">PARIS</span>
+    </div>
+  </div>
+
+  <div class="collage collage-bl" aria-hidden="true">
+    <svg class="doily" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <g fill="none" stroke="#ffffff" stroke-width="2.5">
+        <circle cx="100" cy="100" r="88" stroke-dasharray="0.1 9" stroke-linecap="round" stroke-width="7"/>
+        <circle cx="100" cy="100" r="72"/>
+        <circle cx="100" cy="100" r="60" stroke-dasharray="1.5 7"/>
+      </g>
+      <g fill="#ffffff" opacity="0.9">
+        <ellipse cx="100" cy="30" rx="9" ry="18"/>
+        <ellipse cx="100" cy="30" rx="9" ry="18" transform="rotate(45 100 100)"/>
+        <ellipse cx="100" cy="30" rx="9" ry="18" transform="rotate(90 100 100)"/>
+        <ellipse cx="100" cy="30" rx="9" ry="18" transform="rotate(135 100 100)"/>
+        <ellipse cx="100" cy="30" rx="9" ry="18" transform="rotate(180 100 100)"/>
+        <ellipse cx="100" cy="30" rx="9" ry="18" transform="rotate(225 100 100)"/>
+        <ellipse cx="100" cy="30" rx="9" ry="18" transform="rotate(270 100 100)"/>
+        <ellipse cx="100" cy="30" rx="9" ry="18" transform="rotate(315 100 100)"/>
+        <circle cx="100" cy="100" r="7"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="collage collage-br" aria-hidden="true">
+    <div class="paper paper-b">
+      <span class="paper-word">à bientôt</span>
+      <span class="paper-lines"></span>
+    </div>
+    <span class="tape tape-b"></span>
+    <span class="seal"></span>
+  </div>
+
+  <!-- 闪烁亮晶晶 -->
+  <i class="sp" style="--x:8%;--y:26%;--s:11px;--dl:9.0s;--d:2.6s"></i>
+  <i class="sp sp-pink" style="--x:15%;--y:58%;--s:8px;--dl:9.6s;--d:3.1s"></i>
+  <i class="sp" style="--x:22%;--y:16%;--s:8px;--dl:10.1s;--d:2.4s"></i>
+  <i class="sp sp-gold" style="--x:28%;--y:74%;--s:12px;--dl:9.3s;--d:3.4s"></i>
+  <i class="sp" style="--x:38%;--y:12%;--s:7px;--dl:10.4s;--d:2.8s"></i>
+  <i class="sp sp-pink" style="--x:46%;--y:84%;--s:9px;--dl:9.9s;--d:3s"></i>
+  <i class="sp" style="--x:56%;--y:10%;--s:10px;--dl:9.5s;--d:2.5s"></i>
+  <i class="sp sp-gold" style="--x:64%;--y:80%;--s:8px;--dl:10.6s;--d:3.2s"></i>
+  <i class="sp" style="--x:74%;--y:18%;--s:12px;--dl:9.2s;--d:2.7s"></i>
+  <i class="sp sp-pink" style="--x:82%;--y:34%;--s:8px;--dl:10.2s;--d:3s"></i>
+  <i class="sp" style="--x:90%;--y:58%;--s:10px;--dl:9.7s;--d:2.9s"></i>
+  <i class="sp sp-gold" style="--x:86%;--y:76%;--s:7px;--dl:10.8s;--d:3.5s"></i>
+  <i class="sp" style="--x:12%;--y:42%;--s:7px;--dl:10.8s;--d:2.3s"></i>
+  <i class="sp sp-pink" style="--x:68%;--y:64%;--s:9px;--dl:10.3s;--d:3.3s"></i>
+
+  <!-- 柔光滤镜层 -->
+  <div class="hero-glow" aria-hidden="true"></div>
+
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Carnet de douceur</p>
+    <h1 class="hero-title">把温柔<br>慢慢画给你看</h1>
+    <div class="hero-ornament"><i></i><b></b><i></i></div>
+    <p class="hero-en">Chen Yanli</p>
+    <p class="hero-fr">Un peu de douceur, chaque jour.</p>
+  </div>
   <span class="scroll-hint">向下滚动</span>
 </header>
 
@@ -539,6 +841,7 @@
 
   let motes = [];
   let petals = [];
+  let glints = [];
 
   function buildMotes(){
     motes = [];
@@ -570,6 +873,19 @@
         vy: (Math.random() * 0.12 + 0.05) * DPR,
         alpha: Math.random() * 0.05 + 0.038,
         born: Math.random() * 3
+      });
+    }
+
+    glints = [];
+    for (let i = 0; i < 16; i++){
+      glints.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: (Math.random() * 3.5 + 2.5) * DPR,
+        vy: (Math.random() * 0.05 + 0.02) * DPR,
+        speed: Math.random() * 2 + 1.2,
+        phase: Math.random() * Math.PI * 2,
+        born: Math.random() * 2
       });
     }
   }
@@ -631,6 +947,28 @@
       ctx.drawImage(m.sprite, x - r, m.y - r, r * 2, r * 2);
     }
     ctx.globalAlpha = 1;
+
+    // 亮晶晶星芒，轻轻闪烁
+    for (const g of glints){
+      const life = clamp((t - g.born) / 1.6, 0, 1);
+      if (life <= 0) continue;
+      g.y -= g.vy;
+      if (g.y < -20 * DPR){ g.y = H + 20 * DPR; g.x = Math.random() * W; }
+      const tw = 0.5 + 0.5 * Math.sin(t * g.speed + g.phase);
+      const a = tw * life * outFade;
+      if (a < 0.03) continue;
+      const r = g.r * (0.7 + 0.5 * tw);
+      ctx.strokeStyle = 'rgba(255,255,255,' + (a * 0.9) + ')';
+      ctx.lineWidth = 1.1 * DPR;
+      ctx.beginPath();
+      ctx.moveTo(g.x - r, g.y); ctx.lineTo(g.x + r, g.y);
+      ctx.moveTo(g.x, g.y - r); ctx.lineTo(g.x, g.y + r);
+      ctx.stroke();
+      ctx.fillStyle = 'rgba(255,255,255,' + a + ')';
+      ctx.beginPath();
+      ctx.arc(g.x, g.y, g.r * 0.22, 0, Math.PI * 2);
+      ctx.fill();
+    }
 
     // 复古边缘晕影
     const vig = ctx.createRadialGradient(W / 2, H / 2, Math.min(W, H) * 0.32, W / 2, H / 2, Math.max(W, H) * 0.78);
