@@ -93,7 +93,7 @@
     perspective: 2600px;
     transform: translateX(-25%) scale(0.92) rotate(-1.4deg);
     transition: transform 1.2s cubic-bezier(0.45, 0.06, 0.2, 1);
-    filter: drop-shadow(0 24px 42px rgba(120, 70, 80, 0.28));
+    filter: drop-shadow(0 22px 40px rgba(216, 164, 180, 0.38));
     cursor: pointer;
   }
   .fb-book.opened { transform: translateX(0) scale(1) rotate(0deg); }
@@ -109,23 +109,23 @@
     left: calc(50% - 13px);
     top: 0.4%; bottom: 0.4%;
     width: 14px;
-    background: linear-gradient(90deg, rgba(52, 30, 22, 0), rgba(52, 30, 22, 0.5) 55%, rgba(30, 16, 12, 0.72));
+    background: linear-gradient(90deg, rgba(216, 170, 182, 0), rgba(216, 170, 182, 0.42) 55%, rgba(188, 138, 152, 0.58));
     border-radius: 10px 0 0 10px;
   }
   .fb-edge-r {
     left: calc(100% - 1px);
     top: 1.6%; bottom: 1.2%;
     width: 9px;
-    background: repeating-linear-gradient(0deg, #f0e5cd 0 2px, #d8c6a4 2px 4px);
+    background: repeating-linear-gradient(0deg, #fdf3ee 0 2px, #f3dee3 2px 4px);
     border-radius: 0 3px 3px 0;
-    box-shadow: 4px 5px 12px rgba(60, 35, 25, 0.35);
+    box-shadow: 4px 5px 12px rgba(200, 150, 165, 0.35);
   }
   .fb-edge-b {
     left: calc(50% + 2px); right: -5px; bottom: -8px;
     height: 9px;
-    background: repeating-linear-gradient(90deg, #f0e5cd 0 2px, #d8c6a4 2px 4px);
+    background: repeating-linear-gradient(90deg, #fdf3ee 0 2px, #f3dee3 2px 4px);
     border-radius: 0 0 4px 4px;
-    box-shadow: 0 6px 12px rgba(60, 35, 25, 0.3);
+    box-shadow: 0 6px 12px rgba(200, 150, 165, 0.3);
   }
   .fb-book.opened .fb-spine,
   .fb-book.opened .fb-edge-r,
@@ -143,9 +143,9 @@
     left: 0;
     border-radius: 12px 0 0 12px;
     background:
-      radial-gradient(120% 90% at 30% 10%, rgba(255, 240, 214, 0.18), rgba(255, 240, 214, 0) 55%),
-      linear-gradient(135deg, #b98d92, #9c707c 55%, #84565f);
-    box-shadow: inset -16px 0 30px rgba(60, 30, 36, 0.4);
+      radial-gradient(120% 90% at 30% 10%, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0) 55%),
+      linear-gradient(135deg, #f6dfe5, #eccdd6 55%, #e3bcc8);
+    box-shadow: inset -16px 0 30px rgba(196, 148, 162, 0.28);
   }
   .fb-static-r {
     left: 50%;
@@ -204,29 +204,53 @@
     text-align: center;
   }
 
-  /* 封面：做旧羊皮纸 + 古堡剪影 + 镂空蕾丝框 + 烫金花体 */
+  /* 封面：奶油水彩晕染 + 薄纱珠光 + 细蕾丝 + 香槟花体 */
   .fb-cover-page {
     background-image:
-      radial-gradient(120% 90% at 50% 0%, rgba(255, 240, 214, 0.32), rgba(255, 240, 214, 0) 55%),
-      radial-gradient(130% 110% at 50% 120%, rgba(56, 33, 22, 0.62), rgba(56, 33, 22, 0) 58%),
-      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='b'><feTurbulence type='fractalNoise' baseFrequency='0.016 0.028' numOctaves='3' seed='7'/><feColorMatrix values='0 0 0 0 0.36 0 0 0 0 0.26 0 0 0 0 0.16 0 0 0 0.4 0'/></filter><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.42 0 0 0 0 0.33 0 0 0 0 0.22 0 0 0 0.6 0'/></filter><rect width='260' height='260' filter='url(%23b)'/><rect width='260' height='260' filter='url(%23n)' opacity='0.55'/></svg>"),
-      linear-gradient(155deg, #d8bf96 0%, #c4a57a 32%, #a9885f 60%, #8a6b4b 100%);
-    background-size: auto, auto, 260px 260px, auto;
-    box-shadow: inset 0 0 60px rgba(60, 35, 22, 0.45), inset 18px 0 34px rgba(50, 28, 18, 0.4);
+      radial-gradient(58% 46% at 20% 16%, rgba(249, 203, 216, 0.55), rgba(249, 203, 216, 0) 70%),
+      radial-gradient(52% 44% at 82% 22%, rgba(214, 201, 228, 0.5), rgba(214, 201, 228, 0) 70%),
+      radial-gradient(56% 48% at 78% 86%, rgba(197, 216, 235, 0.45), rgba(197, 216, 235, 0) 72%),
+      radial-gradient(64% 52% at 20% 84%, rgba(252, 231, 216, 0.55), rgba(252, 231, 216, 0) 72%),
+      linear-gradient(115deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.4) 48%, rgba(255, 255, 255, 0) 56%),
+      radial-gradient(90% 80% at 50% 42%, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0) 78%),
+      linear-gradient(rgba(255, 252, 250, 0.72), rgba(255, 250, 248, 0.62)),
+      url("背景1.jpg");
+    background-size: auto, auto, auto, auto, auto, auto, auto, cover;
+    background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 50% 32%;
+    box-shadow: inset 0 0 46px rgba(255, 255, 255, 0.65), inset 16px 0 30px rgba(206, 164, 176, 0.16);
   }
-  .fb-castle {
+  .fb-cover-page::after {
+    content: "";
     position: absolute;
-    left: 12%; right: 12%; bottom: 3.5%;
-    opacity: 0.16;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(45% 32% at 50% 30%, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 70%);
     pointer-events: none;
   }
-  .fb-castle svg { width: 100%; display: block; }
+  .fb-corner-rose {
+    position: absolute;
+    width: 13%;
+    z-index: 3;
+    opacity: 0.9;
+    pointer-events: none;
+  }
+  .fb-corner-rose.tl { top: 2.5%; left: 4%; transform: rotate(-12deg); }
+  .fb-corner-rose.br { bottom: 3%; right: 4%; transform: rotate(168deg); }
+  .fb-bow {
+    position: absolute;
+    top: 3.4%;
+    left: 50%;
+    width: 12%;
+    transform: translateX(-50%);
+    z-index: 3;
+    pointer-events: none;
+  }
 
   /* 白色镂空蕾丝边框（婚礼请柬风） */
   .fb-lace-frame {
     position: absolute;
-    inset: 6% 8%;
-    border: 18px solid transparent;
+    inset: 6.5% 8.5%;
+    border: 12px solid transparent;
     border-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='48' height='48' viewBox='0 0 48 48'><defs><g id='s'><path d='M16 0h16v2.6H16z' fill='%23ffffff'/><circle cx='24' cy='8.6' r='6.2' fill='none' stroke='%23ffffff' stroke-width='2.4'/><circle cx='24' cy='8.6' r='1.5' fill='%23ffffff'/><circle cx='17.8' cy='13.4' r='1.3' fill='%23ffffff'/><circle cx='30.2' cy='13.4' r='1.3' fill='%23ffffff'/></g><g id='c'><path d='M0 0h16v2.6H2.6V16H0z' fill='%23ffffff'/><circle cx='9.4' cy='9.4' r='2.6' fill='none' stroke='%23ffffff' stroke-width='1.5'/></g></defs><use xlink:href='%23c'/><use xlink:href='%23s'/><use xlink:href='%23s' transform='rotate(90 24 24)'/><use xlink:href='%23s' transform='rotate(180 24 24)'/><use xlink:href='%23s' transform='rotate(270 24 24)'/><use xlink:href='%23c' transform='rotate(90 24 24)'/><use xlink:href='%23c' transform='rotate(180 24 24)'/><use xlink:href='%23c' transform='rotate(270 24 24)'/></svg>") 16 round;
     pointer-events: none;
   }
@@ -242,48 +266,48 @@
   .fb-sprig { width: 15%; margin-bottom: 4%; opacity: 0.95; }
   .fb-cover-eyebrow {
     font-family: "Cormorant Garamond", "Optima", Georgia, serif;
-    font-size: clamp(10px, 1.1vw, 13px);
-    letter-spacing: 0.42em;
-    text-indent: 0.42em;
+    font-size: clamp(9px, 1vw, 12px);
+    letter-spacing: 0.5em;
+    text-indent: 0.5em;
     text-transform: uppercase;
-    color: #f3e2c8;
-    text-shadow: 0 1px 2px rgba(60, 35, 20, 0.5);
+    color: #c49aa6;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.7);
     margin-bottom: 2%;
   }
   .fb-gold {
     font-family: "Pinyon Script", "Edwardian Script ITC", "Snell Roundhand", "Apple Chancery", cursive;
     font-weight: 400;
-    background: linear-gradient(100deg, #7d5f24 0%, #c9a44c 20%, #f6e7a9 38%, #d9b45c 52%, #8a6a2f 70%, #e8cd7e 88%, #a8834a 100%);
+    background: linear-gradient(100deg, #c9a86f 0%, #e8d3a5 25%, #f7ecd2 45%, #dfc493 60%, #c3a06b 80%, #eeddb6 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    filter: drop-shadow(0 1px 1px rgba(50, 28, 16, 0.55)) drop-shadow(0 0 14px rgba(247, 231, 168, 0.25));
+    filter: drop-shadow(0 1px 1px rgba(255, 255, 255, 0.8)) drop-shadow(0 3px 10px rgba(198, 150, 164, 0.4));
   }
-  .fb-cover-title { font-size: clamp(38px, 5.4vw, 62px); line-height: 1.25; padding: 0 4%; }
+  .fb-cover-title { font-size: clamp(30px, 4.2vw, 46px); line-height: 1.3; padding: 0 4%; }
   .fb-cover-sub {
-    margin-top: 4%;
-    font-size: clamp(12px, 1.4vw, 17px);
-    letter-spacing: 0.3em;
-    text-indent: 0.3em;
-    color: #f7ead2;
-    text-shadow: 0 1px 2px rgba(60, 35, 20, 0.55);
+    margin-top: 5%;
+    font-size: clamp(11px, 1.25vw, 15px);
+    letter-spacing: 0.5em;
+    text-indent: 0.5em;
+    color: #b78f9c;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.7);
   }
   .fb-cover-sub2 {
-    margin-top: 2.5%;
+    margin-top: 3%;
     font-family: "Cormorant Garamond", Georgia, serif;
-    font-size: clamp(9px, 1vw, 12px);
-    letter-spacing: 0.34em;
-    text-indent: 0.34em;
-    color: rgba(247, 234, 210, 0.85);
+    font-size: clamp(8px, 0.9vw, 11px);
+    letter-spacing: 0.4em;
+    text-indent: 0.4em;
+    color: rgba(183, 143, 156, 0.8);
   }
   .fb-cover-open {
-    margin-top: 7%;
+    margin-top: 8%;
     font-family: "Cormorant Garamond", Georgia, serif;
     font-style: italic;
-    font-size: clamp(10px, 1.1vw, 14px);
-    letter-spacing: 0.22em;
-    color: #f7ead2;
-    text-shadow: 0 1px 2px rgba(60, 35, 20, 0.5);
+    font-size: clamp(9px, 1vw, 12px);
+    letter-spacing: 0.3em;
+    color: #cba8b2;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.7);
     animation: fbPulse 2.2s ease-in-out infinite;
   }
   @keyframes fbPulse {
@@ -521,8 +545,8 @@
     opacity: 0;
     transition: opacity 0.8s ease 0.7s;
     background-image:
-      radial-gradient(ellipse 14px 7.5px at 50% 50%, rgba(0, 0, 0, 0) 52%, rgba(133, 101, 94, 0.85) 60%, rgba(66, 40, 44, 0.9) 68%, rgba(0, 0, 0, 0) 76%),
-      radial-gradient(circle 3px at 50% 50%, rgba(74, 48, 50, 0.5) 2.6px, rgba(0, 0, 0, 0) 3.2px);
+      radial-gradient(ellipse 14px 7.5px at 50% 50%, rgba(0, 0, 0, 0) 52%, rgba(196, 158, 170, 0.85) 60%, rgba(150, 110, 124, 0.9) 68%, rgba(0, 0, 0, 0) 76%),
+      radial-gradient(circle 3px at 50% 50%, rgba(150, 110, 124, 0.45) 2.6px, rgba(0, 0, 0, 0) 3.2px);
     background-size: 30px 42px, 30px 42px;
     background-repeat: repeat-y, repeat-y;
     background-position: center 4px, center 4px;
@@ -557,7 +581,7 @@
   @media (max-width: 700px) {
     .fb-book { width: 96vw; }
     .fb-btn { width: 36px; height: 36px; font-size: 17px; }
-    .fb-lace-frame { border-width: 12px; inset: 5% 6.5%; }
+    .fb-lace-frame { border-width: 9px; inset: 5.5% 7%; }
     .fb-lace-photo { border-width: 10px; }
     .fb-coil { width: 20px; margin-left: -10px; background-size: 20px 30px, 20px 30px; }
     .fb-post::after { font-size: 6px; }
@@ -1109,10 +1133,12 @@
       <!-- 第 1 页：封面 / 照片一 -->
       <div class="fb-sheet">
         <div class="fb-face fb-front fb-cover-page">
-          <div class="fb-castle" aria-hidden="true"><svg viewBox="0 0 222 70" xmlns="http://www.w3.org/2000/svg"><circle cx="188" cy="16" r="9" fill="#3a2418"/><path d="M4 70 V44 h9 v-8 h6 v8 h9 V30 h5 v-10 h6 v10 h6 v14 h11 V34 h6 v-7 h6 v7 h7 v10 h12 V22 h5 v-10 h7 v10 h6 v26 h11 V36 h6 v-7 h6 v7 h7 v8 h12 V28 h5 v-10 h7 v10 h6 v20 h11 V38 h6 v-7 h6 v7 h7 v6 h9 v-9 h6 v9 h6 v26 Z" fill="#3a2418"/></svg></div>
           <div class="fb-lace-frame" aria-hidden="true"></div>
+          <svg class="fb-bow" viewBox="0 0 60 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M30 16 C19 4 7 7 9 16 C7 25 19 26 30 16 C41 26 53 25 51 16 C53 7 41 4 30 16 Z" fill="#f4c7d1" opacity="0.9"/><path d="M30 16 C24 10 16 10 15 16 C16 22 24 22 30 16 C36 22 44 22 45 16 C44 10 36 10 30 16 Z" fill="#f9dde3"/><circle cx="30" cy="16" r="3.6" fill="#e8aab8"/><path d="M27 19 l-3 9 M33 19 l3 9" stroke="#f4c7d1" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>
+          <svg class="fb-corner-rose tl" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#c9d8c0"/><path d="M46 40 q9 0 12 9 q-9 1 -14 -5" fill="#bfd3b6"/><circle cx="30" cy="30" r="15" fill="#f2c3cd"/><circle cx="25" cy="26" r="8.5" fill="#f9dde3"/><path d="M30 21 q6 4 2.5 9 q-5.5 4.5 -8.5 -1 q-1 -7 5.5 -8" fill="none" stroke="#d9a3ae" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <svg class="fb-corner-rose br" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#c9d8c0"/><path d="M46 40 q9 0 12 9 q-9 1 -14 -5" fill="#bfd3b6"/><circle cx="30" cy="30" r="15" fill="#f2c3cd"/><circle cx="25" cy="26" r="8.5" fill="#f9dde3"/><path d="M30 21 q6 4 2.5 9 q-5.5 4.5 -8.5 -1 q-1 -7 5.5 -8" fill="none" stroke="#d9a3ae" stroke-width="1.5" stroke-linecap="round"/></svg>
           <div class="fb-content fb-cover-content">
-            <svg class="fb-sprig" viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M30 36 V22" stroke="#a9bd9f" stroke-width="1.6" fill="none"/><path d="M30 30 q-10 2 -14 -6 q10 -2 14 6" fill="#b6c7ab"/><path d="M30 26 q10 2 14 -6 q-10 -2 -14 6" fill="#a9bd9f"/><circle cx="30" cy="14" r="10" fill="#e9b9bf"/><circle cx="26" cy="11" r="5.5" fill="#f2cdd2"/><path d="M30 8 q5 3 2 7 q-5 3 -6.5 -1 q-0.5 -5 4.5 -6" fill="none" stroke="#c98a94" stroke-width="1.3" stroke-linecap="round"/></svg>
+            <svg class="fb-sprig" viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M30 36 V22" stroke="#b7cbb0" stroke-width="1.6" fill="none"/><path d="M30 30 q-10 2 -14 -6 q10 -2 14 6" fill="#c9d8c0"/><path d="M30 26 q10 2 14 -6 q-10 -2 -14 6" fill="#bfd3b6"/><circle cx="30" cy="14" r="10" fill="#f2c3cd"/><circle cx="26" cy="11" r="5.5" fill="#f9dde3"/><path d="M30 8 q5 3 2 7 q-5 3 -6.5 -1 q-0.5 -5 4.5 -6" fill="none" stroke="#d9a3ae" stroke-width="1.3" stroke-linecap="round"/></svg>
             <p class="fb-cover-eyebrow">Carnet de fleurs</p>
             <h1 class="fb-gold fb-cover-title">Mon Carnet</h1>
             <p class="fb-cover-sub">· 燕丽的花园手账 ·</p>
