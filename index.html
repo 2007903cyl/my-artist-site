@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>陈燕丽 — 艺术家</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500;1,600&family=Pinyon+Script&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -88,27 +91,68 @@
     width: min(92vw, 920px);
     aspect-ratio: 2 / 1.36;
     perspective: 2600px;
+    transform: translateX(-25%) scale(0.92) rotate(-1.4deg);
+    transition: transform 1.2s cubic-bezier(0.45, 0.06, 0.2, 1);
     filter: drop-shadow(0 24px 42px rgba(120, 70, 80, 0.28));
+    cursor: pointer;
   }
-  .fb-page-parchment {
-    background:
-      radial-gradient(120% 90% at 30% 15%, rgba(255, 252, 244, 0.95), rgba(255, 252, 244, 0) 60%),
-      radial-gradient(100% 80% at 85% 90%, rgba(206, 176, 132, 0.22), rgba(206, 176, 132, 0) 55%),
-      repeating-linear-gradient(0deg, rgba(150, 120, 80, 0.05) 0 2px, rgba(0, 0, 0, 0) 2px 5px),
-      #f3e9d2;
+  .fb-book.opened { transform: translateX(0) scale(1) rotate(0deg); }
+
+  /* 合上书时的书脊与书页厚度 */
+  .fb-spine, .fb-edge-r, .fb-edge-b {
+    position: absolute;
+    z-index: 60;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
   }
-  .fb-static { position: absolute; top: 0; width: 50%; height: 100%; }
+  .fb-spine {
+    left: calc(50% - 13px);
+    top: 0.4%; bottom: 0.4%;
+    width: 14px;
+    background: linear-gradient(90deg, rgba(52, 30, 22, 0), rgba(52, 30, 22, 0.5) 55%, rgba(30, 16, 12, 0.72));
+    border-radius: 10px 0 0 10px;
+  }
+  .fb-edge-r {
+    left: calc(100% - 1px);
+    top: 1.6%; bottom: 1.2%;
+    width: 9px;
+    background: repeating-linear-gradient(0deg, #f0e5cd 0 2px, #d8c6a4 2px 4px);
+    border-radius: 0 3px 3px 0;
+    box-shadow: 4px 5px 12px rgba(60, 35, 25, 0.35);
+  }
+  .fb-edge-b {
+    left: calc(50% + 2px); right: -5px; bottom: -8px;
+    height: 9px;
+    background: repeating-linear-gradient(90deg, #f0e5cd 0 2px, #d8c6a4 2px 4px);
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 6px 12px rgba(60, 35, 25, 0.3);
+  }
+  .fb-book.opened .fb-spine,
+  .fb-book.opened .fb-edge-r,
+  .fb-book.opened .fb-edge-b { opacity: 0; }
+
+  /* 静态页：封底（左）与简介（右） */
+  .fb-static {
+    position: absolute;
+    top: 0; width: 50%; height: 100%;
+    opacity: 0;
+    transition: opacity 0.9s ease 0.4s;
+  }
+  .fb-book.opened .fb-static { opacity: 1; }
   .fb-static-l {
     left: 0;
     border-radius: 12px 0 0 12px;
-    background: linear-gradient(135deg, #caa0a4, #b08188 55%, #9c6f78);
-    box-shadow: inset -16px 0 30px rgba(60, 30, 36, 0.35);
+    background:
+      radial-gradient(120% 90% at 30% 10%, rgba(255, 240, 214, 0.18), rgba(255, 240, 214, 0) 55%),
+      linear-gradient(135deg, #b98d92, #9c707c 55%, #84565f);
+    box-shadow: inset -16px 0 30px rgba(60, 30, 36, 0.4);
   }
   .fb-static-r {
     left: 50%;
     border-radius: 0 12px 12px 0;
     box-shadow: inset 16px 0 30px rgba(120, 80, 60, 0.16);
   }
+
   .fb-sheet {
     position: absolute;
     top: 0; left: 50%;
@@ -135,6 +179,20 @@
     border-radius: 12px 0 0 12px;
     box-shadow: inset -18px 0 30px rgba(120, 80, 60, 0.14);
   }
+
+  /* 内页纸张：水彩碎花 + 做旧折痕 + 茶渍 */
+  .fb-page-paper {
+    --bgp: 50% 50%;
+    background-image:
+      radial-gradient(50% 38% at 16% 14%, rgba(255, 253, 246, 0.6), rgba(255, 253, 246, 0) 70%),
+      radial-gradient(62% 48% at 84% 88%, rgba(170, 122, 88, 0.13), rgba(170, 122, 88, 0) 70%),
+      linear-gradient(114deg, rgba(0, 0, 0, 0) 45%, rgba(122, 85, 66, 0.05) 49.6%, rgba(255, 255, 255, 0.3) 50%, rgba(122, 85, 66, 0.05) 50.5%, rgba(0, 0, 0, 0) 55%),
+      linear-gradient(rgba(253, 247, 237, 0.55), rgba(250, 243, 231, 0.42)),
+      url("背景1.jpg");
+    background-size: auto, auto, auto, auto, cover;
+    background-position: 0 0, 0 0, 0 0, 0 0, var(--bgp);
+  }
+
   .fb-content {
     position: absolute;
     inset: 0;
@@ -146,52 +204,86 @@
     text-align: center;
   }
 
-  /* 封面 */
+  /* 封面：做旧羊皮纸 + 古堡剪影 + 镂空蕾丝框 + 烫金花体 */
+  .fb-cover-page {
+    background-image:
+      radial-gradient(120% 90% at 50% 0%, rgba(255, 240, 214, 0.32), rgba(255, 240, 214, 0) 55%),
+      radial-gradient(130% 110% at 50% 120%, rgba(56, 33, 22, 0.62), rgba(56, 33, 22, 0) 58%),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='b'><feTurbulence type='fractalNoise' baseFrequency='0.016 0.028' numOctaves='3' seed='7'/><feColorMatrix values='0 0 0 0 0.36 0 0 0 0 0.26 0 0 0 0 0.16 0 0 0 0.4 0'/></filter><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.42 0 0 0 0 0.33 0 0 0 0 0.22 0 0 0 0.6 0'/></filter><rect width='260' height='260' filter='url(%23b)'/><rect width='260' height='260' filter='url(%23n)' opacity='0.55'/></svg>"),
+      linear-gradient(155deg, #d8bf96 0%, #c4a57a 32%, #a9885f 60%, #8a6b4b 100%);
+    background-size: auto, auto, 260px 260px, auto;
+    box-shadow: inset 0 0 60px rgba(60, 35, 22, 0.45), inset 18px 0 34px rgba(50, 28, 18, 0.4);
+  }
+  .fb-castle {
+    position: absolute;
+    left: 12%; right: 12%; bottom: 3.5%;
+    opacity: 0.16;
+    pointer-events: none;
+  }
+  .fb-castle svg { width: 100%; display: block; }
+
+  /* 白色镂空蕾丝边框（婚礼请柬风） */
+  .fb-lace-frame {
+    position: absolute;
+    inset: 6% 8%;
+    border: 18px solid transparent;
+    border-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='48' height='48' viewBox='0 0 48 48'><defs><g id='s'><path d='M16 0h16v2.6H16z' fill='%23ffffff'/><circle cx='24' cy='8.6' r='6.2' fill='none' stroke='%23ffffff' stroke-width='2.4'/><circle cx='24' cy='8.6' r='1.5' fill='%23ffffff'/><circle cx='17.8' cy='13.4' r='1.3' fill='%23ffffff'/><circle cx='30.2' cy='13.4' r='1.3' fill='%23ffffff'/></g><g id='c'><path d='M0 0h16v2.6H2.6V16H0z' fill='%23ffffff'/><circle cx='9.4' cy='9.4' r='2.6' fill='none' stroke='%23ffffff' stroke-width='1.5'/></g></defs><use xlink:href='%23c'/><use xlink:href='%23s'/><use xlink:href='%23s' transform='rotate(90 24 24)'/><use xlink:href='%23s' transform='rotate(180 24 24)'/><use xlink:href='%23s' transform='rotate(270 24 24)'/><use xlink:href='%23c' transform='rotate(90 24 24)'/><use xlink:href='%23c' transform='rotate(180 24 24)'/><use xlink:href='%23c' transform='rotate(270 24 24)'/></svg>") 16 round;
+    pointer-events: none;
+  }
+  .fb-lace-frame::after {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.28);
+  }
+
+  .fb-cover-content { z-index: 2; }
+  .fb-sprig { width: 15%; margin-bottom: 4%; opacity: 0.95; }
   .fb-cover-eyebrow {
-    font-family: "Optima", Georgia, serif;
+    font-family: "Cormorant Garamond", "Optima", Georgia, serif;
     font-size: clamp(10px, 1.1vw, 13px);
     letter-spacing: 0.42em;
     text-indent: 0.42em;
     text-transform: uppercase;
-    color: #a87e84;
-    margin-bottom: 5%;
+    color: #f3e2c8;
+    text-shadow: 0 1px 2px rgba(60, 35, 20, 0.5);
+    margin-bottom: 2%;
   }
-  .fb-cover-frame {
-    position: relative;
-    width: 88%;
-    padding: 10% 8%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  .fb-cover-oval {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-  }
-  .fb-cover-title {
-    font-size: clamp(17px, 2.3vw, 27px);
+  .fb-gold {
+    font-family: "Pinyon Script", "Edwardian Script ITC", "Snell Roundhand", "Apple Chancery", cursive;
     font-weight: 400;
-    letter-spacing: 0.24em;
-    text-indent: 0.24em;
-    color: #7a4a52;
+    background: linear-gradient(100deg, #7d5f24 0%, #c9a44c 20%, #f6e7a9 38%, #d9b45c 52%, #8a6a2f 70%, #e8cd7e 88%, #a8834a 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 1px 1px rgba(50, 28, 16, 0.55)) drop-shadow(0 0 14px rgba(247, 231, 168, 0.25));
   }
+  .fb-cover-title { font-size: clamp(38px, 5.4vw, 62px); line-height: 1.25; padding: 0 4%; }
   .fb-cover-sub {
-    margin-top: 5%;
-    font-family: Georgia, serif;
-    font-size: clamp(9px, 1vw, 12px);
+    margin-top: 4%;
+    font-size: clamp(12px, 1.4vw, 17px);
     letter-spacing: 0.3em;
     text-indent: 0.3em;
-    color: #a87e84;
+    color: #f7ead2;
+    text-shadow: 0 1px 2px rgba(60, 35, 20, 0.55);
+  }
+  .fb-cover-sub2 {
+    margin-top: 2.5%;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: clamp(9px, 1vw, 12px);
+    letter-spacing: 0.34em;
+    text-indent: 0.34em;
+    color: rgba(247, 234, 210, 0.85);
   }
   .fb-cover-open {
-    margin-top: 6%;
-    font-size: clamp(10px, 1.05vw, 13px);
-    letter-spacing: 0.3em;
-    text-indent: 0.3em;
-    color: #b98c93;
+    margin-top: 7%;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    font-size: clamp(10px, 1.1vw, 14px);
+    letter-spacing: 0.22em;
+    color: #f7ead2;
+    text-shadow: 0 1px 2px rgba(60, 35, 20, 0.5);
     animation: fbPulse 2.2s ease-in-out infinite;
   }
   @keyframes fbPulse {
@@ -199,7 +291,7 @@
     50%      { opacity: 1; }
   }
 
-  /* 拍立得照片页 */
+  /* 拍立得照片 */
   .fb-polaroid {
     position: relative;
     width: 76%;
@@ -208,7 +300,17 @@
     box-shadow: 0 10px 24px rgba(90, 60, 55, 0.28);
     transform: rotate(-2deg);
   }
-  .fb-polaroid.tilt-r { transform: rotate(2deg); }
+  .fb-polaroid.tilt-r { transform: rotate(2.4deg); }
+  .fb-polaroid::before {
+    content: "";
+    position: absolute;
+    top: -4%; left: 50%;
+    width: 34%; height: 7%;
+    transform: translateX(-50%) rotate(-2deg);
+    background: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.7) 0 6px, rgba(214, 201, 228, 0.6) 6px 12px);
+    box-shadow: 0 2px 5px rgba(120, 100, 130, 0.18);
+    clip-path: polygon(3% 0, 97% 8%, 100% 86%, 4% 100%, 0 16%);
+  }
   .fb-polaroid img {
     width: 100%;
     aspect-ratio: 3 / 4;
@@ -219,12 +321,14 @@
   .fb-cap {
     position: absolute;
     bottom: 5%; left: 0; right: 0;
-    font-family: Georgia, serif;
+    font-family: "Cormorant Garamond", Georgia, serif;
     font-style: italic;
-    font-size: clamp(10px, 1.15vw, 14px);
-    letter-spacing: 0.1em;
+    font-size: clamp(11px, 1.25vw, 15px);
+    letter-spacing: 0.08em;
     color: #8a6a6e;
   }
+
+  /* 和纸胶带 */
   .fb-tape-tl, .fb-tape-tr {
     position: absolute;
     top: 3%;
@@ -233,7 +337,7 @@
     background: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.65) 0 6px, rgba(244, 196, 202, 0.65) 6px 12px);
     box-shadow: 0 2px 5px rgba(170, 120, 130, 0.2);
     clip-path: polygon(4% 0, 96% 6%, 100% 88%, 5% 100%, 0 14%);
-    z-index: 2;
+    z-index: 4;
   }
   .fb-tape-tl { left: 8%; transform: rotate(-14deg); }
   .fb-tape-tr {
@@ -241,42 +345,119 @@
     transform: rotate(12deg);
     background: repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.6) 0 6px, rgba(238, 214, 186, 0.6) 6px 12px);
   }
+  .fb-tape-tl.fb-tape-lilac { background: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.65) 0 6px, rgba(197, 184, 214, 0.6) 6px 12px); }
+  .fb-tape-tr.fb-tape-sage { background: repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.6) 0 6px, rgba(178, 199, 168, 0.55) 6px 12px); }
+
+  /* 玫瑰角饰 */
   .fb-rose-corner {
     position: absolute;
-    bottom: 3.5%;
+    bottom: 4.5%;
     width: 17%;
     opacity: 0.9;
+    z-index: 3;
   }
-  .fb-rose-l { left: 5%; transform: rotate(-8deg); }
-  .fb-rose-r { right: 5%; transform: rotate(8deg) scaleX(-1); }
+  .fb-rose-l { left: 6%; transform: rotate(-8deg); }
+  .fb-rose-r { right: 6%; transform: rotate(8deg) scaleX(-1); }
 
-  /* 主图（椭圆相框） */
-  .fb-oval-frame {
-    width: 68%;
+  /* 复古邮票 */
+  .fb-stamp {
+    position: absolute;
+    top: 6.5%; right: 6.5%;
+    width: 17%;
+    aspect-ratio: 4 / 4.8;
+    padding: 1.6%;
+    background: radial-gradient(transparent 2.7px, #fffdf8 3px);
+    background-size: 10px 10px;
+    background-position: -5px -5px;
+    transform: rotate(7deg);
+    box-shadow: 0 5px 12px rgba(90, 60, 55, 0.22);
+    z-index: 4;
+  }
+  .fb-stamp-in {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6%;
+    width: 100%; height: 100%;
+    background: linear-gradient(155deg, #efd2d9 0%, #dba7b4 55%, #c98fa2 100%);
+  }
+  .fb-stamp-in svg { width: 52%; }
+  .fb-stamp-in b {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(8px, 0.9vw, 11px);
+    letter-spacing: 0.18em;
+    color: #7a4a52;
+  }
+  .fb-post {
+    position: absolute;
+    top: -6%; left: -16%;
+    width: 52%;
+    aspect-ratio: 1;
+    border: 1.6px solid rgba(112, 74, 82, 0.5);
+    border-radius: 50%;
+    transform: rotate(-16deg);
+  }
+  .fb-post::after {
+    content: "2026";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Georgia, serif;
+    font-size: 9px;
+    letter-spacing: 1px;
+    color: rgba(112, 74, 82, 0.55);
+  }
+
+  .fb-pageno {
+    position: absolute;
+    bottom: 2.8%; left: 0; right: 0;
+    font-family: Georgia, serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-indent: 0.3em;
+    color: rgba(150, 110, 105, 0.7);
+  }
+
+  /* 主图：白色蕾丝相框 */
+  .fb-lace-photo {
+    width: 80%;
     padding: 4.5%;
     background: #fffdf8;
-    border-radius: 50%;
-    box-shadow: 0 10px 26px rgba(90, 60, 55, 0.28), inset 0 0 0 1px rgba(185, 140, 145, 0.4);
+    background-clip: padding-box;
+    border: 14px solid transparent;
+    border-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='48' height='48' viewBox='0 0 48 48'><defs><g id='s'><path d='M16 0h16v2.6H16z' fill='%23ffffff'/><circle cx='24' cy='8.6' r='6.2' fill='none' stroke='%23ffffff' stroke-width='2.4'/><circle cx='24' cy='8.6' r='1.5' fill='%23ffffff'/><circle cx='17.8' cy='13.4' r='1.3' fill='%23ffffff'/><circle cx='30.2' cy='13.4' r='1.3' fill='%23ffffff'/></g><g id='c'><path d='M0 0h16v2.6H2.6V16H0z' fill='%23ffffff'/><circle cx='9.4' cy='9.4' r='2.6' fill='none' stroke='%23ffffff' stroke-width='1.5'/></g></defs><use xlink:href='%23c'/><use xlink:href='%23s'/><use xlink:href='%23s' transform='rotate(90 24 24)'/><use xlink:href='%23s' transform='rotate(180 24 24)'/><use xlink:href='%23s' transform='rotate(270 24 24)'/><use xlink:href='%23c' transform='rotate(90 24 24)'/><use xlink:href='%23c' transform='rotate(180 24 24)'/><use xlink:href='%23c' transform='rotate(270 24 24)'/></svg>") 16 round;
+    box-shadow: 0 12px 26px rgba(90, 60, 55, 0.3);
+    transform: rotate(-1.2deg);
   }
-  .fb-oval-frame img {
+  .fb-lace-photo img {
     width: 100%;
     aspect-ratio: 3 / 4;
     object-fit: cover;
     object-position: 32% 40%;
-    border-radius: 50%;
     display: block;
     filter: sepia(14%) saturate(0.94);
   }
-  .fb-cap-name { position: static; margin-top: 5%; }
+  .fb-cap-name {
+    margin-top: 4.5%;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    font-size: clamp(11px, 1.2vw, 15px);
+    color: #8a6a6e;
+    line-height: 1.7;
+  }
 
-  /* 简介页 */
+  /* 简介页：诗签排版 */
   .fb-eyebrow {
-    font-family: "Optima", Georgia, serif;
+    font-family: "Cormorant Garamond", "Optima", Georgia, serif;
     font-size: clamp(9px, 1vw, 12px);
     letter-spacing: 0.4em;
     text-indent: 0.4em;
     color: #a87e84;
-    margin-bottom: 4%;
+    margin-bottom: 3%;
   }
   .fb-heading {
     font-size: clamp(17px, 2.2vw, 26px);
@@ -289,7 +470,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    margin: 6% 0;
+    margin: 5% 0;
   }
   .fb-rule i {
     width: clamp(28px, 4vw, 56px);
@@ -298,28 +479,55 @@
   }
   .fb-rule i:last-child { transform: scaleX(-1); }
   .fb-rule b { width: 4px; height: 4px; background: #c58f97; transform: rotate(45deg); }
-  .fb-text {
-    font-size: clamp(11px, 1.2vw, 15px);
+  .fb-poem {
+    font-size: clamp(12px, 1.32vw, 16px);
     line-height: 2.05;
+    letter-spacing: 0.1em;
     color: #6b4850;
-    text-align: justify;
+  }
+  .fb-floret { width: 11%; margin: 3.2% 0; opacity: 0.9; }
+  .fb-sign {
+    margin-top: 4%;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    font-size: clamp(11px, 1.15vw, 14px);
+    letter-spacing: 0.08em;
+    color: #a87e84;
   }
   .fb-text-en {
-    margin-top: 4%;
-    font-family: Georgia, serif;
+    margin-top: 3.5%;
+    font-family: "Cormorant Garamond", Georgia, serif;
     font-style: italic;
-    text-align: center;
     color: #a87e84;
     font-size: clamp(10px, 1.05vw, 13px);
   }
   .fb-more {
-    margin-top: 7%;
+    margin-top: 6%;
     font-size: clamp(10px, 1.05vw, 13px);
     letter-spacing: 0.26em;
     text-indent: 0.26em;
     color: #b98c93;
     animation: fbPulse 2.2s ease-in-out infinite;
   }
+
+  /* 打孔线圈 */
+  .fb-coil {
+    position: absolute;
+    left: 50%; top: 3.5%; bottom: 3.5%;
+    width: 30px;
+    margin-left: -15px;
+    z-index: 55;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.7s;
+    background-image:
+      radial-gradient(ellipse 14px 7.5px at 50% 50%, rgba(0, 0, 0, 0) 52%, rgba(133, 101, 94, 0.85) 60%, rgba(66, 40, 44, 0.9) 68%, rgba(0, 0, 0, 0) 76%),
+      radial-gradient(circle 3px at 50% 50%, rgba(74, 48, 50, 0.5) 2.6px, rgba(0, 0, 0, 0) 3.2px);
+    background-size: 30px 42px, 30px 42px;
+    background-repeat: repeat-y, repeat-y;
+    background-position: center 4px, center 4px;
+  }
+  .fb-book.opened .fb-coil { opacity: 0.5; }
 
   /* 翻页控制条 */
   .fb-controls {
@@ -349,6 +557,10 @@
   @media (max-width: 700px) {
     .fb-book { width: 96vw; }
     .fb-btn { width: 36px; height: 36px; font-size: 17px; }
+    .fb-lace-frame { border-width: 12px; inset: 5% 6.5%; }
+    .fb-lace-photo { border-width: 10px; }
+    .fb-coil { width: 20px; margin-left: -10px; background-size: 20px 30px, 20px 30px; }
+    .fb-post::after { font-size: 6px; }
   }
   .hero .scroll-hint {
     position: absolute;
@@ -866,142 +1078,172 @@
   <!-- 3D 翻页手账 -->
   <div class="fb-stage">
     <div class="fb-book" id="fbBook">
+      <!-- 合上书时的书脊 / 书页厚度 -->
+      <div class="fb-spine" aria-hidden="true"></div>
+      <div class="fb-edge-r" aria-hidden="true"></div>
+      <div class="fb-edge-b" aria-hidden="true"></div>
+
       <!-- 封底（左侧静态） -->
       <div class="fb-static fb-static-l"></div>
 
-      <!-- 最终定格页（右侧静态）：简介 -->
-      <div class="fb-static fb-static-r fb-page-parchment">
+      <!-- 最终定格页（右侧静态）：诗签简介 -->
+      <div class="fb-static fb-static-r fb-page-paper" style="--bgp: 30% 70%">
+        <span class="fb-tape-tl fb-tape-lilac" aria-hidden="true"></span>
+        <span class="fb-tape-tr fb-tape-sage" aria-hidden="true"></span>
         <div class="fb-content">
           <p class="fb-eyebrow">À propos de moi</p>
           <h2 class="fb-heading">关于我</h2>
           <div class="fb-rule"><i></i><b></b><i></i></div>
-          <p class="fb-text">你好呀，我是陈燕丽，天津美术学院环境设计专业的大一学生。喜欢画画、看展、旅行和民谣，正把眼里的温柔，一点一点变成设计的语言。</p>
-          <p class="fb-text fb-text-en">A girl who paints softness into everyday life.</p>
+          <p class="fb-poem">你好呀，我是陈燕丽。<br>天津美术学院 · 环境设计。<br>把日子过成一首小诗，<br>一半烟火，一半花期。</p>
+          <svg class="fb-floret" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><filter id="wc1" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="0.7"/></filter></defs><g filter="url(#wc1)" opacity="0.9"><circle cx="20" cy="11" r="6" fill="#e9b9bf"/><circle cx="28.5" cy="17" r="6" fill="#eec3cb"/><circle cx="25" cy="27" r="6" fill="#e9b9bf"/><circle cx="15" cy="27" r="6" fill="#f2cdd2"/><circle cx="11.5" cy="17" r="6" fill="#eec3cb"/><circle cx="20" cy="19.5" r="4.2" fill="#f6e3b8"/></g></svg>
+          <p class="fb-poem">镜头替我记住风的方向，<br>画笔留下光的温度。</p>
+          <p class="fb-sign">— 燕丽 · 写于花期 —</p>
+          <p class="fb-text-en">A girl who paints softness into everyday life.</p>
           <p class="fb-more">向下滚动，阅读完整的故事 ↓</p>
         </div>
       </div>
 
+      <!-- 打孔线圈 -->
+      <div class="fb-coil" aria-hidden="true"></div>
+
       <!-- 第 1 页：封面 / 照片一 -->
       <div class="fb-sheet">
-        <div class="fb-face fb-front fb-page-parchment">
-          <div class="fb-content">
-            <p class="fb-cover-eyebrow">Mon Carnet</p>
-            <div class="fb-cover-frame">
-              <svg class="fb-cover-oval" viewBox="0 0 240 150" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                <ellipse cx="120" cy="75" rx="104" ry="60" fill="none" stroke="#b98c93" stroke-width="1.4"/>
-                <ellipse cx="120" cy="75" rx="112" ry="68" fill="none" stroke="#b98c93" stroke-width="1" stroke-dasharray="3 5"/>
-                <g transform="translate(2 47) scale(0.55)"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><circle cx="30" cy="28" r="15" fill="#e9b9bf"/><circle cx="24" cy="24" r="8" fill="#f2cdd2"/><path d="M30 21 q6 4 2 9 q-6 4 -8 -1 q0 -7 6 -8" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/></g>
-                <g transform="translate(206 47) scale(0.55)"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><circle cx="30" cy="28" r="15" fill="#e9b9bf"/><circle cx="24" cy="24" r="8" fill="#f2cdd2"/><path d="M30 21 q6 4 2 9 q-6 4 -8 -1 q0 -7 6 -8" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/></g>
-              </svg>
-              <h1 class="fb-cover-title">燕丽的花园手账</h1>
-              <p class="fb-cover-sub">YANLI'S JOURNAL · 2026</p>
-            </div>
-            <p class="fb-cover-open">点击或滚动，翻开手账 →</p>
+        <div class="fb-face fb-front fb-cover-page">
+          <div class="fb-castle" aria-hidden="true"><svg viewBox="0 0 222 70" xmlns="http://www.w3.org/2000/svg"><circle cx="188" cy="16" r="9" fill="#3a2418"/><path d="M4 70 V44 h9 v-8 h6 v8 h9 V30 h5 v-10 h6 v10 h6 v14 h11 V34 h6 v-7 h6 v7 h7 v10 h12 V22 h5 v-10 h7 v10 h6 v26 h11 V36 h6 v-7 h6 v7 h7 v8 h12 V28 h5 v-10 h7 v10 h6 v20 h11 V38 h6 v-7 h6 v7 h7 v6 h9 v-9 h6 v9 h6 v26 Z" fill="#3a2418"/></svg></div>
+          <div class="fb-lace-frame" aria-hidden="true"></div>
+          <div class="fb-content fb-cover-content">
+            <svg class="fb-sprig" viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M30 36 V22" stroke="#a9bd9f" stroke-width="1.6" fill="none"/><path d="M30 30 q-10 2 -14 -6 q10 -2 14 6" fill="#b6c7ab"/><path d="M30 26 q10 2 14 -6 q-10 -2 -14 6" fill="#a9bd9f"/><circle cx="30" cy="14" r="10" fill="#e9b9bf"/><circle cx="26" cy="11" r="5.5" fill="#f2cdd2"/><path d="M30 8 q5 3 2 7 q-5 3 -6.5 -1 q-0.5 -5 4.5 -6" fill="none" stroke="#c98a94" stroke-width="1.3" stroke-linecap="round"/></svg>
+            <p class="fb-cover-eyebrow">Carnet de fleurs</p>
+            <h1 class="fb-gold fb-cover-title">Mon Carnet</h1>
+            <p class="fb-cover-sub">· 燕丽的花园手账 ·</p>
+            <p class="fb-cover-sub2">YANLI'S JOURNAL — MMXXVI</p>
+            <p class="fb-cover-open">Cliquez pour ouvrir · 点击翻开</p>
           </div>
         </div>
-        <div class="fb-face fb-back fb-page-parchment">
+        <div class="fb-face fb-back fb-page-paper" style="--bgp: 15% 20%">
           <div class="fb-content">
-            <span class="fb-tape-tl"></span>
+            <span class="fb-tape-tl" aria-hidden="true"></span>
             <div class="fb-polaroid">
               <img src="photos/flip-01.jpg" alt="手账照片一" loading="lazy" decoding="async">
               <span class="fb-cap">« le printemps » · 春日</span>
             </div>
-            <svg class="fb-rose-corner fb-rose-r" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><path d="M46 40 q9 0 12 9 q-9 1 -14 -5" fill="#9bb292"/><circle cx="30" cy="30" r="16" fill="#e9b9bf"/><circle cx="24" cy="25" r="9" fill="#f2cdd2"/><circle cx="36" cy="33" r="8" fill="#f6dade"/><path d="M30 22 q7 4 3 10 q-6 5 -9 -1 q-1 -8 6 -9" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <svg class="fb-rose-corner fb-rose-r" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><path d="M46 40 q9 0 12 9 q-9 1 -14 -5" fill="#9bb292"/><circle cx="30" cy="30" r="16" fill="#e9b9bf"/><circle cx="24" cy="25" r="9" fill="#f2cdd2"/><circle cx="36" cy="33" r="8" fill="#f6dade"/><path d="M30 22 q7 4 3 10 q-6 5 -9 -1 q-1 -8 6 -9" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <span class="fb-pageno">— p.1 —</span>
           </div>
         </div>
       </div>
 
       <!-- 第 2 页：照片二 / 照片三 -->
       <div class="fb-sheet">
-        <div class="fb-face fb-front fb-page-parchment">
+        <div class="fb-face fb-front fb-page-paper" style="--bgp: 80% 15%">
           <div class="fb-content">
-            <span class="fb-tape-tr"></span>
+            <span class="fb-tape-tr fb-tape-sage" aria-hidden="true"></span>
+            <div class="fb-stamp" aria-hidden="true">
+              <span class="fb-stamp-in">
+                <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><circle cx="30" cy="28" r="14" fill="#e9b9bf"/><circle cx="25" cy="25" r="7.5" fill="#f2cdd2"/><path d="M30 20 q6 4 2 8 q-5 4 -8 -1 q0 -6 6 -7" fill="none" stroke="#c98a94" stroke-width="1.5" stroke-linecap="round"/></svg>
+                <b>PARIS</b>
+              </span>
+              <i class="fb-post"></i>
+            </div>
             <div class="fb-polaroid tilt-r">
               <img src="photos/flip-02.jpg" alt="手账照片二" loading="lazy" decoding="async">
               <span class="fb-cap">« souvenir » · 纪念</span>
             </div>
-            <svg class="fb-rose-corner fb-rose-l" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><path d="M46 40 q9 0 12 9 q-9 1 -14 -5" fill="#9bb292"/><circle cx="30" cy="30" r="16" fill="#e9b9bf"/><circle cx="24" cy="25" r="9" fill="#f2cdd2"/><circle cx="36" cy="33" r="8" fill="#f6dade"/><path d="M30 22 q7 4 3 10 q-6 5 -9 -1 q-1 -8 6 -9" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <svg class="fb-rose-corner fb-rose-l" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><path d="M46 40 q9 0 12 9 q-9 1 -14 -5" fill="#9bb292"/><circle cx="30" cy="30" r="16" fill="#e9b9bf"/><circle cx="24" cy="25" r="9" fill="#f2cdd2"/><circle cx="36" cy="33" r="8" fill="#f6dade"/><path d="M30 22 q7 4 3 10 q-6 5 -9 -1 q-1 -8 6 -9" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <span class="fb-pageno">— p.2 —</span>
           </div>
         </div>
-        <div class="fb-face fb-back fb-page-parchment">
+        <div class="fb-face fb-back fb-page-paper" style="--bgp: 30% 82%">
           <div class="fb-content">
-            <span class="fb-tape-tl"></span>
+            <span class="fb-tape-tl fb-tape-lilac" aria-hidden="true"></span>
             <div class="fb-polaroid">
               <img src="photos/flip-03.jpg" alt="手账照片三" loading="lazy" decoding="async">
               <span class="fb-cap">« douceur » · 温柔</span>
             </div>
-            <svg class="fb-rose-corner fb-rose-r" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><path d="M46 40 q9 0 12 9 q-9 1 -14 -5" fill="#9bb292"/><circle cx="30" cy="30" r="16" fill="#e9b9bf"/><circle cx="24" cy="25" r="9" fill="#f2cdd2"/><circle cx="36" cy="33" r="8" fill="#f6dade"/><path d="M30 22 q7 4 3 10 q-6 5 -9 -1 q-1 -8 6 -9" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <svg class="fb-rose-corner fb-rose-r" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><path d="M46 40 q9 0 12 9 q-9 1 -14 -5" fill="#9bb292"/><circle cx="30" cy="30" r="16" fill="#e9b9bf"/><circle cx="24" cy="25" r="9" fill="#f2cdd2"/><circle cx="36" cy="33" r="8" fill="#f6dade"/><path d="M30 22 q7 4 3 10 q-6 5 -9 -1 q-1 -8 6 -9" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <span class="fb-pageno">— p.3 —</span>
           </div>
         </div>
       </div>
 
       <!-- 第 3 页：照片四 / 照片五 -->
       <div class="fb-sheet">
-        <div class="fb-face fb-front fb-page-parchment">
+        <div class="fb-face fb-front fb-page-paper" style="--bgp: 62% 45%">
           <div class="fb-content">
-            <span class="fb-tape-tr"></span>
+            <span class="fb-tape-tr" aria-hidden="true"></span>
             <div class="fb-polaroid tilt-r">
               <img src="photos/flip-04.jpg" alt="手账照片四" loading="lazy" decoding="async">
               <span class="fb-cap">« promenade » · 漫步</span>
             </div>
-            <svg class="fb-rose-corner fb-rose-l" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><path d="M46 40 q9 0 12 9 q-9 1 -14 -5" fill="#9bb292"/><circle cx="30" cy="30" r="16" fill="#e9b9bf"/><circle cx="24" cy="25" r="9" fill="#f2cdd2"/><circle cx="36" cy="33" r="8" fill="#f6dade"/><path d="M30 22 q7 4 3 10 q-6 5 -9 -1 q-1 -8 6 -9" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <svg class="fb-rose-corner fb-rose-l" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><path d="M46 40 q9 0 12 9 q-9 1 -14 -5" fill="#9bb292"/><circle cx="30" cy="30" r="16" fill="#e9b9bf"/><circle cx="24" cy="25" r="9" fill="#f2cdd2"/><circle cx="36" cy="33" r="8" fill="#f6dade"/><path d="M30 22 q7 4 3 10 q-6 5 -9 -1 q-1 -8 6 -9" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <span class="fb-pageno">— p.4 —</span>
           </div>
         </div>
-        <div class="fb-face fb-back fb-page-parchment">
+        <div class="fb-face fb-back fb-page-paper" style="--bgp: 18% 55%">
           <div class="fb-content">
-            <span class="fb-tape-tl"></span>
+            <span class="fb-tape-tl fb-tape-lilac" aria-hidden="true"></span>
+            <div class="fb-stamp" aria-hidden="true">
+              <span class="fb-stamp-in">
+                <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><circle cx="30" cy="28" r="14" fill="#e9b9bf"/><circle cx="25" cy="25" r="7.5" fill="#f2cdd2"/><path d="M30 20 q6 4 2 8 q-5 4 -8 -1 q0 -6 6 -7" fill="none" stroke="#c98a94" stroke-width="1.5" stroke-linecap="round"/></svg>
+                <b>RÊVE</b>
+              </span>
+              <i class="fb-post"></i>
+            </div>
             <div class="fb-polaroid">
               <img src="photos/flip-05.jpg" alt="手账照片五" loading="lazy" decoding="async">
               <span class="fb-cap">« lumière » · 光影</span>
             </div>
-            <svg class="fb-rose-corner fb-rose-r" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><path d="M46 40 q9 0 12 9 q-9 1 -14 -5" fill="#9bb292"/><circle cx="30" cy="30" r="16" fill="#e9b9bf"/><circle cx="24" cy="25" r="9" fill="#f2cdd2"/><circle cx="36" cy="33" r="8" fill="#f6dade"/><path d="M30 22 q7 4 3 10 q-6 5 -9 -1 q-1 -8 6 -9" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <svg class="fb-rose-corner fb-rose-r" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><path d="M46 40 q9 0 12 9 q-9 1 -14 -5" fill="#9bb292"/><circle cx="30" cy="30" r="16" fill="#e9b9bf"/><circle cx="24" cy="25" r="9" fill="#f2cdd2"/><circle cx="36" cy="33" r="8" fill="#f6dade"/><path d="M30 22 q7 4 3 10 q-6 5 -9 -1 q-1 -8 6 -9" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <span class="fb-pageno">— p.5 —</span>
           </div>
         </div>
       </div>
 
       <!-- 第 4 页：照片六 / 照片七 -->
       <div class="fb-sheet">
-        <div class="fb-face fb-front fb-page-parchment">
+        <div class="fb-face fb-front fb-page-paper" style="--bgp: 85% 78%">
           <div class="fb-content">
-            <span class="fb-tape-tr"></span>
+            <span class="fb-tape-tr fb-tape-sage" aria-hidden="true"></span>
             <div class="fb-polaroid tilt-r">
               <img src="photos/flip-06.jpg" alt="手账照片六" loading="lazy" decoding="async">
               <span class="fb-cap">« fleurs » · 花事</span>
             </div>
-            <svg class="fb-rose-corner fb-rose-l" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><path d="M46 40 q9 0 12 9 q-9 1 -14 -5" fill="#9bb292"/><circle cx="30" cy="30" r="16" fill="#e9b9bf"/><circle cx="24" cy="25" r="9" fill="#f2cdd2"/><circle cx="36" cy="33" r="8" fill="#f6dade"/><path d="M30 22 q7 4 3 10 q-6 5 -9 -1 q-1 -8 6 -9" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <svg class="fb-rose-corner fb-rose-l" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><path d="M46 40 q9 0 12 9 q-9 1 -14 -5" fill="#9bb292"/><circle cx="30" cy="30" r="16" fill="#e9b9bf"/><circle cx="24" cy="25" r="9" fill="#f2cdd2"/><circle cx="36" cy="33" r="8" fill="#f6dade"/><path d="M30 22 q7 4 3 10 q-6 5 -9 -1 q-1 -8 6 -9" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <span class="fb-pageno">— p.6 —</span>
           </div>
         </div>
-        <div class="fb-face fb-back fb-page-parchment">
+        <div class="fb-face fb-back fb-page-paper" style="--bgp: 42% 12%">
           <div class="fb-content">
-            <span class="fb-tape-tl"></span>
+            <span class="fb-tape-tl" aria-hidden="true"></span>
             <div class="fb-polaroid">
               <img src="photos/flip-07.jpg" alt="手账照片七" loading="lazy" decoding="async">
               <span class="fb-cap">« rêverie » · 幻想</span>
             </div>
-            <svg class="fb-rose-corner fb-rose-r" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><path d="M46 40 q9 0 12 9 q-9 1 -14 -5" fill="#9bb292"/><circle cx="30" cy="30" r="16" fill="#e9b9bf"/><circle cx="24" cy="25" r="9" fill="#f2cdd2"/><circle cx="36" cy="33" r="8" fill="#f6dade"/><path d="M30 22 q7 4 3 10 q-6 5 -9 -1 q-1 -8 6 -9" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <svg class="fb-rose-corner fb-rose-r" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><path d="M46 40 q9 0 12 9 q-9 1 -14 -5" fill="#9bb292"/><circle cx="30" cy="30" r="16" fill="#e9b9bf"/><circle cx="24" cy="25" r="9" fill="#f2cdd2"/><circle cx="36" cy="33" r="8" fill="#f6dade"/><path d="M30 22 q7 4 3 10 q-6 5 -9 -1 q-1 -8 6 -9" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <span class="fb-pageno">— p.7 —</span>
           </div>
         </div>
       </div>
 
       <!-- 第 5 页：照片八 / 主图（街景照） -->
       <div class="fb-sheet">
-        <div class="fb-face fb-front fb-page-parchment">
+        <div class="fb-face fb-front fb-page-paper" style="--bgp: 68% 60%">
           <div class="fb-content">
-            <span class="fb-tape-tr"></span>
+            <span class="fb-tape-tr fb-tape-sage" aria-hidden="true"></span>
             <div class="fb-polaroid tilt-r">
               <img src="photos/flip-08.jpg" alt="手账照片八" loading="lazy" decoding="async">
               <span class="fb-cap">« quotidien » · 日常</span>
             </div>
-            <svg class="fb-rose-corner fb-rose-l" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><path d="M46 40 q9 0 12 9 q-9 1 -14 -5" fill="#9bb292"/><circle cx="30" cy="30" r="16" fill="#e9b9bf"/><circle cx="24" cy="25" r="9" fill="#f2cdd2"/><circle cx="36" cy="33" r="8" fill="#f6dade"/><path d="M30 22 q7 4 3 10 q-6 5 -9 -1 q-1 -8 6 -9" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <svg class="fb-rose-corner fb-rose-l" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><path d="M46 40 q9 0 12 9 q-9 1 -14 -5" fill="#9bb292"/><circle cx="30" cy="30" r="16" fill="#e9b9bf"/><circle cx="24" cy="25" r="9" fill="#f2cdd2"/><circle cx="36" cy="33" r="8" fill="#f6dade"/><path d="M30 22 q7 4 3 10 q-6 5 -9 -1 q-1 -8 6 -9" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <span class="fb-pageno">— p.8 —</span>
           </div>
         </div>
-        <div class="fb-face fb-back fb-page-parchment">
+        <div class="fb-face fb-back fb-page-paper" style="--bgp: 55% 80%">
           <div class="fb-content">
-            <span class="fb-tape-tr"></span>
-            <div class="fb-oval-frame">
+            <div class="fb-lace-photo">
               <img src="photos/portrait-main.jpg" alt="陈燕丽街景照" loading="lazy" decoding="async">
             </div>
-            <p class="fb-cap fb-cap-name">« moi » · 陈燕丽 Chen Yanli</p>
+            <p class="fb-cap-name">« moi, dans la rue »<br>陈燕丽 · Chen Yanli</p>
           </div>
         </div>
       </div>
@@ -1009,7 +1251,7 @@
 
     <div class="fb-controls">
       <button class="fb-btn" id="fbPrev" aria-label="上一页">‹</button>
-      <span class="fb-hint" id="fbHint">点击或滚动，翻开手账</span>
+      <span class="fb-hint" id="fbHint">点击封面，翻开手账</span>
       <button class="fb-btn" id="fbNext" aria-label="下一页">›</button>
     </div>
   </div>
@@ -1153,6 +1395,8 @@
   var N = sheets.length;
   var cur = 0;
   var lock = false;
+  var opened = false;
+  var auto = true;
   var hint = document.getElementById('fbHint');
   var prevBtn = document.getElementById('fbPrev');
   var nextBtn = document.getElementById('fbNext');
@@ -1161,12 +1405,13 @@
 
   function updateUI(){
     if (hint) {
-      if (cur === 0) hint.textContent = '封面 · 共 ' + N + ' 页';
+      if (!opened) hint.textContent = '点击封面，翻开手账';
+      else if (cur === 0) hint.textContent = '正在翻开…';
       else if (cur >= N) hint.textContent = '最后一页 · 关于我';
-      else hint.textContent = '第 ' + cur + ' / ' + N + ' 页';
+      else hint.textContent = (auto ? '自动翻页中… ' : '第 ') + cur + (auto ? ' / ' + N : ' / ' + N + ' 页');
     }
-    if (prevBtn) prevBtn.style.visibility = cur === 0 ? 'hidden' : 'visible';
-    if (nextBtn) nextBtn.style.visibility = cur >= N ? 'hidden' : 'visible';
+    if (prevBtn) prevBtn.style.visibility = (opened && cur > 0) ? 'visible' : 'hidden';
+    if (nextBtn) nextBtn.style.visibility = (opened && cur > 0 && cur < N) ? 'visible' : 'hidden';
   }
 
   function flipNext(){
@@ -1188,46 +1433,76 @@
     var s = sheets[cur];
     s.style.zIndex = N - cur;
     s.classList.remove('flipped');
+    if (cur === 0) {
+      opened = false;
+      auto = false;
+      book.classList.remove('opened');
+    }
     updateUI();
     setTimeout(function(){ lock = false; }, 1000);
   }
 
-  if (nextBtn) nextBtn.addEventListener('click', flipNext);
-  if (prevBtn) prevBtn.addEventListener('click', flipPrev);
+  // 自动翻页：封面翻开后依次展示照片，定格在主图简介页
+  function autoFlip(){
+    if (!auto || !opened || cur >= N) return;
+    flipNext();
+    if (cur < N) setTimeout(autoFlip, 1700);
+  }
 
-  // 点击书的左右半区翻页
+  function openBook(){
+    if (opened) return;
+    opened = true;
+    auto = true;
+    book.classList.add('opened');
+    updateUI();
+    setTimeout(autoFlip, 700);
+  }
+
+  if (nextBtn) nextBtn.addEventListener('click', function(){ auto = false; flipNext(); });
+  if (prevBtn) prevBtn.addEventListener('click', function(){ auto = false; flipPrev(); });
+
+  // 点击：未打开时点击封面打开；已打开时左右半区翻页
   book.addEventListener('click', function(e){
+    if (!opened) { openBook(); return; }
     var r = book.getBoundingClientRect();
     var x = e.clientX - r.left;
+    auto = false;
     if (x > r.width / 2) flipNext(); else flipPrev();
   });
 
-  // 滚轮劫持：书未翻完时拦截页面滚动，翻完后放行
+  // 滚轮：未打开时向下滚动打开；打开后翻页；翻完放行
   var wheelLock = false;
   window.addEventListener('wheel', function(e){
     if (window.scrollY > 10) return;
+    if (!opened) {
+      if (e.deltaY > 0) { e.preventDefault(); openBook(); }
+      return;
+    }
     if (cur >= N && e.deltaY > 0) return;
     if (cur <= 0 && e.deltaY < 0) return;
     e.preventDefault();
     if (wheelLock) return;
     wheelLock = true;
+    auto = false;
     if (e.deltaY > 0) flipNext(); else flipPrev();
     setTimeout(function(){ wheelLock = false; }, 1000);
   }, { passive: false });
 
-  // 触屏滑动翻页
+  // 触屏滑动
   var touchX = 0, touchY = 0;
   book.addEventListener('touchstart', function(e){
     touchX = e.touches[0].clientX;
     touchY = e.touches[0].clientY;
   }, { passive: true });
   book.addEventListener('touchmove', function(e){
-    if (cur < N) e.preventDefault();
+    if (opened && cur < N) e.preventDefault();
   }, { passive: false });
   book.addEventListener('touchend', function(e){
     var dx = e.changedTouches[0].clientX - touchX;
     var dy = e.changedTouches[0].clientY - touchY;
     if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+      if (!opened) { openBook(); return; }
+      auto = false;
       if (dx < 0) flipNext(); else flipPrev();
     }
   }, { passive: true });
