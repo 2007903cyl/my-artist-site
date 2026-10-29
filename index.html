@@ -514,19 +514,18 @@
   // ---------- 名字栅格化点云 ----------
   let nameTargets = [];
   function buildNameTargets(text, cvW, cvH) {
-    // 防御：视口尺寸异常时返回空数组
     if (cvW <= 0 || cvH <= 0) return [];
 
     const off = document.createElement('canvas');
     const octx = off.getContext('2d');
-    // 名字像素尺寸（CSS像素）自适应
     const cssW = cvW / devicePixelRatio;
     const cssH = cvH / devicePixelRatio;
-    const fontSize = Math.max(20, Math.round(Math.min(cssW * 0.18, cssH * 0.22)));
-    const pad = Math.round(fontSize * 0.3);
+    // 字号放大：占视口高度 28%（原 22%），更醒目
+    const fontSize = Math.max(48, Math.round(Math.min(cssW * 0.22, cssH * 0.28)));
+    const pad = Math.round(fontSize * 0.35);
 
-    off.width  = Math.max(fontSize * text.length + pad * 2, 40);
-    off.height = Math.max(fontSize + pad * 2, 40);
+    off.width  = Math.max(fontSize * text.length + pad * 2, 80);
+    off.height = Math.max(fontSize + pad * 2, 60);
 
     octx.fillStyle = '#000';
     octx.fillRect(0, 0, off.width, off.height);
@@ -539,7 +538,8 @@
     if (off.width === 0 || off.height === 0) return [];
     const img = octx.getImageData(0, 0, off.width, off.height).data;
     const sampled = [];
-    const step = Math.max(3, Math.round(fontSize / 28)); // 采样步长
+    // 采样步长减细：fontSize/40（原 /28），每颗汉字采样更多点
+    const step = Math.max(2, Math.round(fontSize / 40));
     for (let y = 0; y < off.height; y += step) {
       for (let x = 0; x < off.width; x += step) {
         const i = (y * off.width + x) * 4;
@@ -548,7 +548,6 @@
         }
       }
     }
-    // 缩放 + 居中到 canvas
     const scale = devicePixelRatio;
     const cx = cvW / 2;
     const cy = cvH / 2;
@@ -581,12 +580,15 @@
   // 预计算名字目标点（W/H 已由 resize 设置好）
   nameTargets = buildNameTargets('陈燕丽', W, H);
 
-  // Phase 1: 密集裂变
-  function spawnDenseChildren(count) {
-    // 分布半径 = 视口对角线 * 0.75 → 保证从屏幕外涌入感
+  // Phase 1: 密集裂变（粒子数跟随 nameTargets 动态调整）
+  function spawnDenseChildren() {
+    // 名字需要多少粒子就生成多少，星座额外加 250 颗
+    const nameCount = nameTargets.length;
+    const libraCount = 250;
+    const total = Math.max(800, nameCount + libraCount);
     const diag = Math.sqrt(W*W + H*H) / DPR;
     const r = diag * 0.55;
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < total; i++) {
       const a = Math.random() * Math.PI * 2;
       const sp = Math.random() * 3 + 0.6;
       particles.push({
@@ -598,14 +600,13 @@
         tx: CX + Math.cos(a) * r * DPR,
         ty: CY + Math.sin(a) * r * DPR,
         born: 0, rotSpeed: 0,
-        // 标记用途: 'name' → 飞名字, 'libra' → 飞星座, 'drift' → 漂移
         role: 'name'
       });
     }
-    // 把最后 ~200 颗的 role 改为 libra
-    const libraCount = Math.min(200, count * 0.4);
-    for (let i = count - libraCount; i < count; i++) {
-      particles[particles.length - 1 - (count - 1 - i)].role = 'libra';
+    // 最后 libraCount 颗改为星座角色
+    const pTotal = particles.length;
+    for (let i = pTotal - libraCount; i < pTotal; i++) {
+      particles[i].role = 'libra';
     }
   }
 
@@ -634,7 +635,7 @@
       phase = curPhase;
       phaseStart = elapsed;
 
-      if (phase === 1) spawnDenseChildren(520);
+      if (phase === 1) spawnDenseChildren();
       if (phase === 2) assignNameTargets();
       if (phase === 4) {
         libraByIndexCache = {}; // 清除缓存
