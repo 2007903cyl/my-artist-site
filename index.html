@@ -58,24 +58,6 @@
   }
   .nav-links a:hover::after { width: 100%; }
 
-  /* ---------- 开场动画 Canvas ---------- */
-  #intro-canvas {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    z-index: 9999;
-    background:
-      radial-gradient(130% 95% at 50% 16%, #fffdf9 0%, #fdf3ea 46%, #f8e6e3 100%);
-    pointer-events: none;
-    transition: opacity 2s ease;
-  }
-  #intro-canvas.done {
-    opacity: 0;
-  }
-  #intro-canvas.off {
-    display: none;
-  }
-
   /* ---------- 首屏 ---------- */
   .hero {
     position: relative;
@@ -87,71 +69,286 @@
     text-align: center;
     padding: 0 24px;
     opacity: 0;
-    animation: heroReveal 2.2s ease 8.4s forwards;
+    animation: heroReveal 2.2s ease 0.2s forwards;
   }
-  .hero-eyebrow {
-    font-family: "Optima", "Palatino Linotype", Georgia, serif;
-    font-size: 11px;
+  /* ---------- 3D 翻页手账 ---------- */
+  .fb-stage {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    opacity: 0;
+    animation: heroFadeUp 1.6s ease 0.35s forwards;
+  }
+  .fb-book {
+    position: relative;
+    width: min(92vw, 920px);
+    aspect-ratio: 2 / 1.36;
+    perspective: 2600px;
+    filter: drop-shadow(0 24px 42px rgba(120, 70, 80, 0.28));
+  }
+  .fb-page-parchment {
+    background:
+      radial-gradient(120% 90% at 30% 15%, rgba(255, 252, 244, 0.95), rgba(255, 252, 244, 0) 60%),
+      radial-gradient(100% 80% at 85% 90%, rgba(206, 176, 132, 0.22), rgba(206, 176, 132, 0) 55%),
+      repeating-linear-gradient(0deg, rgba(150, 120, 80, 0.05) 0 2px, rgba(0, 0, 0, 0) 2px 5px),
+      #f3e9d2;
+  }
+  .fb-static { position: absolute; top: 0; width: 50%; height: 100%; }
+  .fb-static-l {
+    left: 0;
+    border-radius: 12px 0 0 12px;
+    background: linear-gradient(135deg, #caa0a4, #b08188 55%, #9c6f78);
+    box-shadow: inset -16px 0 30px rgba(60, 30, 36, 0.35);
+  }
+  .fb-static-r {
+    left: 50%;
+    border-radius: 0 12px 12px 0;
+    box-shadow: inset 16px 0 30px rgba(120, 80, 60, 0.16);
+  }
+  .fb-sheet {
+    position: absolute;
+    top: 0; left: 50%;
+    width: 50%; height: 100%;
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    transition: transform 1.15s cubic-bezier(0.36, 0.08, 0.24, 1);
+    cursor: pointer;
+  }
+  .fb-sheet.flipped { transform: rotateY(-180deg); }
+  .fb-face {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  .fb-front {
+    border-radius: 0 12px 12px 0;
+    box-shadow: inset 18px 0 30px rgba(120, 80, 60, 0.14);
+  }
+  .fb-back {
+    transform: rotateY(180deg);
+    border-radius: 12px 0 0 12px;
+    box-shadow: inset -18px 0 30px rgba(120, 80, 60, 0.14);
+  }
+  .fb-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 7% 9%;
+    text-align: center;
+  }
+
+  /* 封面 */
+  .fb-cover-eyebrow {
+    font-family: "Optima", Georgia, serif;
+    font-size: clamp(10px, 1.1vw, 13px);
     letter-spacing: 0.42em;
     text-indent: 0.42em;
     text-transform: uppercase;
-    color: #b08a8a;
-    margin-bottom: 36px;
-    opacity: 0;
-    animation: heroFadeUp 1.8s ease 8.9s forwards;
+    color: #a87e84;
+    margin-bottom: 5%;
   }
-  .hero-title {
-    font-family: "Songti SC", "STSong", "SimSun", "Noto Serif SC", serif;
-    font-size: clamp(24px, 3.2vw, 40px);
+  .fb-cover-frame {
+    position: relative;
+    width: 88%;
+    padding: 10% 8%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .fb-cover-oval {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .fb-cover-title {
+    font-size: clamp(17px, 2.3vw, 27px);
     font-weight: 400;
-    line-height: 2;
-    letter-spacing: 0.2em;
-    text-indent: 0.2em;
-    color: #a2676f;
-    text-shadow: 0 0 26px rgba(255, 255, 255, 0.9);
-    opacity: 0;
-    animation: heroFadeUp 2s ease 9.2s forwards;
+    letter-spacing: 0.24em;
+    text-indent: 0.24em;
+    color: #7a4a52;
   }
-  .hero-ornament {
+  .fb-cover-sub {
+    margin-top: 5%;
+    font-family: Georgia, serif;
+    font-size: clamp(9px, 1vw, 12px);
+    letter-spacing: 0.3em;
+    text-indent: 0.3em;
+    color: #a87e84;
+  }
+  .fb-cover-open {
+    margin-top: 6%;
+    font-size: clamp(10px, 1.05vw, 13px);
+    letter-spacing: 0.3em;
+    text-indent: 0.3em;
+    color: #b98c93;
+    animation: fbPulse 2.2s ease-in-out infinite;
+  }
+  @keyframes fbPulse {
+    0%, 100% { opacity: 0.45; }
+    50%      { opacity: 1; }
+  }
+
+  /* 拍立得照片页 */
+  .fb-polaroid {
+    position: relative;
+    width: 76%;
+    background: #fffdf8;
+    padding: 6% 6% 20%;
+    box-shadow: 0 10px 24px rgba(90, 60, 55, 0.28);
+    transform: rotate(-2deg);
+  }
+  .fb-polaroid.tilt-r { transform: rotate(2deg); }
+  .fb-polaroid img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    display: block;
+    filter: sepia(12%) saturate(0.95);
+  }
+  .fb-cap {
+    position: absolute;
+    bottom: 5%; left: 0; right: 0;
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: clamp(10px, 1.15vw, 14px);
+    letter-spacing: 0.1em;
+    color: #8a6a6e;
+  }
+  .fb-tape-tl, .fb-tape-tr {
+    position: absolute;
+    top: 3%;
+    width: 26%;
+    height: 5.5%;
+    background: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.65) 0 6px, rgba(244, 196, 202, 0.65) 6px 12px);
+    box-shadow: 0 2px 5px rgba(170, 120, 130, 0.2);
+    clip-path: polygon(4% 0, 96% 6%, 100% 88%, 5% 100%, 0 14%);
+    z-index: 2;
+  }
+  .fb-tape-tl { left: 8%; transform: rotate(-14deg); }
+  .fb-tape-tr {
+    right: 8%;
+    transform: rotate(12deg);
+    background: repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.6) 0 6px, rgba(238, 214, 186, 0.6) 6px 12px);
+  }
+  .fb-rose-corner {
+    position: absolute;
+    bottom: 3.5%;
+    width: 17%;
+    opacity: 0.9;
+  }
+  .fb-rose-l { left: 5%; transform: rotate(-8deg); }
+  .fb-rose-r { right: 5%; transform: rotate(8deg) scaleX(-1); }
+
+  /* 主图（椭圆相框） */
+  .fb-oval-frame {
+    width: 68%;
+    padding: 4.5%;
+    background: #fffdf8;
+    border-radius: 50%;
+    box-shadow: 0 10px 26px rgba(90, 60, 55, 0.28), inset 0 0 0 1px rgba(185, 140, 145, 0.4);
+  }
+  .fb-oval-frame img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    object-position: 32% 40%;
+    border-radius: 50%;
+    display: block;
+    filter: sepia(14%) saturate(0.94);
+  }
+  .fb-cap-name { position: static; margin-top: 5%; }
+
+  /* 简介页 */
+  .fb-eyebrow {
+    font-family: "Optima", Georgia, serif;
+    font-size: clamp(9px, 1vw, 12px);
+    letter-spacing: 0.4em;
+    text-indent: 0.4em;
+    color: #a87e84;
+    margin-bottom: 4%;
+  }
+  .fb-heading {
+    font-size: clamp(17px, 2.2vw, 26px);
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-indent: 0.3em;
+    color: #7a4a52;
+  }
+  .fb-rule {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 6% 0;
+  }
+  .fb-rule i {
+    width: clamp(28px, 4vw, 56px);
+    height: 1px;
+    background: linear-gradient(90deg, rgba(178, 128, 132, 0), rgba(178, 128, 132, 0.6));
+  }
+  .fb-rule i:last-child { transform: scaleX(-1); }
+  .fb-rule b { width: 4px; height: 4px; background: #c58f97; transform: rotate(45deg); }
+  .fb-text {
+    font-size: clamp(11px, 1.2vw, 15px);
+    line-height: 2.05;
+    color: #6b4850;
+    text-align: justify;
+  }
+  .fb-text-en {
+    margin-top: 4%;
+    font-family: Georgia, serif;
+    font-style: italic;
+    text-align: center;
+    color: #a87e84;
+    font-size: clamp(10px, 1.05vw, 13px);
+  }
+  .fb-more {
+    margin-top: 7%;
+    font-size: clamp(10px, 1.05vw, 13px);
+    letter-spacing: 0.26em;
+    text-indent: 0.26em;
+    color: #b98c93;
+    animation: fbPulse 2.2s ease-in-out infinite;
+  }
+
+  /* 翻页控制条 */
+  .fb-controls {
     display: flex;
     align-items: center;
     gap: 18px;
-    margin: 28px 0 24px;
-    opacity: 0;
-    animation: heroFadeUp 1.6s ease 9.7s forwards;
+    position: relative;
+    z-index: 2;
   }
-  .hero-ornament i {
-    display: block;
-    width: clamp(36px, 7vw, 76px);
-    height: 1px;
-    background: linear-gradient(90deg, rgba(178, 128, 132, 0), rgba(178, 128, 132, 0.55));
+  .fb-btn {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    border: 1px solid rgba(160, 110, 118, 0.4);
+    background: rgba(255, 252, 246, 0.85);
+    color: #8a5a62;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    transition: transform 0.3s, background 0.3s;
   }
-  .hero-ornament i:last-child { transform: scaleX(-1); }
-  .hero-ornament b {
-    display: block;
-    width: 4px; height: 4px;
-    background: #c58f97;
-    transform: rotate(45deg);
+  .fb-btn:hover { transform: scale(1.08); background: #fffdf8; }
+  .fb-hint {
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: #8a6068;
   }
-  .hero-en {
-    font-family: "Optima", "Palatino Linotype", Georgia, serif;
-    font-style: italic;
-    font-size: clamp(15px, 1.4vw, 19px);
-    letter-spacing: 0.34em;
-    text-indent: 0.34em;
-    color: #a5797f;
-    opacity: 0;
-    animation: heroFadeUp 1.8s ease 10.1s forwards;
-  }
-  .hero-fr {
-    margin-top: 16px;
-    font-family: "Optima", "Palatino Linotype", Georgia, serif;
-    font-size: clamp(11px, 1vw, 13px);
-    letter-spacing: 0.24em;
-    text-indent: 0.24em;
-    color: #bb9296;
-    opacity: 0;
-    animation: heroFadeUp 1.8s ease 10.6s forwards;
+  @media (max-width: 700px) {
+    .fb-book { width: 96vw; }
+    .fb-btn { width: 36px; height: 36px; font-size: 17px; }
   }
   .hero .scroll-hint {
     position: absolute;
@@ -161,7 +358,7 @@
     color: #b08a90;
     writing-mode: vertical-rl;
     opacity: 0;
-    animation: heroFadeUp 1.8s ease 11.2s forwards;
+    animation: heroFadeUp 1.8s ease 2.2s forwards;
   }
   @keyframes heroReveal {
     from { opacity: 0; }
@@ -192,7 +389,7 @@
     background-position: left top;
     opacity: 0;
     filter: drop-shadow(0 1px 3px rgba(185, 135, 140, 0.35));
-    animation: laceIn 2.2s ease 8.8s forwards;
+    animation: laceIn 2.2s ease 0.6s forwards;
   }
   .hero-lace-top { top: 66px; }
   .hero-lace-bottom { bottom: 18px; transform: scaleY(-1); }
@@ -210,22 +407,22 @@
     width: 340px; height: 340px;
     left: 6%; top: 18%;
     background: rgba(255, 214, 222, 0.6);
-    animation: hazeIn 2.4s ease 8.8s forwards,
-               hazeFloat 11s ease-in-out 11.2s infinite;
+    animation: hazeIn 2.4s ease 0.5s forwards,
+               hazeFloat 11s ease-in-out 3s infinite;
   }
   .haze-2 {
     width: 300px; height: 300px;
     right: 4%; top: 30%;
     background: rgba(255, 238, 222, 0.9);
-    animation: hazeIn 2.4s ease 9.2s forwards,
-               hazeFloat2 13s ease-in-out 11.6s infinite;
+    animation: hazeIn 2.4s ease 0.7s forwards,
+               hazeFloat2 13s ease-in-out 3.4s infinite;
   }
   .haze-3 {
     width: 420px; height: 260px;
     left: 30%; bottom: 4%;
     background: rgba(248, 214, 220, 0.8);
-    animation: hazeIn 2.6s ease 9.5s forwards,
-               hazeFloat 15s ease-in-out 12.1s infinite;
+    animation: hazeIn 2.6s ease 0.9s forwards,
+               hazeFloat 15s ease-in-out 3.8s infinite;
   }
   @keyframes hazeIn { to { opacity: 0.55; } }
   @keyframes hazeFloat {
@@ -245,10 +442,10 @@
     opacity: 0;
     animation: collageIn 1.8s ease forwards;
   }
-  .collage-tl { top: 15%; left: 6%;  transform: rotate(-6deg); animation-delay: 9.0s; }
-  .collage-tr { top: 13%; right: 7%; transform: rotate(4deg);  animation-delay: 9.2s; }
-  .collage-bl { bottom: 12%; left: 8%; animation-delay: 9.4s; }
-  .collage-br { bottom: 13%; right: 6%; transform: rotate(5deg); animation-delay: 9.6s; }
+  .collage-tl { top: 15%; left: 6%;  transform: rotate(-6deg); animation-delay: 0.8s; }
+  .collage-tr { top: 13%; right: 7%; transform: rotate(4deg);  animation-delay: 1.0s; }
+  .collage-bl { bottom: 12%; left: 8%; animation-delay: 1.2s; }
+  .collage-br { bottom: 13%; right: 6%; transform: rotate(5deg); animation-delay: 1.4s; }
   @keyframes collageIn { to { opacity: 0.95; } }
 
   .paper {
@@ -371,7 +568,7 @@
     mix-blend-mode: screen;
     filter: blur(4px);
     opacity: 0;
-    animation: glowIn 2.6s ease 8.6s forwards;
+    animation: glowIn 2.6s ease 0.4s forwards;
   }
   @keyframes glowIn { to { opacity: 0.85; } }
 
@@ -648,32 +845,175 @@
   </div>
 
   <!-- 闪烁亮晶晶 -->
-  <i class="sp" style="--x:8%;--y:26%;--s:11px;--dl:9.0s;--d:2.6s"></i>
-  <i class="sp sp-pink" style="--x:15%;--y:58%;--s:8px;--dl:9.6s;--d:3.1s"></i>
-  <i class="sp" style="--x:22%;--y:16%;--s:8px;--dl:10.1s;--d:2.4s"></i>
-  <i class="sp sp-gold" style="--x:28%;--y:74%;--s:12px;--dl:9.3s;--d:3.4s"></i>
-  <i class="sp" style="--x:38%;--y:12%;--s:7px;--dl:10.4s;--d:2.8s"></i>
-  <i class="sp sp-pink" style="--x:46%;--y:84%;--s:9px;--dl:9.9s;--d:3s"></i>
-  <i class="sp" style="--x:56%;--y:10%;--s:10px;--dl:9.5s;--d:2.5s"></i>
-  <i class="sp sp-gold" style="--x:64%;--y:80%;--s:8px;--dl:10.6s;--d:3.2s"></i>
-  <i class="sp" style="--x:74%;--y:18%;--s:12px;--dl:9.2s;--d:2.7s"></i>
-  <i class="sp sp-pink" style="--x:82%;--y:34%;--s:8px;--dl:10.2s;--d:3s"></i>
-  <i class="sp" style="--x:90%;--y:58%;--s:10px;--dl:9.7s;--d:2.9s"></i>
-  <i class="sp sp-gold" style="--x:86%;--y:76%;--s:7px;--dl:10.8s;--d:3.5s"></i>
-  <i class="sp" style="--x:12%;--y:42%;--s:7px;--dl:10.8s;--d:2.3s"></i>
-  <i class="sp sp-pink" style="--x:68%;--y:64%;--s:9px;--dl:10.3s;--d:3.3s"></i>
+  <i class="sp" style="--x:8%;--y:26%;--s:11px;--dl:0.8s;--d:2.6s"></i>
+  <i class="sp sp-pink" style="--x:15%;--y:58%;--s:8px;--dl:1.4s;--d:3.1s"></i>
+  <i class="sp" style="--x:22%;--y:16%;--s:8px;--dl:1.9s;--d:2.4s"></i>
+  <i class="sp sp-gold" style="--x:28%;--y:74%;--s:12px;--dl:1.1s;--d:3.4s"></i>
+  <i class="sp" style="--x:38%;--y:12%;--s:7px;--dl:2.2s;--d:2.8s"></i>
+  <i class="sp sp-pink" style="--x:46%;--y:84%;--s:9px;--dl:1.7s;--d:3s"></i>
+  <i class="sp" style="--x:56%;--y:10%;--s:10px;--dl:1.3s;--d:2.5s"></i>
+  <i class="sp sp-gold" style="--x:64%;--y:80%;--s:8px;--dl:2.4s;--d:3.2s"></i>
+  <i class="sp" style="--x:74%;--y:18%;--s:12px;--dl:1s;--d:2.7s"></i>
+  <i class="sp sp-pink" style="--x:82%;--y:34%;--s:8px;--dl:2s;--d:3s"></i>
+  <i class="sp" style="--x:90%;--y:58%;--s:10px;--dl:1.5s;--d:2.9s"></i>
+  <i class="sp sp-gold" style="--x:86%;--y:76%;--s:7px;--dl:2.6s;--d:3.5s"></i>
+  <i class="sp" style="--x:12%;--y:42%;--s:7px;--dl:2.6s;--d:2.3s"></i>
+  <i class="sp sp-pink" style="--x:68%;--y:64%;--s:9px;--dl:2.1s;--d:3.3s"></i>
 
   <!-- 柔光滤镜层 -->
   <div class="hero-glow" aria-hidden="true"></div>
 
-  <div class="hero-inner">
-    <p class="hero-eyebrow">Carnet de douceur</p>
-    <h1 class="hero-title">把温柔<br>慢慢画给你看</h1>
-    <div class="hero-ornament"><i></i><b></b><i></i></div>
-    <p class="hero-en">Chen Yanli</p>
-    <p class="hero-fr">Un peu de douceur, chaque jour.</p>
+  <!-- 3D 翻页手账 -->
+  <div class="fb-stage">
+    <div class="fb-book" id="fbBook">
+      <!-- 封底（左侧静态） -->
+      <div class="fb-static fb-static-l"></div>
+
+      <!-- 最终定格页（右侧静态）：简介 -->
+      <div class="fb-static fb-static-r fb-page-parchment">
+        <div class="fb-content">
+          <p class="fb-eyebrow">À propos de moi</p>
+          <h2 class="fb-heading">关于我</h2>
+          <div class="fb-rule"><i></i><b></b><i></i></div>
+          <p class="fb-text">你好呀，我是陈燕丽，天津美术学院环境设计专业的大一学生。喜欢画画、看展、旅行和民谣，正把眼里的温柔，一点一点变成设计的语言。</p>
+          <p class="fb-text fb-text-en">A girl who paints softness into everyday life.</p>
+          <p class="fb-more">向下滚动，阅读完整的故事 ↓</p>
+        </div>
+      </div>
+
+      <!-- 第 1 页：封面 / 照片一 -->
+      <div class="fb-sheet">
+        <div class="fb-face fb-front fb-page-parchment">
+          <div class="fb-content">
+            <p class="fb-cover-eyebrow">Mon Carnet</p>
+            <div class="fb-cover-frame">
+              <svg class="fb-cover-oval" viewBox="0 0 240 150" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="120" cy="75" rx="104" ry="60" fill="none" stroke="#b98c93" stroke-width="1.4"/>
+                <ellipse cx="120" cy="75" rx="112" ry="68" fill="none" stroke="#b98c93" stroke-width="1" stroke-dasharray="3 5"/>
+                <g transform="translate(2 47) scale(0.55)"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><circle cx="30" cy="28" r="15" fill="#e9b9bf"/><circle cx="24" cy="24" r="8" fill="#f2cdd2"/><path d="M30 21 q6 4 2 9 q-6 4 -8 -1 q0 -7 6 -8" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/></g>
+                <g transform="translate(206 47) scale(0.55)"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><circle cx="30" cy="28" r="15" fill="#e9b9bf"/><circle cx="24" cy="24" r="8" fill="#f2cdd2"/><path d="M30 21 q6 4 2 9 q-6 4 -8 -1 q0 -7 6 -8" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/></g>
+              </svg>
+              <h1 class="fb-cover-title">燕丽的花园手账</h1>
+              <p class="fb-cover-sub">YANLI'S JOURNAL · 2026</p>
+            </div>
+            <p class="fb-cover-open">点击或滚动，翻开手账 →</p>
+          </div>
+        </div>
+        <div class="fb-face fb-back fb-page-parchment">
+          <div class="fb-content">
+            <span class="fb-tape-tl"></span>
+            <div class="fb-polaroid">
+              <img src="photos/flip-01.jpg" alt="手账照片一" loading="lazy" decoding="async">
+              <span class="fb-cap">« le printemps » · 春日</span>
+            </div>
+            <svg class="fb-rose-corner fb-rose-r" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><path d="M46 40 q9 0 12 9 q-9 1 -14 -5" fill="#9bb292"/><circle cx="30" cy="30" r="16" fill="#e9b9bf"/><circle cx="24" cy="25" r="9" fill="#f2cdd2"/><circle cx="36" cy="33" r="8" fill="#f6dade"/><path d="M30 22 q7 4 3 10 q-6 5 -9 -1 q-1 -8 6 -9" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- 第 2 页：照片二 / 照片三 -->
+      <div class="fb-sheet">
+        <div class="fb-face fb-front fb-page-parchment">
+          <div class="fb-content">
+            <span class="fb-tape-tr"></span>
+            <div class="fb-polaroid tilt-r">
+              <img src="photos/flip-02.jpg" alt="手账照片二" loading="lazy" decoding="async">
+              <span class="fb-cap">« souvenir » · 纪念</span>
+            </div>
+            <svg class="fb-rose-corner fb-rose-l" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><path d="M46 40 q9 0 12 9 q-9 1 -14 -5" fill="#9bb292"/><circle cx="30" cy="30" r="16" fill="#e9b9bf"/><circle cx="24" cy="25" r="9" fill="#f2cdd2"/><circle cx="36" cy="33" r="8" fill="#f6dade"/><path d="M30 22 q7 4 3 10 q-6 5 -9 -1 q-1 -8 6 -9" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+        <div class="fb-face fb-back fb-page-parchment">
+          <div class="fb-content">
+            <span class="fb-tape-tl"></span>
+            <div class="fb-polaroid">
+              <img src="photos/flip-03.jpg" alt="手账照片三" loading="lazy" decoding="async">
+              <span class="fb-cap">« douceur » · 温柔</span>
+            </div>
+            <svg class="fb-rose-corner fb-rose-r" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><path d="M46 40 q9 0 12 9 q-9 1 -14 -5" fill="#9bb292"/><circle cx="30" cy="30" r="16" fill="#e9b9bf"/><circle cx="24" cy="25" r="9" fill="#f2cdd2"/><circle cx="36" cy="33" r="8" fill="#f6dade"/><path d="M30 22 q7 4 3 10 q-6 5 -9 -1 q-1 -8 6 -9" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- 第 3 页：照片四 / 照片五 -->
+      <div class="fb-sheet">
+        <div class="fb-face fb-front fb-page-parchment">
+          <div class="fb-content">
+            <span class="fb-tape-tr"></span>
+            <div class="fb-polaroid tilt-r">
+              <img src="photos/flip-04.jpg" alt="手账照片四" loading="lazy" decoding="async">
+              <span class="fb-cap">« promenade » · 漫步</span>
+            </div>
+            <svg class="fb-rose-corner fb-rose-l" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><path d="M46 40 q9 0 12 9 q-9 1 -14 -5" fill="#9bb292"/><circle cx="30" cy="30" r="16" fill="#e9b9bf"/><circle cx="24" cy="25" r="9" fill="#f2cdd2"/><circle cx="36" cy="33" r="8" fill="#f6dade"/><path d="M30 22 q7 4 3 10 q-6 5 -9 -1 q-1 -8 6 -9" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+        <div class="fb-face fb-back fb-page-parchment">
+          <div class="fb-content">
+            <span class="fb-tape-tl"></span>
+            <div class="fb-polaroid">
+              <img src="photos/flip-05.jpg" alt="手账照片五" loading="lazy" decoding="async">
+              <span class="fb-cap">« lumière » · 光影</span>
+            </div>
+            <svg class="fb-rose-corner fb-rose-r" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><path d="M46 40 q9 0 12 9 q-9 1 -14 -5" fill="#9bb292"/><circle cx="30" cy="30" r="16" fill="#e9b9bf"/><circle cx="24" cy="25" r="9" fill="#f2cdd2"/><circle cx="36" cy="33" r="8" fill="#f6dade"/><path d="M30 22 q7 4 3 10 q-6 5 -9 -1 q-1 -8 6 -9" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- 第 4 页：照片六 / 照片七 -->
+      <div class="fb-sheet">
+        <div class="fb-face fb-front fb-page-parchment">
+          <div class="fb-content">
+            <span class="fb-tape-tr"></span>
+            <div class="fb-polaroid tilt-r">
+              <img src="photos/flip-06.jpg" alt="手账照片六" loading="lazy" decoding="async">
+              <span class="fb-cap">« fleurs » · 花事</span>
+            </div>
+            <svg class="fb-rose-corner fb-rose-l" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><path d="M46 40 q9 0 12 9 q-9 1 -14 -5" fill="#9bb292"/><circle cx="30" cy="30" r="16" fill="#e9b9bf"/><circle cx="24" cy="25" r="9" fill="#f2cdd2"/><circle cx="36" cy="33" r="8" fill="#f6dade"/><path d="M30 22 q7 4 3 10 q-6 5 -9 -1 q-1 -8 6 -9" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+        <div class="fb-face fb-back fb-page-parchment">
+          <div class="fb-content">
+            <span class="fb-tape-tl"></span>
+            <div class="fb-polaroid">
+              <img src="photos/flip-07.jpg" alt="手账照片七" loading="lazy" decoding="async">
+              <span class="fb-cap">« rêverie » · 幻想</span>
+            </div>
+            <svg class="fb-rose-corner fb-rose-r" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><path d="M46 40 q9 0 12 9 q-9 1 -14 -5" fill="#9bb292"/><circle cx="30" cy="30" r="16" fill="#e9b9bf"/><circle cx="24" cy="25" r="9" fill="#f2cdd2"/><circle cx="36" cy="33" r="8" fill="#f6dade"/><path d="M30 22 q7 4 3 10 q-6 5 -9 -1 q-1 -8 6 -9" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- 第 5 页：照片八 / 主图（街景照） -->
+      <div class="fb-sheet">
+        <div class="fb-face fb-front fb-page-parchment">
+          <div class="fb-content">
+            <span class="fb-tape-tr"></span>
+            <div class="fb-polaroid tilt-r">
+              <img src="photos/flip-08.jpg" alt="手账照片八" loading="lazy" decoding="async">
+              <span class="fb-cap">« quotidien » · 日常</span>
+            </div>
+            <svg class="fb-rose-corner fb-rose-l" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><path d="M14 42 q-9 3 -10 12 q9 -1 13 -8" fill="#a9bd9f"/><path d="M46 40 q9 0 12 9 q-9 1 -14 -5" fill="#9bb292"/><circle cx="30" cy="30" r="16" fill="#e9b9bf"/><circle cx="24" cy="25" r="9" fill="#f2cdd2"/><circle cx="36" cy="33" r="8" fill="#f6dade"/><path d="M30 22 q7 4 3 10 q-6 5 -9 -1 q-1 -8 6 -9" fill="none" stroke="#c98a94" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+        <div class="fb-face fb-back fb-page-parchment">
+          <div class="fb-content">
+            <span class="fb-tape-tr"></span>
+            <div class="fb-oval-frame">
+              <img src="photos/portrait-main.jpg" alt="陈燕丽街景照" loading="lazy" decoding="async">
+            </div>
+            <p class="fb-cap fb-cap-name">« moi » · 陈燕丽 Chen Yanli</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fb-controls">
+      <button class="fb-btn" id="fbPrev" aria-label="上一页">‹</button>
+      <span class="fb-hint" id="fbHint">点击或滚动，翻开手账</span>
+      <button class="fb-btn" id="fbNext" aria-label="下一页">›</button>
+    </div>
   </div>
-  <span class="scroll-hint">向下滚动</span>
+  <span class="scroll-hint">翻完手账，继续向下</span>
 </header>
 
 <!-- 关于我 -->
@@ -805,186 +1145,94 @@
   <p class="copyright">© 2026 陈燕丽 · 保留所有权利</p>
 </footer>
 
-<canvas id="intro-canvas"></canvas>
-
 <script>
 (function(){
-  const canvas = document.getElementById('intro-canvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
+  var book = document.getElementById('fbBook');
+  if (!book) return;
+  var sheets = Array.prototype.slice.call(book.querySelectorAll('.fb-sheet'));
+  var N = sheets.length;
+  var cur = 0;
+  var lock = false;
+  var hint = document.getElementById('fbHint');
+  var prevBtn = document.getElementById('fbPrev');
+  var nextBtn = document.getElementById('fbNext');
 
-  let W = 0, H = 0, DPR = 1;
-  // 与 CSS 中首屏出现时间保持一致（秒）
-  const DURATION = 8.4;
+  sheets.forEach(function(s, i){ s.style.zIndex = N - i; });
 
-  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
-  const easeOutCubic = x => 1 - Math.pow(1 - x, 3);
-
-  // 预渲染柔和光点，避免逐帧创建渐变
-  function makeSprite(rgb){
-    const s = document.createElement('canvas');
-    s.width = s.height = 64;
-    const c = s.getContext('2d');
-    const g = c.createRadialGradient(32, 32, 0, 32, 32, 32);
-    g.addColorStop(0,    'rgba(' + rgb + ',1)');
-    g.addColorStop(0.32, 'rgba(' + rgb + ',0.48)');
-    g.addColorStop(1,    'rgba(' + rgb + ',0)');
-    c.fillStyle = g;
-    c.fillRect(0, 0, 64, 64);
-    return s;
-  }
-  const PINK  = makeSprite('235, 196, 201');
-  const CREAM = makeSprite('247, 228, 208');
-
-  let motes = [];
-  let petals = [];
-  let glints = [];
-
-  function buildMotes(){
-    motes = [];
-    const count = Math.round(Math.min(84, Math.max(40, window.innerWidth / 20)));
-    for (let i = 0; i < count; i++){
-      motes.push({
-        x: Math.random() * W,
-        y: Math.random() * H,
-        r: (Math.random() * 2.4 + 1) * DPR,
-        vy: (Math.random() * 0.10 + 0.035) * DPR,
-        swayAmp: (Math.random() * 20 + 8) * DPR,
-        swaySpeed: Math.random() * 0.3 + 0.12,
-        phase: Math.random() * Math.PI * 2,
-        alpha: Math.random() * 0.42 + 0.22,
-        born: Math.random() * 2.4,
-        sprite: Math.random() < 0.55 ? PINK : CREAM
-      });
+  function updateUI(){
+    if (hint) {
+      if (cur === 0) hint.textContent = '封面 · 共 ' + N + ' 页';
+      else if (cur >= N) hint.textContent = '最后一页 · 关于我';
+      else hint.textContent = '第 ' + cur + ' / ' + N + ' 页';
     }
-
-    petals = [];
-    for (let i = 0; i < 6; i++){
-      petals.push({
-        x: Math.random() * W,
-        y: Math.random() * H,
-        rx: (Math.random() * 50 + 48) * DPR,
-        ry: (Math.random() * 34 + 34) * DPR,
-        rot: Math.random() * Math.PI,
-        rotSpeed: (Math.random() - 0.5) * 0.0012,
-        vy: (Math.random() * 0.12 + 0.05) * DPR,
-        alpha: Math.random() * 0.05 + 0.038,
-        born: Math.random() * 3
-      });
-    }
-
-    glints = [];
-    for (let i = 0; i < 16; i++){
-      glints.push({
-        x: Math.random() * W,
-        y: Math.random() * H,
-        r: (Math.random() * 3.5 + 2.5) * DPR,
-        vy: (Math.random() * 0.05 + 0.02) * DPR,
-        speed: Math.random() * 2 + 1.2,
-        phase: Math.random() * Math.PI * 2,
-        born: Math.random() * 2
-      });
-    }
+    if (prevBtn) prevBtn.style.visibility = cur === 0 ? 'hidden' : 'visible';
+    if (nextBtn) nextBtn.style.visibility = cur >= N ? 'hidden' : 'visible';
   }
 
-  function resize(){
-    DPR = Math.min(window.devicePixelRatio || 1, 2);
-    W = canvas.width  = Math.round(window.innerWidth  * DPR);
-    H = canvas.height = Math.round(window.innerHeight * DPR);
-    canvas.style.width  = window.innerWidth  + 'px';
-    canvas.style.height = window.innerHeight + 'px';
-    buildMotes();
+  function flipNext(){
+    if (cur >= N || lock) return;
+    lock = true;
+    var s = sheets[cur];
+    var idx = cur;
+    s.classList.add('flipped');
+    setTimeout(function(){ s.style.zIndex = idx + 1; }, 580);
+    cur++;
+    updateUI();
+    setTimeout(function(){ lock = false; }, 1000);
   }
 
-  const t0 = performance.now();
-
-  function tick(now){
-    const t = (now - t0) / 1000;
-    ctx.clearRect(0, 0, W, H);
-
-    // 暖色光晕：像清晨透过纱帘的光，缓缓铺开
-    const bloom = easeOutCubic(clamp(t / 3.2, 0, 1));
-    const halo = ctx.createRadialGradient(W * 0.5, H * 0.42, 0, W * 0.5, H * 0.42, (240 + 280 * bloom) * DPR);
-    halo.addColorStop(0,    'rgba(255, 253, 249, ' + (0.9 * bloom) + ')');
-    halo.addColorStop(0.45, 'rgba(255, 233, 228, ' + (0.45 * bloom) + ')');
-    halo.addColorStop(1,    'rgba(255, 246, 240, 0)');
-    ctx.fillStyle = halo;
-    ctx.fillRect(0, 0, W, H);
-
-    // 收尾整体柔和淡出
-    const outFade = 1 - clamp((t - (DURATION - 1.8)) / 1.6, 0, 1);
-
-    // 朦胧花瓣般的柔光，缓慢上浮
-    for (const f of petals){
-      const life = clamp((t - f.born) / 2.4, 0, 1);
-      if (life <= 0) continue;
-      f.y -= f.vy;
-      f.rot += f.rotSpeed;
-      if (f.y < -140 * DPR){ f.y = H + 120 * DPR; f.x = Math.random() * W; }
-      ctx.save();
-      ctx.translate(f.x, f.y);
-      ctx.rotate(f.rot);
-      ctx.globalAlpha = f.alpha * life * outFade;
-      ctx.drawImage(PINK, -f.rx, -f.ry, f.rx * 2, f.ry * 2);
-      ctx.restore();
-    }
-
-    // 细小光尘，伴微风轻轻摇摆
-    for (const m of motes){
-      const life = clamp((t - m.born) / 1.8, 0, 1);
-      if (life <= 0) continue;
-      m.y -= m.vy;
-      if (m.y < -40 * DPR){
-        m.y = H + 30 * DPR;
-        m.x = Math.random() * W;
-      }
-      const x = m.x + Math.sin(t * m.swaySpeed + m.phase) * m.swayAmp;
-      const r = m.r * 5;
-      ctx.globalAlpha = m.alpha * life * outFade;
-      ctx.drawImage(m.sprite, x - r, m.y - r, r * 2, r * 2);
-    }
-    ctx.globalAlpha = 1;
-
-    // 亮晶晶星芒，轻轻闪烁
-    for (const g of glints){
-      const life = clamp((t - g.born) / 1.6, 0, 1);
-      if (life <= 0) continue;
-      g.y -= g.vy;
-      if (g.y < -20 * DPR){ g.y = H + 20 * DPR; g.x = Math.random() * W; }
-      const tw = 0.5 + 0.5 * Math.sin(t * g.speed + g.phase);
-      const a = tw * life * outFade;
-      if (a < 0.03) continue;
-      const r = g.r * (0.7 + 0.5 * tw);
-      ctx.strokeStyle = 'rgba(255,255,255,' + (a * 0.9) + ')';
-      ctx.lineWidth = 1.1 * DPR;
-      ctx.beginPath();
-      ctx.moveTo(g.x - r, g.y); ctx.lineTo(g.x + r, g.y);
-      ctx.moveTo(g.x, g.y - r); ctx.lineTo(g.x, g.y + r);
-      ctx.stroke();
-      ctx.fillStyle = 'rgba(255,255,255,' + a + ')';
-      ctx.beginPath();
-      ctx.arc(g.x, g.y, g.r * 0.22, 0, Math.PI * 2);
-      ctx.fill();
-    }
-
-    // 复古边缘晕影
-    const vig = ctx.createRadialGradient(W / 2, H / 2, Math.min(W, H) * 0.32, W / 2, H / 2, Math.max(W, H) * 0.78);
-    vig.addColorStop(0, 'rgba(184, 132, 136, 0)');
-    vig.addColorStop(1, 'rgba(184, 132, 136, ' + (0.16 * bloom) + ')');
-    ctx.fillStyle = vig;
-    ctx.fillRect(0, 0, W, H);
-
-    if (t >= DURATION){
-      canvas.classList.add('done');
-      setTimeout(() => canvas.classList.add('off'), 2100);
-      return;
-    }
-    requestAnimationFrame(tick);
+  function flipPrev(){
+    if (cur <= 0 || lock) return;
+    lock = true;
+    cur--;
+    var s = sheets[cur];
+    s.style.zIndex = N - cur;
+    s.classList.remove('flipped');
+    updateUI();
+    setTimeout(function(){ lock = false; }, 1000);
   }
 
-  window.addEventListener('resize', resize);
-  resize();
-  setTimeout(() => requestAnimationFrame(tick), 40);
+  if (nextBtn) nextBtn.addEventListener('click', flipNext);
+  if (prevBtn) prevBtn.addEventListener('click', flipPrev);
+
+  // 点击书的左右半区翻页
+  book.addEventListener('click', function(e){
+    var r = book.getBoundingClientRect();
+    var x = e.clientX - r.left;
+    if (x > r.width / 2) flipNext(); else flipPrev();
+  });
+
+  // 滚轮劫持：书未翻完时拦截页面滚动，翻完后放行
+  var wheelLock = false;
+  window.addEventListener('wheel', function(e){
+    if (window.scrollY > 10) return;
+    if (cur >= N && e.deltaY > 0) return;
+    if (cur <= 0 && e.deltaY < 0) return;
+    e.preventDefault();
+    if (wheelLock) return;
+    wheelLock = true;
+    if (e.deltaY > 0) flipNext(); else flipPrev();
+    setTimeout(function(){ wheelLock = false; }, 1000);
+  }, { passive: false });
+
+  // 触屏滑动翻页
+  var touchX = 0, touchY = 0;
+  book.addEventListener('touchstart', function(e){
+    touchX = e.touches[0].clientX;
+    touchY = e.touches[0].clientY;
+  }, { passive: true });
+  book.addEventListener('touchmove', function(e){
+    if (cur < N) e.preventDefault();
+  }, { passive: false });
+  book.addEventListener('touchend', function(e){
+    var dx = e.changedTouches[0].clientX - touchX;
+    var dy = e.changedTouches[0].clientY - touchY;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+      if (dx < 0) flipNext(); else flipPrev();
+    }
+  }, { passive: true });
+
+  updateUI();
 })();
 </script>
 
