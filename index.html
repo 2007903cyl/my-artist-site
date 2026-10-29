@@ -90,16 +90,37 @@
     text-align: center;
     padding: 0 24px;
     opacity: 0;
-    animation: heroReveal 1.4s ease 7.5s forwards;
+    animation: heroReveal 1.6s ease 9.5s forwards;
   }
   .hero h1 {
     font-size: clamp(72px, 15vw, 200px);
     font-weight: 700;
     letter-spacing: 0.12em;
     line-height: 1.1;
+    animation: heroNameBounce 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) 9.6s both;
+  }
+  @keyframes heroNameBounce {
+    0%   { transform: translateY(40px) scale(0.92); opacity: 0; }
+    50%  { transform: translateY(-18px) scale(1.04); opacity: 1; }
+    70%  { transform: translateY(6px) scale(0.98); }
+    100% { transform: translateY(0) scale(1); opacity: 1; }
+  }
+  .hero .hero-subtitle {
+    margin-top: 28px;
+    font-size: clamp(16px, 2vw, 22px);
+    letter-spacing: 6px;
+    color: #e8c47c;
+    font-weight: 500;
+    text-shadow: 0 0 18px rgba(232, 196, 124, 0.4);
+    animation: heroSubReveal 1.4s ease 10.8s forwards;
+    opacity: 0;
+  }
+  @keyframes heroSubReveal {
+    from { opacity: 0; transform: translateY(10px); letter-spacing: 12px; }
+    to   { opacity: 1; transform: translateY(0);  letter-spacing: 6px; }
   }
   .hero p {
-    margin-top: 32px;
+    margin-top: 20px;
     font-size: clamp(14px, 1.6vw, 18px);
     letter-spacing: 8px;
     color: #adc0d8;
@@ -313,6 +334,7 @@
 <!-- 首屏 -->
 <header class="hero">
   <h1>陈燕丽</h1>
+  <div class="hero-subtitle">你想要了解我吗？</div>
   <p>个人艺术 · 数字影像</p>
   <span class="scroll-hint">向下滚动</span>
 </header>
@@ -453,311 +475,410 @@
   const canvas = document.getElementById('intro-canvas');
   const ctx = canvas.getContext('2d');
   let W = 0, H = 0, CX = 0, CY = 0;
+  let DPR = 1;
 
   function resize() {
-    W = canvas.width = window.innerWidth * devicePixelRatio;
-    H = canvas.height = window.innerHeight * devicePixelRatio;
+    DPR = devicePixelRatio;
+    W = canvas.width = window.innerWidth * DPR;
+    H = canvas.height = window.innerHeight * DPR;
     canvas.style.width = window.innerWidth + 'px';
     canvas.style.height = window.innerHeight + 'px';
     CX = W / 2; CY = H / 2;
+    // 名字目标点云在 resize 时也需要重算
+    nameTargets = buildNameTargets('陈燕丽', W, H);
   }
   window.addEventListener('resize', resize);
-  resize();
 
   const LIBRA_STARS = [
-    { dx: -80, dy: -50 },
-    { dx:   0, dy: -90 },
-    { dx:  80, dy: -50 },
-    { dx:  40, dy:  20 },
-    { dx: -40, dy:  20 },
-    { dx:  60, dy:  60 },
-    { dx: -60, dy:  60 },
+    { dx: -80, dy: -50 }, { dx: 0, dy: -90 }, { dx: 80, dy: -50 },
+    { dx: 40, dy: 20 },   { dx: -40, dy: 20 }, { dx: 60, dy: 60 },
+    { dx: -60, dy: 60 },
   ];
   const LIBRA_LINES = [[0,1],[1,2],[0,4],[2,3],[3,5],[4,6],[5,6]];
 
   // ---------- Easing ----------
   const ease = {
-    outCubic: t => 1 - Math.pow(1 - t, 3),
-    inCubic:  t => t * t * t,
+    outCubic:   t => 1 - Math.pow(1 - t, 3),
+    inCubic:    t => t * t * t,
     inOutCubic: t => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2,
-    outBack:  t => { const c1=1.70158, c3=c1+1; return 1 + c3*Math.pow(t-1,3) + c1*Math.pow(t-1,2); },
+    outBack:    t => { const c1=1.70158, c3=c1+1; return 1 + c3*Math.pow(t-1,3) + c1*Math.pow(t-1,2); },
+    outElastic: t => {
+      if (t === 0) return 0; if (t === 1) return 1;
+      const c4 = (2 * Math.PI) / 3;
+      return Math.pow(2, -10 * t) * Math.sin((t * 10 - 0.75) * c4) + 1;
+    },
   };
   const lerp = (a,b,t) => a + (b-a)*t;
   const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
 
+  // ---------- 名字栅格化点云 ----------
+  let nameTargets = [];
+  function buildNameTargets(text, cvW, cvH) {
+    // 防御：视口尺寸异常时返回空数组
+    if (cvW <= 0 || cvH <= 0) return [];
+
+    const off = document.createElement('canvas');
+    const octx = off.getContext('2d');
+    // 名字像素尺寸（CSS像素）自适应
+    const cssW = cvW / devicePixelRatio;
+    const cssH = cvH / devicePixelRatio;
+    const fontSize = Math.max(20, Math.round(Math.min(cssW * 0.18, cssH * 0.22)));
+    const pad = Math.round(fontSize * 0.3);
+
+    off.width  = Math.max(fontSize * text.length + pad * 2, 40);
+    off.height = Math.max(fontSize + pad * 2, 40);
+
+    octx.fillStyle = '#000';
+    octx.fillRect(0, 0, off.width, off.height);
+    octx.fillStyle = '#fff';
+    octx.font = `bold ${fontSize}px "Songti SC","STSong","SimSun","Noto Serif SC",serif`;
+    octx.textBaseline = 'middle';
+    octx.textAlign = 'center';
+    octx.fillText(text, off.width / 2, off.height / 2);
+
+    if (off.width === 0 || off.height === 0) return [];
+    const img = octx.getImageData(0, 0, off.width, off.height).data;
+    const sampled = [];
+    const step = Math.max(3, Math.round(fontSize / 28)); // 采样步长
+    for (let y = 0; y < off.height; y += step) {
+      for (let x = 0; x < off.width; x += step) {
+        const i = (y * off.width + x) * 4;
+        if (img[i+3] > 128 && img[i] > 64) {
+          sampled.push({ x: x - off.width / 2, y: y - off.height / 2 });
+        }
+      }
+    }
+    // 缩放 + 居中到 canvas
+    const scale = devicePixelRatio;
+    const cx = cvW / 2;
+    const cy = cvH / 2;
+    return sampled.map(p => ({
+      tx: cx + p.x * scale,
+      ty: cy + p.y * scale,
+    }));
+  }
+
   // ---------- State ----------
   const t0 = performance.now();
-  let phase = 0;          // 当前阶段
-  let phaseStart = 0;     // 当前阶段起点
-  let phaseDur = [500, 1300, 1700, 1300, 2000, 1700, 99999][0];
+  let phase = 0;
+  let phaseStart = 0;
 
-  // 2D 粒子（Phase 0-3）
-  let particles = [];
-  // 3D 粒子（Phase 4+）
-  let stars3d = [];
-  // 连线 alpha 进度
-  let lineAlpha = 0;
-  let lineIdx = 0;
+  // 粒子系统
+  let particles = [];     // 2D 粒子（Phase 0-5）
+  let stars3d = [];       // 3D 粒子（Phase 6+）
 
-  // 初始化：Phase 0 中央单星
+  // ---------- 初始化 ----------
+  resize(); // 先设置 W/H
   function init() {
     particles = [{
       x: CX, y: CY, vx: 0, vy: 0,
       size: 4, baseSize: 4,
-      targetX: CX, targetY: CY,
-      born: 0, life: 1,
-      rot: 0, rotSpeed: 0.02
+      tx: CX, ty: CY,
+      born: 0, rotSpeed: 0.02
     }];
   }
   init();
+  // 预计算名字目标点（W/H 已由 resize 设置好）
+  nameTargets = buildNameTargets('陈燕丽', W, H);
 
-  // 生成衍生粒子（Phase 1）
-  function spawnChildren(count) {
+  // Phase 1: 密集裂变
+  function spawnDenseChildren(count) {
+    // 分布半径 = 视口对角线 * 0.75 → 保证从屏幕外涌入感
+    const diag = Math.sqrt(W*W + H*H) / DPR;
+    const r = diag * 0.55;
     for (let i = 0; i < count; i++) {
       const a = Math.random() * Math.PI * 2;
-      const sp = Math.random() * 2 + 0.5;
+      const sp = Math.random() * 3 + 0.6;
       particles.push({
         x: CX, y: CY,
         vx: Math.cos(a) * sp,
         vy: Math.sin(a) * sp,
-        size: Math.random() * 2 + 1.5,
-        baseSize: 2,
-        targetX: CX + (Math.random()-0.5) * 600,
-        targetY: CY + (Math.random()-0.5) * 600,
-        born: 0, life: 1,
-        rot: 0, rotSpeed: 0
+        size: Math.random() * 2 + 1.2,
+        baseSize: 1.8,
+        tx: CX + Math.cos(a) * r * DPR,
+        ty: CY + Math.sin(a) * r * DPR,
+        born: 0, rotSpeed: 0,
+        // 标记用途: 'name' → 飞名字, 'libra' → 飞星座, 'drift' → 漂移
+        role: 'name'
       });
+    }
+    // 把最后 ~200 颗的 role 改为 libra
+    const libraCount = Math.min(200, count * 0.4);
+    for (let i = count - libraCount; i < count; i++) {
+      particles[particles.length - 1 - (count - 1 - i)].role = 'libra';
     }
   }
 
-  // 初始化 3D 粒子（Phase 4）
+  // Phase 6: 初始化 3D 粒子
   function init3DStars() {
     stars3d = [];
-    for (let i = 0; i < 260; i++) {
+    for (let i = 0; i < 340; i++) {
       const r = 180 + Math.random() * 420;
       const theta = Math.random() * Math.PI * 2;
       const phi = Math.acos(2 * Math.random() - 1);
-      stars3d.push({ r, theta, phi, size: Math.random()*1.8+0.6, born: Math.random()*600 });
+      stars3d.push({ r, theta, phi, size: Math.random()*1.8+0.6 });
     }
   }
 
-  // ---------- Main Loop ----------
+  // ---------- 主循环 ----------
   function tick(now) {
     const elapsed = now - t0;
     const t = elapsed / 1000;
 
-    // 阶段判定
-    const thresh = [0, 0.5, 1.8, 3.5, 4.8, 6.8, 8.5];
+    // 阶段判定（新的时间点）
+    const thresh = [0, 0.5, 1.8, 4.0, 5.2, 6.5, 7.5, 9.5];
     let curPhase = 0;
     for (let i = thresh.length - 1; i >= 0; i--) { if (t >= thresh[i]) { curPhase = i; break; } }
+
     if (curPhase !== phase) {
       phase = curPhase;
       phaseStart = elapsed;
-      // 进入各阶段时的初始化
-      if (phase === 1) spawnChildren(80);
-      if (phase === 4) init3DStars();
-      if (phase === 6) {
-        // 结束：淡出并转背景
+
+      if (phase === 1) spawnDenseChildren(520);
+      if (phase === 2) assignNameTargets();
+      if (phase === 4) {
+        libraByIndexCache = {}; // 清除缓存
+        assignLibraTargets();
+      }
+      if (phase === 6) init3DStars();
+      if (phase === 7) {
+        // 动画收尾：淡出并降为背景
         setTimeout(() => {
-          canvas.classList.remove('intro');
           canvas.classList.add('done');
           setTimeout(() => {
             canvas.classList.remove('done');
             canvas.classList.add('bg');
-          }, 1200);
+          }, 1300);
         }, 100);
       }
     }
-    const pT = (elapsed - phaseStart) / 1000; // 当前阶段内经过的秒数
+    const pT = (elapsed - phaseStart) / 1000;
 
-    // 清屏（Phase 4+ 用半透明拖尾）
-    if (phase >= 4) {
-      ctx.fillStyle = 'rgba(5, 10, 20, 0.18)';
+    // 清屏策略
+    if (phase >= 6) {
+      ctx.fillStyle = 'rgba(5, 10, 20, 0.20)';
       ctx.fillRect(0, 0, W, H);
     } else {
       ctx.fillStyle = '#000';
       ctx.fillRect(0, 0, W, H);
     }
 
-    // 光晕层
-    if (phase <= 3) {
-      const haloR = phase === 0 ? 40 * ease.outCubic(clamp(pT / 0.5, 0, 1))
-                  : phase === 1 ? 180 + 200 * ease.outCubic(clamp(pT / 1.3, 0, 1))
-                  : phase === 2 ? 380 - 120 * ease.inOutCubic(clamp(pT / 1.7, 0, 1))
-                  : 260 + 30 * Math.sin(pT * 4);
-      const g = ctx.createRadialGradient(CX, CY, 0, CX, CY, haloR * devicePixelRatio);
-      g.addColorStop(0, 'rgba(232,196,124,0.22)');
-      g.addColorStop(0.5, 'rgba(80,130,190,0.06)');
-      g.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.fillStyle = g;
-      ctx.fillRect(0, 0, W, H);
+    // 中心光晕（Phase 0-5）
+    if (phase <= 5) {
+      drawCenterHalo(phase, pT);
     }
 
-    // ---------- Phase 0: 单星弹出 ----------
+    // ============ Phase 0: 单星弹出 ============
     if (phase === 0) {
       const k = ease.outBack(clamp(pT / 0.5, 0, 1));
-      drawStar(CX, CY, 4 * devicePixelRatio * k, 1);
-      particles[0].rot += 0.02 * k;
+      drawStar(CX, CY, 4 * DPR * k, 1);
+      particles[0].rotSpeed = 0.02 * k;
     }
 
-    // ---------- Phase 1: 分裂扩散 ----------
+    // ============ Phase 1: 密集裂变扩散 ============
     if (phase === 1) {
       const k = clamp(pT / 1.3, 0, 1);
       particles.forEach(p => {
         if (p === particles[0]) {
-          p.rot += 0.04 + k * 0.06;
-          drawStar(p.x, p.y, 4 * devicePixelRatio, 1);
+          p.rotSpeed = 0.04 + k * 0.08;
+          drawStar(p.x, p.y, 4 * DPR, 1);
         } else {
-          p.x += p.vx * (0.5 + k * 2.2);
-          p.y += p.vy * (0.5 + k * 2.2);
-          drawStar(p.x, p.y, p.size * devicePixelRatio, 0.85);
+          p.x += p.vx * (0.5 + k * 2.5);
+          p.y += p.vy * (0.5 + k * 2.5);
+          // 轻微湍流
+          p.vx += (Math.random() - 0.5) * 0.05;
+          p.vy += (Math.random() - 0.5) * 0.05;
+          drawStar(p.x, p.y, p.size * DPR, 0.9);
         }
       });
     }
 
-    // ---------- Phase 2: 汇聚成星座 ----------
+    // ============ Phase 2: 星星汇聚成「陈燕丽」 ============
     if (phase === 2) {
-      const k = ease.inOutCubic(clamp(pT / 1.7, 0, 1));
-      // 保留 7 颗核心星 + 让它们向星座位置插值
-      for (let i = 0; i < 7; i++) {
-        const sx = CX + LIBRA_STARS[i].dx * devicePixelRatio;
-        const sy = CY + LIBRA_STARS[i].dy * devicePixelRatio;
-        if (i < particles.length) {
-          const p = particles[i];
-          p.x = lerp(p.x, sx, 0.08 + k * 0.25);
-          p.y = lerp(p.y, sy, 0.08 + k * 0.25);
-          drawStar(p.x, p.y, 3.2 * devicePixelRatio, 0.95);
-        } else {
-          drawStar(sx, sy, 3.2 * devicePixelRatio, 0.95);
+      const k = ease.inOutCubic(clamp(pT / 2.2, 0, 1));
+      // 名字角色飞向目标点
+      let ni = 0;
+      for (const p of particles) {
+        if (p.role === 'name' && ni < nameTargets.length) {
+          const tgt = nameTargets[ni % nameTargets.length];
+          const tx = tgt.tx + (Math.random() - 0.5) * 4 * DPR;
+          const ty = tgt.ty + (Math.random() - 0.5) * 4 * DPR;
+          const easing = 0.05 + k * 0.28;
+          p.x = lerp(p.x, tx, easing);
+          p.y = lerp(p.y, ty, easing);
+          p.tx = tx; p.ty = ty;
+          p.vx *= 0.9; p.vy *= 0.9;
+          drawStar(p.x, p.y, p.baseSize * DPR, 1);
+          ni++;
+        } else if (p.role === 'libra') {
+          // 星座角色飘向外围 + 缩小
+          p.x += p.vx * 0.3;
+          p.y += p.vy * 0.3;
+          p.vx *= 0.96; p.vy *= 0.96;
+          drawStar(p.x, p.y, p.size * DPR * 0.45, 0.35);
         }
       }
-      // 其他粒子淡出
-      for (let i = 7; i < particles.length; i++) {
-        const p = particles[i];
-        p.vx *= 0.95; p.vy *= 0.95;
-        p.x += p.vx; p.y += p.vy;
-        const a = 1 - k;
-        if (a > 0.02) drawStar(p.x, p.y, p.size * devicePixelRatio * 0.5, a);
-      }
-      particles = particles.slice(0, Math.max(7, particles.length - 2));
     }
 
-    // ---------- Phase 3: 星座连线亮起 ----------
+    // ============ Phase 3: 名字点亮 + 跳动 ============
     if (phase === 3) {
+      const k = clamp(pT / 1.2, 0, 1);
+      const jump = ease.outElastic(k);
+      const glow = 0.5 + 0.5 * Math.sin(pT * 8);
+      for (const p of particles) {
+        if (p.role === 'name') {
+          // 在目标位置上微抖动（跳动感）
+          const jitterX = Math.sin(pT * 6 + (p.tx + p.ty) * 0.01) * 2 * DPR * jump;
+          const jitterY = Math.cos(pT * 5 + p.tx * 0.01) * 2 * DPR * jump - 6 * DPR * k;
+          const px = p.tx + jitterX;
+          const py = p.ty + jitterY;
+          const sz = p.baseSize * DPR * (1 + 0.3 * glow * jump);
+          // 名字粒子光晕层
+          const r2 = sz * 5;
+          const g2 = ctx.createRadialGradient(px, py, 0, px, py, r2);
+          g2.addColorStop(0, `rgba(232,196,124,${0.55 * glow * jump})`);
+          g2.addColorStop(1, 'rgba(232,196,124,0)');
+          ctx.fillStyle = g2;
+          ctx.fillRect(px - r2, py - r2, r2*2, r2*2);
+          drawStar(px, py, sz, 1);
+        } else if (p.role === 'libra') {
+          drawStar(p.x, p.y, p.size * DPR * 0.4, 0.3);
+        }
+      }
+    }
+
+    // ============ Phase 4: 名字扩散 + 星座汇聚 ============
+    if (phase === 4) {
       const k = ease.inOutCubic(clamp(pT / 1.3, 0, 1));
-      // 画线：依次淡入每条
-      const perLine = 0.16;
+      // 名字粒子向外爆炸扩散
+      for (const p of particles) {
+        if (p.role === 'name') {
+          if (!p.burst) {
+            const a = Math.random() * Math.PI * 2;
+            const s = Math.random() * 4 + 2;
+            p.vx = Math.cos(a) * s;
+            p.vy = Math.sin(a) * s;
+            p.burst = true;
+          }
+          p.x += p.vx * (1 + k * 4);
+          p.y += p.vy * (1 + k * 4);
+          p.vx *= 0.93; p.vy *= 0.93;
+          const a2 = 1 - k * 0.8;
+          if (a2 > 0.02) drawStar(p.x, p.y, p.size * DPR * 0.6, a2);
+        }
+      }
+      // 星座角色飞向天秤座 7 个核心点
+      let li = 0;
+      for (const p of particles) {
+        if (p.role === 'libra') {
+          const si = li % 7;
+          const sx = CX + LIBRA_STARS[si].dx * DPR;
+          const sy = CY + LIBRA_STARS[si].dy * DPR;
+          const easing = 0.06 + k * 0.30;
+          p.x = lerp(p.x, sx, easing);
+          p.y = lerp(p.y, sy, easing);
+          p.tx = sx; p.ty = sy;
+          p.vx *= 0.9; p.vy *= 0.9;
+          drawStar(p.x, p.y, 2.6 * DPR, 0.95);
+          li++;
+        }
+      }
+    }
+
+    // ============ Phase 5: 星座连线亮起 ============
+    if (phase === 5) {
+      const k = ease.inOutCubic(clamp(pT / 1.0, 0, 1));
+      const perLine = 0.18;
       LIBRA_LINES.forEach((line, i) => {
         const lineStart = i * perLine;
         const lineT = clamp((k - lineStart) / perLine, 0, 1);
         const a = ease.outCubic(lineT) * 0.7;
-        const p1 = particles[line[0]], p2 = particles[line[1]];
+        // 找到 role==='libra' 且 target 对应 LIBRA_STARS 的粒子
+        const p1 = getLibraByIndex(line[0]);
+        const p2 = getLibraByIndex(line[1]);
         if (p1 && p2 && a > 0.01) {
           ctx.strokeStyle = `rgba(232,196,124,${a})`;
-          ctx.lineWidth = 1.3 * devicePixelRatio;
+          ctx.lineWidth = 1.3 * DPR;
           ctx.beginPath();
           ctx.moveTo(p1.x, p1.y);
           ctx.lineTo(p2.x, p2.y);
           ctx.stroke();
         }
       });
-      // 画 7 颗星（更亮，加光晕）
+      // 绘制 7 颗核心星（带光晕）
       for (let i = 0; i < 7; i++) {
-        const p = particles[i];
+        const p = getLibraByIndex(i);
         if (!p) continue;
-        // 光晕
-        const g2 = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 14 * devicePixelRatio);
-        g2.addColorStop(0, 'rgba(232,196,124,0.55)');
-        g2.addColorStop(1, 'rgba(232,196,124,0)');
-        ctx.fillStyle = g2;
-        ctx.fillRect(p.x - 16*devicePixelRatio, p.y - 16*devicePixelRatio, 32*devicePixelRatio, 32*devicePixelRatio);
-        drawStar(p.x, p.y, 3.5 * devicePixelRatio, 1);
+        const gr = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 16 * DPR);
+        gr.addColorStop(0, 'rgba(232,196,124,0.6)');
+        gr.addColorStop(1, 'rgba(232,196,124,0)');
+        ctx.fillStyle = gr;
+        ctx.fillRect(p.x - 18*DPR, p.y - 18*DPR, 36*DPR, 36*DPR);
+        drawStar(p.x, p.y, 3.6 * DPR, 1);
       }
-      // 标注 "天秤座"
-      if (k > 0.75) {
-        const at = (k - 0.75) / 0.25;
+      // 标注「天秤座」
+      if (k > 0.7) {
+        const at = (k - 0.7) / 0.3;
         ctx.fillStyle = `rgba(232,196,124,${at * 0.85})`;
-        ctx.font = `${14 * devicePixelRatio}px "Songti SC", serif`;
+        ctx.font = `${14 * DPR}px "Songti SC",serif`;
         ctx.textAlign = 'center';
-        ctx.letterSpacing = '4px';
-        ctx.fillText('天 秤 座', CX, CY + 140 * devicePixelRatio);
+        ctx.fillText('天 秤 座', CX, CY + 140 * DPR);
       }
     }
 
-    // ---------- Phase 4: 爆炸 + 3D 涌入 ----------
-    if (phase === 4) {
+    // ============ Phase 6: 爆炸 → 3D 宇宙涌入 ============
+    if (phase === 6) {
       const k = ease.outCubic(clamp(pT / 2.0, 0, 1));
-      // 先把星座粒子向外炸开
-      particles.forEach(p => {
-        p.x += p.vx * (1.5 + k * 4) || (Math.random()-0.5) * 12;
-        p.y += p.vy * (1.5 + k * 4) || (Math.random()-0.5) * 12;
-        p.vx = (p.vx || 0) * 0.94; p.vy = (p.vy || 0) * 0.94;
-        const a = 1 - k * 0.6;
-        if (a > 0.02) drawStar(p.x, p.y, p.size * devicePixelRatio, a);
-      });
-      // 同时 3D 星星从中心涌出
-      const fov = 500;
+      // 2D 粒子全部向外炸开
+      for (const p of particles) {
+        if (!p.burst) {
+          const a = Math.random() * Math.PI * 2;
+          const s = Math.random() * 5 + 3;
+          p.vx = Math.cos(a) * s;
+          p.vy = Math.sin(a) * s;
+          p.burst = true;
+        }
+        p.x += p.vx * (1 + k * 5);
+        p.y += p.vy * (1 + k * 5);
+        p.vx *= 0.93; p.vy *= 0.93;
+        const a2 = 1 - k * 0.7;
+        if (a2 > 0.02) drawStar(p.x, p.y, p.size * DPR * 0.5, a2);
+      }
+      // 3D 宇宙
+      const fov = 520;
       for (const s of stars3d) {
-        s.theta += 0.004 + k * 0.015;
+        s.theta += 0.004 + k * 0.016;
         const sinT = Math.sin(s.theta), cosT = Math.cos(s.theta);
         const sinP = Math.sin(s.phi), cosP = Math.cos(s.phi);
         const r = s.r * (0.3 + k * 0.7);
         const x = r * sinP * cosT;
         const y = r * sinP * sinT;
-        const z = r * cosP + 600;
+        const z = r * cosP + 620;
         if (z < 1) continue;
         const scale = fov / z;
-        const sx = CX + x * scale * devicePixelRatio;
-        const sy = CY + y * scale * devicePixelRatio;
-        const sz = s.size * scale * devicePixelRatio;
-        const a = clamp(scale * 1.1, 0.1, 1);
-        drawStar(sx, sy, sz, a);
-      }
-    }
-
-    // ---------- Phase 5: 3D 宇宙稳定旋转 ----------
-    if (phase === 5) {
-      // 星座粒子淡出
-      particles.forEach(p => {
-        p.vx *= 0.9; p.vy *= 0.9;
-        p.x += p.vx; p.y += p.vy;
-        drawStar(p.x, p.y, p.size * devicePixelRatio * 0.4, 0.15);
-      });
-      particles = particles.filter(p => p.vx*p.vx + p.vy*p.vy > 0.01);
-      // 3D 宇宙
-      const fov = 500;
-      for (const s of stars3d) {
-        s.theta += 0.006;
-        const sinT = Math.sin(s.theta), cosT = Math.cos(s.theta);
-        const sinP = Math.sin(s.phi), cosP = Math.cos(s.phi);
-        const x = s.r * sinP * cosT;
-        const y = s.r * sinP * sinT;
-        const z = s.r * cosP + 600;
-        if (z < 1) continue;
-        const scale = fov / z;
-        const sx = CX + x * scale * devicePixelRatio;
-        const sy = CY + y * scale * devicePixelRatio;
-        const sz = s.size * scale * devicePixelRatio;
+        const sx = CX + x * scale * DPR;
+        const sy = CY + y * scale * DPR;
+        const sz = s.size * scale * DPR;
         const a = clamp(scale * 1.1, 0.12, 1);
         drawStar(sx, sy, sz, a);
       }
     }
 
-    // ---------- Phase 6: 继续 3D 旋转（背景） ----------
-    if (phase === 6) {
-      const fov = 500;
+    // ============ Phase 7: 3D 宇宙稳定旋转（背景） ============
+    if (phase === 7) {
+      const fov = 520;
       for (const s of stars3d) {
         s.theta += 0.004;
         const sinT = Math.sin(s.theta), cosT = Math.cos(s.theta);
         const sinP = Math.sin(s.phi), cosP = Math.cos(s.phi);
         const x = s.r * sinP * cosT;
         const y = s.r * sinP * sinT;
-        const z = s.r * cosP + 600;
+        const z = s.r * cosP + 620;
         if (z < 1) continue;
         const scale = fov / z;
-        const sx = CX + x * scale * devicePixelRatio;
-        const sy = CY + y * scale * devicePixelRatio;
-        const sz = s.size * scale * devicePixelRatio;
+        const sx = CX + x * scale * DPR;
+        const sy = CY + y * scale * DPR;
+        const sz = s.size * scale * DPR;
         const a = clamp(scale * 0.9, 0.08, 0.8);
         drawStar(sx, sy, sz, a);
       }
@@ -766,29 +887,90 @@
     requestAnimationFrame(tick);
   }
 
-  // ---------- Draw a glowing star ----------
+  // ---------- 工具函数 ----------
+
+  // Phase 2 进入时：把 nameTargets 分配给 role==='name' 的粒子
+  function assignNameTargets() {
+    if (nameTargets.length === 0) return;
+    let ni = 0;
+    for (const p of particles) {
+      if (p.role === 'name') {
+        const tgt = nameTargets[ni % nameTargets.length];
+        if (!tgt) continue;
+        p.tx = tgt.tx;
+        p.ty = tgt.ty;
+        ni++;
+      }
+    }
+  }
+
+  // Phase 4 进入时：把 LIBRA_STARS 7 个位置分配给 role==='libra' 的粒子
+  function assignLibraTargets() {
+    let li = 0;
+    for (const p of particles) {
+      if (p.role === 'libra') {
+        const si = li % 7;
+        p.tx = CX + LIBRA_STARS[si].dx * DPR;
+        p.ty = CY + LIBRA_STARS[si].dy * DPR;
+        li++;
+      }
+    }
+  }
+
+  // 根据索引取一颗 role==='libra' 且 tx/ty 匹配 LIBRA_STARS[i] 的粒子
+  let libraByIndexCache = {};
+  function getLibraByIndex(idx) {
+    if (libraByIndexCache[idx]) return libraByIndexCache[idx];
+    const tx0 = CX + LIBRA_STARS[idx].dx * DPR;
+    const ty0 = CY + LIBRA_STARS[idx].dy * DPR;
+    for (const p of particles) {
+      if (p.role === 'libra' && Math.abs(p.tx - tx0) < 2 && Math.abs(p.ty - ty0) < 2) {
+        libraByIndexCache[idx] = p;
+        return p;
+      }
+    }
+    // fallback：直接返回第一颗匹配 role 的
+    for (const p of particles) {
+      if (p.role === 'libra') return p;
+    }
+    return null;
+  }
+
+  // 中心光晕（Phase 0-5）
+  function drawCenterHalo(ph, pT) {
+    let haloR = 30;
+    if (ph === 0) haloR = 40 * ease.outCubic(clamp(pT / 0.5, 0, 1));
+    else if (ph === 1) haloR = 180 + 300 * ease.outCubic(clamp(pT / 1.3, 0, 1));
+    else if (ph === 2) haloR = Math.max(100, 480 - 200 * ease.inOutCubic(clamp(pT / 2.2, 0, 1)));
+    else if (ph === 3) haloR = 300 + 40 * Math.sin(pT * 6);
+    else if (ph === 4) haloR = 200 + 120 * ease.outCubic(clamp(pT / 1.3, 0, 1));
+    else if (ph === 5) haloR = 260 + 20 * Math.sin(pT * 5);
+
+    const g = ctx.createRadialGradient(CX, CY, 0, CX, CY, haloR * DPR);
+    g.addColorStop(0, 'rgba(232,196,124,0.18)');
+    g.addColorStop(0.5, 'rgba(80,130,190,0.05)');
+    g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  // 绘制发光星点
   function drawStar(x, y, size, alpha) {
     if (size < 0.3 || alpha <= 0.01) return;
-    // 光晕
     const r = size * 4;
     const g = ctx.createRadialGradient(x, y, 0, x, y, r);
-    g.addColorStop(0, `rgba(240,230,210,${alpha * 0.7})`);
-    g.addColorStop(0.3, `rgba(200,210,230,${alpha * 0.25})`);
+    g.addColorStop(0, `rgba(240,230,210,${alpha * 0.75})`);
+    g.addColorStop(0.3, `rgba(200,210,230,${alpha * 0.28})`);
     g.addColorStop(1, 'rgba(0,0,0,0)');
     ctx.fillStyle = g;
     ctx.fillRect(x - r, y - r, r*2, r*2);
-    // 核心
     ctx.fillStyle = `rgba(255,255,255,${alpha})`;
     ctx.beginPath();
     ctx.arc(x, y, Math.max(0.5, size), 0, Math.PI * 2);
     ctx.fill();
   }
 
-  // 延迟 60ms 让 canvas 先黑屏，再开始动画
   setTimeout(() => requestAnimationFrame(tick), 60);
-
-  // 动画结束后清理：把 canvas 降为背景层继续渲染缓慢旋转
-  // （在 phase === 6 时已经做了 canvas.classList.add('bg')，此处无需额外处理）
 })();
 </script>
 </body>
