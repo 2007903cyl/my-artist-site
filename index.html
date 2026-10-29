@@ -92,38 +92,24 @@
     opacity: 0;
     animation: heroReveal 1.6s ease 9.5s forwards;
   }
-  .hero h1 {
-    font-size: clamp(72px, 15vw, 200px);
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    line-height: 1.1;
-    animation: heroNameBounce 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) 9.6s both;
-  }
-  @keyframes heroNameBounce {
-    0%   { transform: translateY(40px) scale(0.92); opacity: 0; }
-    50%  { transform: translateY(-18px) scale(1.04); opacity: 1; }
-    70%  { transform: translateY(6px) scale(0.98); }
-    100% { transform: translateY(0) scale(1); opacity: 1; }
-  }
   .hero .hero-subtitle {
-    margin-top: 28px;
-    font-size: clamp(16px, 2vw, 22px);
+    margin-top: 0;
+    font-size: clamp(18px, 2.4vw, 26px);
     letter-spacing: 6px;
     color: #b56a7a;
     font-weight: 500;
     text-shadow: 0 0 18px rgba(181, 106, 122, 0.35);
-    animation: heroSubReveal 1.4s ease 10.8s forwards;
+    animation: heroSubReveal 1.4s ease 9.5s forwards,
+               heroSoftBounce 2.4s ease-in-out 10.9s infinite;
     opacity: 0;
   }
   @keyframes heroSubReveal {
     from { opacity: 0; transform: translateY(10px); letter-spacing: 12px; }
     to   { opacity: 1; transform: translateY(0);  letter-spacing: 6px; }
   }
-  .hero p {
-    margin-top: 20px;
-    font-size: clamp(14px, 1.6vw, 18px);
-    letter-spacing: 8px;
-    color: #8a6068;
+  @keyframes heroSoftBounce {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
   }
   .hero .scroll-hint {
     position: absolute;
@@ -314,7 +300,6 @@
   }
   @media (max-width: 520px) {
     .works-grid { grid-template-columns: 1fr; }
-    .hero p { letter-spacing: 4px; }
   }
 </style>
 </head>
@@ -333,9 +318,7 @@
 
 <!-- 首屏 -->
 <header class="hero">
-  <h1>陈燕丽</h1>
   <div class="hero-subtitle">你想要了解我吗？</div>
-  <p>个人艺术 · 数字影像</p>
   <span class="scroll-hint">向下滚动</span>
 </header>
 
