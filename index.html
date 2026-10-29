@@ -90,7 +90,7 @@
     text-align: center;
     padding: 0 24px;
     opacity: 0;
-    animation: heroReveal 1.6s ease 9.5s forwards;
+    animation: heroReveal 1.6s ease 11.2s forwards;
   }
   .hero .hero-subtitle {
     margin-top: 0;
@@ -99,8 +99,8 @@
     color: #b56a7a;
     font-weight: 500;
     text-shadow: 0 0 18px rgba(181, 106, 122, 0.35);
-    animation: heroSubReveal 1.4s ease 9.5s forwards,
-               heroSoftBounce 2.4s ease-in-out 10.9s infinite;
+    animation: heroSubReveal 1.4s ease 11.2s forwards,
+               heroSoftBounce 4.5s ease-in-out 12.6s infinite;
     opacity: 0;
   }
   @keyframes heroSubReveal {
@@ -109,7 +109,22 @@
   }
   @keyframes heroSoftBounce {
     0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-6px); }
+    50%      { transform: translateY(-2px); }
+  }
+  .hero .hero-en {
+    margin-top: 18px;
+    font-family: "Optima", "Palatino Linotype", Georgia, serif;
+    font-size: clamp(13px, 1.2vw, 16px);
+    letter-spacing: 0.55em;
+    text-indent: 0.55em;
+    text-transform: uppercase;
+    color: #a5797f;
+    opacity: 0;
+    animation: heroEnReveal 1.6s ease 12.4s forwards;
+  }
+  @keyframes heroEnReveal {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
   .hero .scroll-hint {
     position: absolute;
@@ -319,6 +334,7 @@
 <!-- 首屏 -->
 <header class="hero">
   <div class="hero-subtitle">你想要了解我吗？</div>
+  <div class="hero-en">Chen Yanli</div>
   <span class="scroll-hint">向下滚动</span>
 </header>
 
@@ -611,7 +627,7 @@
     const t = elapsed / 1000;
 
     // 阶段判定（新的时间点）
-    const thresh = [0, 0.5, 1.8, 4.0, 5.2, 6.5, 7.5, 9.5];
+    const thresh = [0, 0.5, 1.8, 4.0, 6.9, 8.2, 9.2, 11.2];
     let curPhase = 0;
     for (let i = thresh.length - 1; i >= 0; i--) { if (t >= thresh[i]) { curPhase = i; break; } }
 
@@ -705,19 +721,19 @@
       }
     }
 
-    // ============ Phase 3: 名字点亮 + 跳动 ============
+    // ============ Phase 3: 名字点亮 + 轻微浮动 ============
     if (phase === 3) {
-      const k = clamp(pT / 1.2, 0, 1);
+      const k = clamp(pT / 1.8, 0, 1);
       const jump = ease.outElastic(k);
-      const glow = 0.5 + 0.5 * Math.sin(pT * 8);
+      const glow = 0.5 + 0.5 * Math.sin(pT * 3);
       for (const p of particles) {
         if (p.role === 'name') {
-          // 在目标位置上微抖动（跳动感）
-          const jitterX = Math.sin(pT * 6 + (p.tx + p.ty) * 0.01) * 2 * DPR * jump;
-          const jitterY = Math.cos(pT * 5 + p.tx * 0.01) * 2 * DPR * jump - 6 * DPR * k;
+          // 极轻微浮动（幅度降低，节奏放慢）
+          const jitterX = Math.sin(pT * 2.2 + (p.tx + p.ty) * 0.01) * 0.9 * DPR * jump;
+          const jitterY = Math.cos(pT * 1.8 + p.tx * 0.01) * 0.9 * DPR * jump - 2 * DPR * k;
           const px = p.tx + jitterX;
           const py = p.ty + jitterY;
-          const sz = p.baseSize * DPR * (1 + 0.3 * glow * jump);
+          const sz = p.baseSize * DPR * (1 + 0.18 * glow * jump);
           // 名字粒子光晕层
           const r2 = sz * 5;
           const g2 = ctx.createRadialGradient(px, py, 0, px, py, r2);
