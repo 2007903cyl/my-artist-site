@@ -3,75 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>陈燕丽 — 旅行手账</title>
+<title>陈燕丽 — 艺术家</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   html { scroll-behavior: smooth; }
 
-  :root {
-    --ink: #4a4039;
-    --ink-dim: #8a7d72;
-    --ink-faint: #b5a99d;
-    --coral: #ff8fa3;
-    --mint: #7fd8be;
-    --lavender: #b8a7e8;
-    --sunny: #ffc94d;
-    --sky: #7ec8e3;
-    --paper: #fffdf8;
-  }
-
   body {
-    background-color: #fff8f0;
-    background-image:
-      radial-gradient(circle, #ffd6e0 6px, transparent 7px),
-      radial-gradient(circle, #c9ecdc 5px, transparent 6px),
-      radial-gradient(circle, #ddd5f5 5px, transparent 6px),
-      radial-gradient(circle, #ffe9b8 5px, transparent 6px);
-    background-size: 130px 130px;
-    background-position: 0 0, 65px 65px, 32px 96px, 96px 32px;
+    background:
+      radial-gradient(120% 60% at 50% -10%, rgba(201, 169, 106, 0.18) 0%, rgba(80, 130, 190, 0) 55%),
+      url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240' fill='none' stroke='%23987c4b' stroke-width='1.4' stroke-linecap='round'><path d='M70 90 q 22 -28 48 -8 q 26 22 8 44 q -20 22 -44 2 q -14 -12 -12 -38z' stroke-opacity='0.3'/><path d='M90 96 q 10 -14 22 -4 q 12 12 2 22 q -12 10 -20 0 q -6 -7 -4 -18z' stroke-opacity='0.24'/><path d='M160 50 h40 v40 M170 60 h20 v20 h-10 v-10 h-10z' stroke-opacity='0.24'/><path d='M40 160 v40 h40 M50 170 v20 h20 v-10 h-10 v-10z' stroke-opacity='0.24'/><path d='M170 170 q 14 -10 24 4 q 8 16 -10 22 q -18 4 -20 -14 q -1 -16 6 -12z' stroke-opacity='0.27'/><path d='M118 118 q 16 -10 26 4 q 10 18 -8 22 q -20 4 -22 -16 q -2 -14 10 -16 q 12 -2 12 10 q 0 10 -10 8' stroke-opacity='0.21'/><circle cx='120' cy='120' r='3' stroke-opacity='0.19'/></svg>") 0 0 / 240px 240px repeat,
+      linear-gradient(180deg, #1c3558 0%, #13223d 25%, #0c1830 55%, #080f20 80%, #050a14 100%);
     background-attachment: fixed;
     min-height: 100vh;
-    color: var(--ink);
-    font-family: "Yuanti SC", "YouYuan", "幼圆", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    color: #f7fbff;
+    font-family: "Songti SC", "STSong", "SimSun", "Noto Serif SC", "Source Han Serif SC", serif;
     line-height: 1.8;
     -webkit-font-smoothing: antialiased;
-    overflow: hidden;
-    animation: unlockScroll 0s 11.4s forwards;
-  }
-  @keyframes unlockScroll { to { overflow: auto; } }
-
-  /* ---------- 夜空舞台 ---------- */
-  .stage-sky {
-    position: fixed;
-    inset: 0;
-    z-index: 1;
-    background: linear-gradient(180deg, #2b2a4e 0%, #1e1d38 55%, #171628 100%);
-    animation: skyOut 1s ease 9.4s forwards;
-    pointer-events: none;
-  }
-  @keyframes skyOut { to { opacity: 0; visibility: hidden; } }
-  .star {
-    position: absolute;
-    border-radius: 50%;
-    background: #fff;
-    animation: twinkle 2.2s ease-in-out infinite alternate;
-  }
-  @keyframes twinkle { from { opacity: 0.25; transform: scale(0.8); } to { opacity: 1; transform: scale(1.25); } }
-  .shooting-star {
-    position: absolute;
-    width: 110px; height: 2.5px;
-    border-radius: 3px;
-    background: linear-gradient(90deg, #fff, rgba(255,255,255,0));
-    opacity: 0;
-    transform: rotate(-32deg);
-  }
-  .shooting-star.s1 { top: 14%; right: 12%; animation: shoot 1.2s ease-out 2.2s both; }
-  .shooting-star.s2 { top: 32%; right: 34%; animation: shoot 1s ease-out 3.7s both; }
-  @keyframes shoot {
-    0% { opacity: 0; transform: rotate(-32deg) translateX(0); }
-    12% { opacity: 1; }
-    100% { opacity: 0; transform: rotate(-32deg) translateX(-300px); }
   }
 
   /* ---------- 导航栏 ---------- */
@@ -82,39 +30,37 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px 40px;
-    background: rgba(255, 248, 240, 0.75);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 2px dashed rgba(255, 143, 163, 0.35);
-    opacity: 0;
-    animation: navDown 0.7s ease 10.5s forwards;
+    padding: 22px 48px;
+    background: rgba(14, 24, 40, 0.55);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    border-bottom: 1px solid rgba(236, 239, 244, 0.1);
   }
-  @keyframes navDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
   .nav-logo {
     font-size: 18px;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
     font-weight: 700;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--ink);
   }
-  .nav-logo .fp-emoji { display: inline-block; animation: hop 1.6s ease-in-out infinite; }
-  @keyframes hop { 0%,100% { transform: translateY(0) rotate(-8deg); } 50% { transform: translateY(-4px) rotate(6deg); } }
-  .nav-links { display: flex; gap: 10px; list-style: none; }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
   .nav-links a {
-    color: var(--ink);
+    color: #f7fbff;
     text-decoration: none;
     font-size: 14px;
-    letter-spacing: 2px;
-    padding: 6px 16px;
-    border-radius: 999px;
-    transition: background 0.3s, color 0.3s, transform 0.3s;
+    letter-spacing: 3px;
+    position: relative;
+    transition: color 0.3s;
   }
-  .nav-links a:hover { background: var(--coral); color: #fff; transform: translateY(-2px); }
+  .nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: -6px;
+    width: 0; height: 1px;
+    background: #f7fbff;
+    transition: width 0.35s ease;
+  }
+  .nav-links a:hover::after { width: 100%; }
 
-  /* ---------- 首屏舞台 ---------- */
+  /* ---------- 首屏 ---------- */
   .hero {
     min-height: 100vh;
     display: flex;
@@ -122,732 +68,355 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 110px 24px 40px;
-    position: relative;
-    z-index: 2;
+    padding: 0 24px;
   }
-  .hero-stage {
-    position: relative;
-    width: clamp(340px, 72vw, 760px);
-    height: clamp(360px, 58vh, 520px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    perspective: 1000px;
-  }
-
-  /* 地球场景 */
-  .earth-scene {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: earthPop 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s both,
-               earthZoom 1.3s cubic-bezier(0.6, 0, 0.8, 0.4) 4.6s forwards;
-  }
-  .earth-scene::before {
-    content: "";
-    position: absolute;
-    left: 50%; top: 50%;
-    width: calc(clamp(280px, 44vh, 360px) * 1.55);
-    height: calc(clamp(280px, 44vh, 360px) * 1.55);
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(126,200,227,0.45) 0%, rgba(126,200,227,0.12) 55%, rgba(126,200,227,0) 70%);
-    animation: glowPulse 2.8s ease-in-out infinite;
-    z-index: 0;
-  }
-  @keyframes glowPulse { 0%,100% { opacity: 0.65; } 50% { opacity: 1; } }
-  .earth-shadow {
-    position: absolute;
-    left: 50%;
-    top: calc(50% + clamp(280px, 44vh, 360px) * 0.5 + 18px);
-    transform: translateX(-50%);
-    width: calc(clamp(280px, 44vh, 360px) * 0.62);
-    height: 22px;
-    border-radius: 50%;
-    background: radial-gradient(ellipse, rgba(20,16,44,0.5), rgba(20,16,44,0) 70%);
-    z-index: 0;
-  }
-  @keyframes earthPop {
-    from { transform: scale(0.15); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-  }
-  @keyframes earthZoom {
-    from { transform: scale(1); opacity: 1; }
-    to { transform: scale(2.6) translateY(10%); opacity: 0; }
-  }
-  .earth { width: clamp(280px, 44vh, 360px); position: relative; z-index: 2; filter: drop-shadow(0 18px 40px rgba(0,0,0,0.45)); }
-  .cloud {
-    position: absolute;
-    background: #fff;
-    border-radius: 999px;
-    opacity: 0.9;
-    z-index: 4;
-    animation: cloudDrift 9s ease-in-out infinite alternate;
-  }
-  .cloud::before, .cloud::after {
-    content: "";
-    position: absolute;
-    background: #fff;
-    border-radius: 50%;
-  }
-  .cloud.c1 { width: 58px; height: 18px; top: 18%; left: 12%; }
-  .cloud.c1::before { width: 24px; height: 24px; top: -13px; left: 9px; }
-  .cloud.c1::after { width: 17px; height: 17px; top: -9px; left: 29px; }
-  .cloud.c2 { width: 46px; height: 15px; top: 30%; right: 12%; animation-delay: 1.6s; }
-  .cloud.c2::before { width: 19px; height: 19px; top: -10px; left: 7px; }
-  .cloud.c2::after { width: 14px; height: 14px; top: -7px; left: 21px; }
-  .cloud.c3 { width: 40px; height: 13px; bottom: 20%; left: 18%; animation-delay: 3s; opacity: 0.7; }
-  .cloud.c3::before { width: 16px; height: 16px; top: -8px; left: 6px; }
-  .cloud.c3::after { width: 12px; height: 12px; top: -6px; left: 18px; }
-  @keyframes cloudDrift { from { transform: translateX(0); } to { transform: translateX(34px); } }
-
-  /* 小女孩绕地球行走轨道 */
-  .orbit {
-    position: absolute;
-    left: 50%; top: 50%;
-    width: 0; height: 0;
-    z-index: 3;
-    animation: orbitSpin 3.7s linear 0.9s both,
-               orbitDepth 3.7s linear 0.9s both;
-  }
-  @keyframes orbitSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-  @keyframes orbitDepth {
-    0%, 24% { z-index: 1; }
-    25%, 74% { z-index: 5; }
-    75%, 100% { z-index: 1; }
-  }
-  .orbit-arm {
-    position: absolute;
-    left: 0; top: 0;
-    transform: translateY(calc(clamp(280px, 44vh, 360px) * -0.5 - 6px));
-  }
-  .orbit-counter { animation: counterSpin 3.7s linear 0.9s both; }
-  @keyframes counterSpin {
-    0% { transform: rotate(0deg) scale(0.8); }
-    25% { transform: rotate(-90deg) scale(1); }
-    50% { transform: rotate(-180deg) scale(1.16); }
-    75% { transform: rotate(-270deg) scale(1); }
-    100% { transform: rotate(-360deg) scale(0.8); }
-  }
-  .girl {
-    width: 62px;
-    transform: translate(-50%, -100%);
-  }
-  .girl-inner { animation: girlBob 0.5s ease-in-out infinite alternate; }
-  @keyframes girlBob { from { transform: translateY(0); } to { transform: translateY(-5px); } }
-  .leg { transform-box: fill-box; transform-origin: 50% 0%; }
-  .leg-l { animation: legSwing 0.5s ease-in-out infinite alternate; }
-  .leg-r { animation: legSwing 0.5s ease-in-out infinite alternate-reverse; }
-  @keyframes legSwing { from { transform: rotate(20deg); } to { transform: rotate(-20deg); } }
-  .arm-wave { transform-box: fill-box; transform-origin: 10% 90%; animation: wave 1.1s ease-in-out infinite; }
-  @keyframes wave { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(-24deg); } }
-
-  /* 中国地图场景 */
-  .map-scene {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transform-origin: 50% 0%;
-    animation: mapSceneIn 0.6s ease 4.9s forwards,
-               mapRoll 1.05s cubic-bezier(0.6, 0, 0.8, 0.4) 9.2s forwards;
-  }
-  @keyframes mapSceneIn { to { opacity: 1; } }
-  @keyframes mapRoll {
-    0% { transform: rotateX(0deg) translateY(0); opacity: 1; }
-    100% { transform: rotateX(92deg) translateY(26%); opacity: 0; }
-  }
-  .china-map {
-    width: clamp(300px, 56vw, 540px);
-    transform: scale(0.25);
-    animation: mapZoom 1.4s cubic-bezier(0.34, 1.3, 0.5, 1) 4.9s forwards;
-    filter: drop-shadow(0 16px 34px rgba(255, 143, 163, 0.35));
-  }
-  @keyframes mapZoom {
-    from { transform: scale(0.25); }
-    to { transform: scale(1); }
-  }
-  .route {
-    fill: none;
-    stroke: #ff8fa3;
-    stroke-width: 2.6;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-dasharray: 100;
-    stroke-dashoffset: 100;
-    opacity: 0.85;
-    animation: routeDraw 2.7s linear 5.9s forwards;
-  }
-  @keyframes routeDraw { to { stroke-dashoffset: 0; } }
-  .fp { opacity: 0; transform-box: fill-box; transform-origin: center; animation: fpPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
-  @keyframes fpPop { from { opacity: 0; transform: scale(0.15); } to { opacity: 1; transform: scale(1); } }
-  .fp-label {
-    font-size: 15px;
+  .hero h1 {
+    font-size: clamp(72px, 15vw, 200px);
     font-weight: 700;
-    fill: var(--ink);
-    opacity: 0;
-    animation: labelUp 0.5s ease both;
+    letter-spacing: 0.12em;
+    line-height: 1.1;
+    animation: fadeUp 1.2s ease both;
   }
-  @keyframes fpLabelUp { from { opacity: 0; } to { opacity: 1; } }
-  .fp-label { animation-name: fpLabelUp; }
-
-  /* 首屏标题 */
-  .hero-title {
-    margin-top: 30px;
-    font-size: clamp(44px, 9vw, 108px);
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    line-height: 1.15;
-    color: var(--ink);
+  .hero p {
+    margin-top: 32px;
+    font-size: clamp(14px, 1.6vw, 18px);
+    letter-spacing: 8px;
+    color: #adc0d8;
+    animation: fadeUp 1.2s 0.3s ease both;
   }
-  .hero-title span {
-    display: inline-block;
-    opacity: 0;
-    animation: letterPop 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-  }
-  .hero-title span:nth-child(1) { animation-delay: 9.95s; color: var(--coral); }
-  .hero-title span:nth-child(2) { animation-delay: 10.1s; color: var(--ink); }
-  .hero-title span:nth-child(3) { animation-delay: 10.25s; color: var(--lavender); }
-  @keyframes letterPop {
-    0% { opacity: 0; transform: translateY(56px) scale(0.3) rotate(-12deg); }
-    60% { opacity: 1; transform: translateY(-8px) scale(1.14) rotate(4deg); }
-    100% { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
-  }
-  .hero-sub {
-    margin-top: 20px;
-    font-size: clamp(14px, 1.8vw, 19px);
-    letter-spacing: 6px;
-    color: var(--ink-dim);
-    opacity: 0;
-    animation: fadeUp 0.9s ease 10.6s both;
-  }
-  .hero-sub .fp-emoji { margin: 0 8px; }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
-  .scroll-hint {
+  .hero .scroll-hint {
     position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 13px;
+    bottom: 40px;
+    font-size: 12px;
     letter-spacing: 4px;
-    color: var(--ink-faint);
-    opacity: 0;
-    animation: fadeUp 0.9s ease 10.9s both, hop 1.8s ease-in-out 11.2s infinite;
+    color: #8fa2bb;
+    writing-mode: vertical-rl;
+    animation: fadeUp 1.2s 0.8s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
   /* ---------- 通用板块 ---------- */
   section {
-    max-width: 1080px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 100px 40px 40px;
-    position: relative;
-    z-index: 2;
+    padding: 120px 48px;
   }
-  .section-tag {
-    font-size: 13px;
-    letter-spacing: 6px;
-    color: var(--ink-faint);
-    margin-bottom: 6px;
+  .section-title {
+    font-size: 14px;
+    letter-spacing: 8px;
+    color: #adc0d8;
+    margin-bottom: 16px;
   }
   .section-heading {
-    font-size: clamp(30px, 4.5vw, 44px);
-    letter-spacing: 5px;
-    color: var(--ink);
-    margin-bottom: 14px;
+    font-size: clamp(32px, 4vw, 48px);
+    letter-spacing: 6px;
+    margin-bottom: 64px;
   }
-  .squiggle {
-    display: block;
-    width: 130px;
-    height: 12px;
-    margin-bottom: 48px;
+  .divider {
+    width: 48px; height: 1px;
+    background: #f7fbff;
+    margin-bottom: 64px;
   }
 
   /* ---------- 关于我 ---------- */
   .about-wrap {
     display: grid;
-    grid-template-columns: 0.9fr 1.1fr;
-    gap: 60px;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 72px;
     align-items: center;
   }
-  .polaroid {
-    background: #fff;
-    padding: 16px 16px 54px;
-    border-radius: 8px;
-    box-shadow: 0 14px 34px rgba(74, 64, 57, 0.16);
-    transform: rotate(-2.5deg);
-    position: relative;
-    transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  .about-portrait {
+    overflow: hidden;
+    background: #1a2740;
   }
-  .polaroid:hover { transform: rotate(0deg) scale(1.03); }
-  .polaroid::before, .polaroid::after {
-    content: "";
-    position: absolute;
-    width: 92px; height: 26px;
-    background: rgba(127, 216, 190, 0.55);
-    top: -13px;
-    border-radius: 3px;
+  .about-portrait img {
+    width: 100%;
+    display: block;
+    filter: grayscale(15%);
+    transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  .polaroid::before { left: -20px; transform: rotate(-38deg); }
-  .polaroid::after { right: -20px; transform: rotate(38deg); background: rgba(255, 143, 163, 0.5); }
-  .polaroid img { width: 100%; display: block; border-radius: 4px; }
-  .polaroid .cap {
-    position: absolute;
-    bottom: 14px; left: 0; right: 0;
-    text-align: center;
-    font-size: 14px;
-    letter-spacing: 3px;
-    color: var(--ink-dim);
-  }
+  .about-portrait:hover img { transform: scale(1.05); }
   .about-text p {
-    font-size: 15.5px;
-    margin-bottom: 20px;
-    color: #6b6055;
+    font-size: 16px;
+    margin-bottom: 24px;
+    color: #d6e2f0;
     text-align: justify;
   }
   .about-text .signature {
-    margin-top: 6px;
-    font-size: 19px;
-    letter-spacing: 3px;
-    color: var(--ink);
-    font-weight: 700;
+    margin-top: 8px;
+    font-size: 20px;
+    letter-spacing: 4px;
+    color: #f7fbff;
   }
 
-  /* ---------- 足迹邮票卡 ---------- */
-  .stamps {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 34px;
-  }
-  .stamp {
-    background: var(--paper);
-    border: 2.5px solid var(--coral);
-    border-radius: 18px;
-    padding: 28px 28px 24px;
-    position: relative;
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s;
-  }
-  .stamp::after {
-    content: "";
-    position: absolute;
-    inset: 8px;
-    border: 2px dashed rgba(74, 64, 57, 0.18);
-    border-radius: 12px;
-    pointer-events: none;
-  }
-  .stamp:nth-child(1) { transform: rotate(-1.6deg); border-color: var(--coral); }
-  .stamp:nth-child(2) { transform: rotate(1.4deg); border-color: var(--mint); }
-  .stamp:nth-child(3) { transform: rotate(1.8deg); border-color: var(--lavender); }
-  .stamp:nth-child(4) { transform: rotate(-1.5deg); border-color: var(--sunny); }
-  .stamp:hover { transform: rotate(0deg) translateY(-6px); box-shadow: 0 16px 34px rgba(74, 64, 57, 0.14); }
-  .stamp .place {
-    font-size: 23px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .stamp .emoji { font-size: 26px; }
-  .stamp .date {
-    display: inline-block;
-    margin: 12px 0 10px;
-    font-size: 12px;
-    letter-spacing: 2px;
-    color: #fff;
-    background: var(--ink);
-    padding: 3px 14px;
-    border-radius: 999px;
-  }
-  .stamp:nth-child(1) .date { background: var(--coral); }
-  .stamp:nth-child(2) .date { background: var(--mint); }
-  .stamp:nth-child(3) .date { background: var(--lavender); }
-  .stamp:nth-child(4) .date { background: var(--sunny); }
-  .stamp p { font-size: 15px; color: #6b6055; }
-
-  /* ---------- 心得手账卡 ---------- */
-  .journal {
+  /* ---------- 作品画廊 ---------- */
+  .works-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
+    gap: 32px;
   }
-  .note-card {
-    background:
-      repeating-linear-gradient(#fffdf8 0 30px, #f4eee3 30px 31px);
-    border-radius: 14px;
-    padding: 44px 24px 26px;
-    position: relative;
-    box-shadow: 0 10px 26px rgba(74, 64, 57, 0.12);
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  .work-item { cursor: pointer; }
+  .work-img {
+    overflow: hidden;
+    background: #1a2740;
+    aspect-ratio: 1 / 1;
   }
-  .note-card::before {
-    content: "";
-    position: absolute;
-    top: -13px; left: 50%;
-    width: 96px; height: 28px;
-    transform: translateX(-50%) rotate(-3deg);
-    border-radius: 3px;
-    background: rgba(255, 201, 77, 0.55);
-  }
-  .note-card:nth-child(1) { transform: rotate(-1.8deg); }
-  .note-card:nth-child(1)::before { background: rgba(255, 143, 163, 0.5); }
-  .note-card:nth-child(2) { transform: rotate(1.2deg); }
-  .note-card:nth-child(2)::before { background: rgba(127, 216, 190, 0.55); }
-  .note-card:nth-child(3) { transform: rotate(-1deg); }
-  .note-card:nth-child(3)::before { background: rgba(184, 167, 232, 0.5); }
-  .note-card:hover { transform: rotate(0deg) translateY(-6px); }
-  .note-card .weather {
-    position: absolute;
-    top: 12px; right: 14px;
-    font-size: 22px;
-  }
-  .note-card h3 {
-    font-size: 17px;
-    letter-spacing: 1px;
-    margin-bottom: 12px;
-    color: var(--ink);
-  }
-  .note-card .note-date {
-    font-size: 12px;
-    letter-spacing: 2px;
-    color: var(--ink-faint);
+  .work-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     display: block;
-    margin-bottom: 10px;
+    transition: transform 1.4s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  .note-card p { font-size: 14px; color: #6b6055; line-height: 1.95; }
+  .work-item:hover .work-img img { transform: scale(1.08); }
+  .work-meta {
+    padding-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .work-meta h3 {
+    font-size: 16px;
+    letter-spacing: 2px;
+    font-weight: 700;
+  }
+  .work-meta span {
+    font-size: 13px;
+    color: #adc0d8;
+    letter-spacing: 1px;
+  }
+
+  /* ---------- 成长历程 ---------- */
+  .exhibitions { list-style: none; }
+  .exhibitions li {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 32px;
+    padding: 28px 0;
+    border-bottom: 1px solid rgba(236, 239, 244, 0.12);
+    transition: padding-left 0.4s ease;
+  }
+  .exhibitions li:hover { padding-left: 12px; }
+  .exhibitions li:first-child { border-top: 1px solid rgba(236, 239, 244, 0.12); }
+  .exh-year {
+    font-size: 23px;
+    letter-spacing: 2px;
+    color: #e6eefa;
+    font-weight: 700;
+  }
+  .exh-info h3 {
+    font-size: 21px;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+  .exh-info p {
+    font-size: 16px;
+    color: #cddbec;
+    letter-spacing: 1px;
+    line-height: 1.9;
+  }
 
   /* ---------- 页脚 ---------- */
   footer {
-    margin-top: 90px;
-    padding: 80px 40px 44px;
+    border-top: 1px solid rgba(236, 239, 244, 0.12);
+    padding: 96px 48px 48px;
     text-align: center;
-    background: rgba(255, 255, 255, 0.55);
-    border-top: 2px dashed rgba(255, 143, 163, 0.35);
-    position: relative;
-    z-index: 2;
   }
-  .footer-heading { font-size: clamp(26px, 3.4vw, 38px); letter-spacing: 5px; margin-bottom: 26px; }
+  .footer-heading {
+    font-size: clamp(28px, 3.5vw, 40px);
+    letter-spacing: 6px;
+    margin-bottom: 32px;
+  }
   .footer-email {
     display: inline-block;
     font-size: 16px;
     letter-spacing: 2px;
-    color: var(--ink);
+    color: #f7fbff;
     text-decoration: none;
-    border-bottom: 2px solid var(--coral);
-    padding-bottom: 3px;
-    margin-bottom: 40px;
-    transition: color 0.3s;
+    border-bottom: 1px solid #f7fbff;
+    padding-bottom: 2px;
+    margin-bottom: 48px;
+    transition: opacity 0.3s;
   }
-  .footer-email:hover { color: var(--coral); }
+  .footer-email:hover { opacity: 0.5; }
   .social-links {
     display: flex;
     justify-content: center;
-    gap: 14px;
-    margin-bottom: 50px;
-    flex-wrap: wrap;
+    gap: 40px;
+    margin-bottom: 64px;
   }
   .social-links a {
-    color: var(--ink);
+    color: #d6e2f0;
     text-decoration: none;
     font-size: 14px;
+    letter-spacing: 3px;
+    transition: color 0.3s;
+  }
+  .social-links a:hover { color: #8fa2bb; }
+  .copyright {
+    font-size: 12px;
     letter-spacing: 2px;
-    padding: 8px 20px;
-    border-radius: 999px;
-    border: 2px solid rgba(74, 64, 57, 0.2);
-    background: #fff;
-    transition: all 0.3s;
+    color: #8fa2bb;
   }
-  .social-links a:hover {
-    border-color: var(--coral);
-    color: var(--coral);
-    transform: translateY(-3px);
-  }
-  .copyright { font-size: 12px; letter-spacing: 2px; color: var(--ink-faint); }
 
   /* ---------- 响应式 ---------- */
   @media (max-width: 860px) {
-    nav { padding: 12px 20px; }
-    .nav-links { gap: 2px; }
-    .nav-links a { padding: 6px 10px; font-size: 13px; }
-    section { padding: 70px 22px 30px; }
-    .about-wrap { grid-template-columns: 1fr; gap: 44px; }
-    .stamps { grid-template-columns: 1fr; }
-    .journal { grid-template-columns: 1fr; }
-    .girl { width: 52px; }
+    nav { padding: 16px 24px; }
+    .nav-links { gap: 20px; }
+    section { padding: 80px 24px; }
+    .about-wrap { grid-template-columns: 1fr; gap: 40px; }
+    .works-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .exhibitions li { grid-template-columns: 80px 1fr; gap: 16px; }
+  }
+  @media (max-width: 520px) {
+    .works-grid { grid-template-columns: 1fr; }
+    .hero p { letter-spacing: 4px; }
   }
 </style>
 </head>
 <body>
 
-<!-- 夜空舞台 -->
-<div class="stage-sky" aria-hidden="true">
-  <span class="star" style="width:4px;height:4px;top:12%;left:18%"></span>
-  <span class="star" style="width:3px;height:3px;top:22%;left:34%;animation-delay:0.6s"></span>
-  <span class="star" style="width:5px;height:5px;top:9%;left:52%;animation-delay:1.1s"></span>
-  <span class="star" style="width:3px;height:3px;top:18%;left:68%;animation-delay:0.3s"></span>
-  <span class="star" style="width:4px;height:4px;top:26%;left:84%;animation-delay:1.5s"></span>
-  <span class="star" style="width:3px;height:3px;top:38%;left:9%;animation-delay:0.9s"></span>
-  <span class="star" style="width:4px;height:4px;top:33%;left:91%;animation-delay:1.9s"></span>
-  <span class="star" style="width:3px;height:3px;top:48%;left:24%;animation-delay:1.3s"></span>
-  <span class="shooting-star s1"></span>
-  <span class="shooting-star s2"></span>
-</div>
-
-<!-- 导航栏 -->
+<!-- 固定导航栏 -->
 <nav>
-  <div class="nav-logo"><span class="fp-emoji">👣</span>陈燕丽的手账</div>
+  <div class="nav-logo">陈燕丽</div>
   <ul class="nav-links">
     <li><a href="#about">关于</a></li>
-    <li><a href="#footprints">足迹</a></li>
-    <li><a href="#journal">心得</a></li>
+    <li><a href="#works">作品</a></li>
+    <li><a href="#exhibitions">成长</a></li>
     <li><a href="#contact">联系</a></li>
   </ul>
 </nav>
 
 <!-- 首屏 -->
 <header class="hero">
-  <div class="hero-stage">
-
-    <!-- 地球 + 小女孩 -->
-    <div class="earth-scene" aria-hidden="true">
-      <svg class="earth" viewBox="0 0 260 260">
-        <defs>
-          <radialGradient id="ocean" cx="35%" cy="28%" r="85%">
-            <stop offset="0%" stop-color="#aee6fb"/>
-            <stop offset="45%" stop-color="#5fb0e6"/>
-            <stop offset="100%" stop-color="#2f5fb0"/>
-          </radialGradient>
-          <radialGradient id="shade" cx="50%" cy="50%" r="50%">
-            <stop offset="68%" stop-color="rgba(0,0,0,0)"/>
-            <stop offset="100%" stop-color="rgba(10,20,60,0.45)"/>
-          </radialGradient>
-          <clipPath id="earthClip"><circle cx="130" cy="130" r="108"/></clipPath>
-        </defs>
-        <circle cx="130" cy="130" r="108" fill="url(#ocean)"/>
-        <g clip-path="url(#earthClip)">
-          <!-- 经纬线 -->
-          <g stroke="rgba(255,255,255,0.22)" stroke-width="1.5" fill="none">
-            <ellipse cx="130" cy="130" rx="108" ry="34"/>
-            <ellipse cx="130" cy="130" rx="108" ry="72"/>
-            <ellipse cx="130" cy="130" rx="34" ry="108"/>
-            <ellipse cx="130" cy="130" rx="72" ry="108"/>
-            <line x1="22" y1="130" x2="238" y2="130"/>
-          </g>
-          <!-- 远景大陆层（慢速视差） -->
-          <g fill="#7cc48a" opacity="0.55">
-            <g>
-              <ellipse cx="90" cy="205" rx="30" ry="13"/>
-              <ellipse cx="235" cy="58" rx="26" ry="11"/>
-              <ellipse cx="350" cy="205" rx="30" ry="13"/>
-              <ellipse cx="495" cy="58" rx="26" ry="11"/>
-            </g>
-            <animateTransform attributeName="transform" type="translate" from="0 0" to="-260 0" dur="18s" repeatCount="indefinite"/>
-          </g>
-          <!-- 近景大陆层 -->
-          <g fill="#9adf9f">
-            <g>
-              <ellipse cx="60" cy="80" rx="34" ry="22"/>
-              <ellipse cx="110" cy="150" rx="26" ry="30"/>
-              <ellipse cx="185" cy="95" rx="30" ry="26"/>
-              <ellipse cx="215" cy="170" rx="22" ry="16"/>
-              <ellipse cx="45" cy="185" rx="20" ry="14"/>
-              <ellipse cx="150" cy="60" rx="18" ry="10"/>
-              <ellipse cx="320" cy="80" rx="34" ry="22"/>
-              <ellipse cx="370" cy="150" rx="26" ry="26"/>
-              <ellipse cx="445" cy="95" rx="30" ry="26"/>
-              <ellipse cx="475" cy="170" rx="22" ry="16"/>
-              <ellipse cx="305" cy="185" rx="20" ry="14"/>
-              <ellipse cx="410" cy="60" rx="18" ry="10"/>
-            </g>
-            <animateTransform attributeName="transform" type="translate" from="0 0" to="-260 0" dur="11s" repeatCount="indefinite"/>
-          </g>
-          <!-- 球面立体阴影 -->
-          <circle cx="130" cy="130" r="108" fill="url(#shade)"/>
-        </g>
-        <circle cx="130" cy="130" r="108" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="3"/>
-        <ellipse cx="92" cy="70" rx="46" ry="25" fill="rgba(255,255,255,0.32)" transform="rotate(-24 92 70)"/>
-      </svg>
-      <div class="earth-shadow"></div>
-
-      <div class="cloud c1"></div>
-      <div class="cloud c2"></div>
-      <div class="cloud c3"></div>
-
-      <!-- 小女孩（绕地球走一圈） -->
-      <div class="orbit">
-      <div class="orbit-arm">
-      <div class="orbit-counter">
-      <div class="girl">
-        <div class="girl-inner">
-          <svg viewBox="0 0 60 92">
-            <!-- 背包 -->
-            <rect x="40" y="34" width="13" height="19" rx="5" fill="#7fd8be"/>
-            <!-- 腿 -->
-            <g class="leg leg-l">
-              <rect x="23" y="64" width="6" height="17" rx="3" fill="#ffd9b3"/>
-              <ellipse cx="26" cy="84" rx="6.5" ry="4" fill="#ff8fa3"/>
-            </g>
-            <g class="leg leg-r">
-              <rect x="33" y="64" width="6" height="17" rx="3" fill="#ffd9b3"/>
-              <ellipse cx="36" cy="84" rx="6.5" ry="4" fill="#ff8fa3"/>
-            </g>
-            <!-- 连衣裙 -->
-            <path d="M22 36 Q31 30 40 36 L45 64 Q31 70 17 64 Z" fill="#ff8fa3"/>
-            <circle cx="31" cy="44" r="2.2" fill="#fff"/>
-            <circle cx="31" cy="53" r="2.2" fill="#fff"/>
-            <!-- 挥手的手臂 -->
-            <g class="arm-wave">
-              <rect x="42" y="26" width="5" height="15" rx="2.5" fill="#ffd9b3" transform="rotate(28 44 38)"/>
-              <circle cx="49" cy="25" r="3.4" fill="#ffd9b3"/>
-            </g>
-            <rect x="12" y="38" width="5" height="14" rx="2.5" fill="#ffd9b3" transform="rotate(14 14 45)"/>
-            <!-- 头 -->
-            <circle cx="31" cy="19" r="13" fill="#ffd9b3"/>
-            <!-- 头发 -->
-            <path d="M18 19 a13 13 0 0 1 26 0 l0 4 q-4 -6 -13 -6 q-9 0 -13 6 Z" fill="#5b4033"/>
-            <circle cx="16" cy="14" r="4.5" fill="#5b4033"/>
-            <circle cx="46" cy="14" r="4.5" fill="#5b4033"/>
-            <circle cx="16" cy="10.5" r="2" fill="#ff8fa3"/>
-            <circle cx="46" cy="10.5" r="2" fill="#ff8fa3"/>
-            <!-- 五官 -->
-            <circle cx="26" cy="20" r="1.7" fill="#4a4039"/>
-            <circle cx="36" cy="20" r="1.7" fill="#4a4039"/>
-            <ellipse cx="22.5" cy="24" rx="2.4" ry="1.4" fill="#ffb3c1"/>
-            <ellipse cx="39.5" cy="24" rx="2.4" ry="1.4" fill="#ffb3c1"/>
-            <path d="M28 24.5 q3 2.5 6 0" stroke="#4a4039" stroke-width="1.3" fill="none" stroke-linecap="round"/>
-          </svg>
-        </div>
-      </div>
-      </div>
-      </div>
-      </div>
-    </div>
-
-    <!-- 中国地图 + 脚印 -->
-    <div class="map-scene">
-      <svg class="china-map" viewBox="0 0 400 300">
-        <!-- 简笔画风格中国轮廓 -->
-        <path d="M70 62 L112 46 L152 56 L192 40 L232 32 L266 46 L286 74 L302 96 L286 120 L302 146 L276 162 L262 186 L226 196 L236 220 L206 236 L180 226 L150 236 L120 216 L94 220 L80 196 L54 180 L60 154 L40 134 L56 110 L46 84 Z"
-          fill="#ffe1a8" stroke="#ff8fa3" stroke-width="4" stroke-linejoin="round"/>
-        <!-- 海南岛 -->
-        <ellipse cx="212" cy="258" rx="11" ry="8" fill="#ffe1a8" stroke="#ff8fa3" stroke-width="3"/>
-        <!-- 旅行路线（手绘描线动画） -->
-        <path class="route" pathLength="100" d="M150 150 Q124 132 102 126 Q104 152 114 170 Q182 128 264 106 Q258 96 250 92 Q262 122 268 152 Q224 178 176 186"/>
-        <!-- 七城脚印：兰州 → 敦煌 → 青海 → 天津 → 北京 → 南京 → 成都 -->
-        <g transform="translate(150,150) rotate(-30)"><g class="fp" style="animation-delay:6.0s" fill="#ff8fa3">
-          <ellipse cx="0" cy="-4" rx="4.6" ry="7"/><ellipse cx="1" cy="6.5" rx="3.6" ry="4.4"/></g></g>
-        <g transform="translate(102,126) rotate(150)"><g class="fp" style="animation-delay:6.42s" fill="#b8a7e8">
-          <ellipse cx="0" cy="-4" rx="4.6" ry="7"/><ellipse cx="1" cy="6.5" rx="3.6" ry="4.4"/></g></g>
-        <g transform="translate(114,170) rotate(55)"><g class="fp" style="animation-delay:6.84s" fill="#7fd8be">
-          <ellipse cx="0" cy="-4" rx="4.6" ry="7"/><ellipse cx="1" cy="6.5" rx="3.6" ry="4.4"/></g></g>
-        <g transform="translate(264,106) rotate(70)"><g class="fp" style="animation-delay:7.26s" fill="#ffc94d">
-          <ellipse cx="0" cy="-4" rx="4.6" ry="7"/><ellipse cx="1" cy="6.5" rx="3.6" ry="4.4"/></g></g>
-        <g transform="translate(250,92) rotate(-100)"><g class="fp" style="animation-delay:7.68s" fill="#7ec8e3">
-          <ellipse cx="0" cy="-4" rx="4.6" ry="7"/><ellipse cx="1" cy="6.5" rx="3.6" ry="4.4"/></g></g>
-        <g transform="translate(268,152) rotate(140)"><g class="fp" style="animation-delay:8.1s" fill="#ff8fa3">
-          <ellipse cx="0" cy="-4" rx="4.6" ry="7"/><ellipse cx="1" cy="6.5" rx="3.6" ry="4.4"/></g></g>
-        <g transform="translate(176,186) rotate(115)"><g class="fp" style="animation-delay:8.52s" fill="#b8a7e8">
-          <ellipse cx="0" cy="-4" rx="4.6" ry="7"/><ellipse cx="1" cy="6.5" rx="3.6" ry="4.4"/></g></g>
-        <!-- 地点标签 -->
-        <text class="fp-label" style="animation-delay:6.06s" x="163" y="141">兰州</text>
-        <text class="fp-label" style="animation-delay:6.48s" x="102" y="110" text-anchor="middle">敦煌</text>
-        <text class="fp-label" style="animation-delay:6.9s" x="104" y="196" text-anchor="middle">青海</text>
-        <text class="fp-label" style="animation-delay:7.32s" x="290" y="103" text-anchor="middle">天津</text>
-        <text class="fp-label" style="animation-delay:7.74s" x="242" y="76" text-anchor="middle">北京</text>
-        <text class="fp-label" style="animation-delay:8.16s" x="291" y="158" text-anchor="middle">南京</text>
-        <text class="fp-label" style="animation-delay:8.58s" x="176" y="212" text-anchor="middle">成都</text>
-        <text class="fp-label" style="animation-delay:8.8s; font-size:14px" x="198" y="184">⭐</text>
-      </svg>
-    </div>
-  </div>
-
-  <h1 class="hero-title"><span>陈</span><span>燕</span><span>丽</span></h1>
-  <p class="hero-sub"><span class="fp-emoji">👣</span>旅行手账 · 带着画笔和好奇心慢慢走<span class="fp-emoji">👣</span></p>
-  <span class="scroll-hint">👣 向下滚动</span>
+  <h1>陈燕丽</h1>
+  <p>个人艺术 · 数字影像</p>
+  <span class="scroll-hint">向下滚动</span>
 </header>
 
 <!-- 关于我 -->
 <section id="about">
-  <p class="section-tag">ABOUT</p>
+  <p class="section-title">ABOUT</p>
   <h2 class="section-heading">关于我</h2>
-  <svg class="squiggle" viewBox="0 0 130 12"><path d="M3 8 Q 13 2 23 8 T 43 8 T 63 8 T 63 8 T 83 8 T 103 8 T 123 8" stroke="#ff8fa3" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg>
   <div class="about-wrap">
-    <div class="polaroid">
+    <div class="about-portrait">
       <img src="photos/微信图片_20261021231436_32_204_small.jpg" alt="陈燕丽肖像">
-      <span class="cap">📍 摄于出发之前</span>
     </div>
     <div class="about-text">
       <p>你好呀，我是陈燕丽，来自甘肃，现在是天津美术学院环境设计专业的大一学生。如果用一句话介绍自己，大概就是——一个总是在观察空间、也被空间治愈着的人。</p>
-      <p>西北的辽阔天地是我最早的美学启蒙：黄土高原的沟壑、敦煌壁画的斑斓、大漠落日的光影，都悄悄刻进了我的眼睛里。而我和设计的正式缘分始于速写本，从第一次拿起铅笔对着静物发呆开始，我就迷上了用线条和光影记录世界的感觉。</p>
-      <p>我喜欢泡画室，也喜欢拉着朋友去看展、逛老建筑；我相信好的设计不是冷冰冰的图纸，而是能让人走进去就忍不住微笑的温度。旅行对我来说，就是把速写本带到更远的地方。</p>
+      <p>西北的辽阔天地是我最早的美学启蒙：黄土高原的沟壑、敦煌壁画的斑斓、大漠落日的光影，都悄悄刻进了我的眼睛里。而我和设计的正式缘分始于速写本，从第一次拿起铅笔对着静物发呆开始，我就迷上了用线条和光影记录世界的感觉：一扇窗透进来的午后阳光、老巷子里斑驳的墙面、咖啡馆里桌椅之间刚刚好的距离……这些看似普通的场景，在我眼里都藏着关于"人如何生活"的答案。</p>
+      <p>现在我正系统地学习环境设计，从素描基础到空间构成，每一门课都让我兴奋不已。我喜欢泡画室，也喜欢拉着朋友去看展、逛老建筑；我相信好的设计不是冷冰冰的图纸，而是能让人走进去就忍不住微笑的温度。</p>
+      <p>未来的路还很长，我希望保持这份好奇与热爱，慢慢成长为一个能为他人创造美好生活空间的设计师。如果你也喜欢艺术与设计，欢迎和我聊聊，我很乐意认识每一位路过的朋友。</p>
       <p class="signature">—— 陈燕丽</p>
     </div>
   </div>
 </section>
 
-<!-- 足迹 -->
-<section id="footprints">
-  <p class="section-tag">FOOTPRINTS</p>
-  <h2 class="section-heading">我的足迹</h2>
-  <svg class="squiggle" viewBox="0 0 130 12"><path d="M3 8 Q 13 2 23 8 T 43 8 T 63 8 T 63 8 T 83 8 T 103 8 T 123 8" stroke="#7fd8be" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg>
-  <div class="stamps">
-    <div class="stamp">
-      <div class="place"><span class="emoji">🏜️</span>甘肃 · 家乡</div>
-      <span class="date">起点</span>
-      <p>黄土高原的风和大漠落日，是我审美的底色。每次回去，都觉得天比在别处高一点点。</p>
+<!-- 作品画廊 -->
+<section id="works">
+  <p class="section-title">WORKS</p>
+  <h2 class="section-heading">作品画廊</h2>
+  <div class="works-grid">
+    <div class="work-item">
+      <div class="work-img">
+        <img src="images/work-01.jpg" alt="作品《凝视》" loading="lazy" decoding="async">
+      </div>
+      <div class="work-meta"><h3>凝视</h3><span>纸本素描 · 2025</span></div>
     </div>
-    <div class="stamp">
-      <div class="place"><span class="emoji">🎨</span>敦煌 · 壁画之旅</div>
-      <span class="date">审美启蒙</span>
-      <p>在洞窟里屏住呼吸看千年的色彩——原来颜料可以比时间更长久，那一刻决定要好好画画。</p>
+    <div class="work-item">
+      <div class="work-img">
+        <img src="images/work-02.jpg" alt="作品《旧物集》" loading="lazy" decoding="async">
+      </div>
+      <div class="work-meta"><h3>旧物集</h3><span>纸本素描 · 2024</span></div>
     </div>
-    <div class="stamp">
-      <div class="place"><span class="emoji">🍜</span>兰州 · 集训时光</div>
-      <span class="date">2025</span>
-      <p>黄河边的画室，铅笔灰和牛肉面的香气混在一起。省考 272 分，是那段日子的句号。</p>
+    <div class="work-item">
+      <div class="work-img">
+        <img src="images/work-03.jpg" alt="作品《少年》" loading="lazy" decoding="async">
+      </div>
+      <div class="work-meta"><h3>少年</h3><span>纸本素描 · 2024</span></div>
     </div>
-    <div class="stamp">
-      <div class="place"><span class="emoji">🏛️</span>天津 · 求学新篇</div>
-      <span class="date">2026 至今</span>
-      <p>考入天津美院环境设计专业。五大道的老建筑在等我慢慢逛，新故事才刚刚开始。</p>
+    <div class="work-item">
+      <div class="work-img">
+        <img src="images/work-04.jpg" alt="作品《壶与果》" loading="lazy" decoding="async">
+      </div>
+      <div class="work-meta"><h3>壶与果</h3><span>纸本素描 · 2024</span></div>
+    </div>
+    <div class="work-item">
+      <div class="work-img">
+        <img src="images/work-05.jpg" alt="作品《岁月》" loading="lazy" decoding="async">
+      </div>
+      <div class="work-meta"><h3>岁月</h3><span>纸本素描 · 2026</span></div>
+    </div>
+    <div class="work-item">
+      <div class="work-img">
+        <img src="images/work-06.jpg" alt="作品《雪径》" loading="lazy" decoding="async">
+      </div>
+      <div class="work-meta"><h3>雪径</h3><span>黑白版画 · 2024</span></div>
+    </div>
+    <div class="work-item">
+      <div class="work-img">
+        <img src="images/work-07.jpg" alt="作品《揭面》" loading="lazy" decoding="async">
+      </div>
+      <div class="work-meta"><h3>揭面</h3><span>综合材料 · 2025</span></div>
+    </div>
+    <div class="work-item">
+      <div class="work-img">
+        <img src="images/work-08.jpg" alt="作品《艾轩·素描》" loading="lazy" decoding="async">
+      </div>
+      <div class="work-meta"><h3>艾轩·素描</h3><span>取自艾轩.素描</span></div>
+    </div>
+    <div class="work-item">
+      <div class="work-img">
+        <img src="images/work-09.jpg" alt="作品《夜渡》" loading="lazy" decoding="async">
+      </div>
+      <div class="work-meta"><h3>夜渡</h3><span>数字绘画 · 2025</span></div>
     </div>
   </div>
 </section>
 
-<!-- 旅游心得 -->
-<section id="journal">
-  <p class="section-tag">JOURNAL</p>
-  <h2 class="section-heading">旅游心得</h2>
-  <svg class="squiggle" viewBox="0 0 130 12"><path d="M3 8 Q 13 2 23 8 T 43 8 T 63 8 T 63 8 T 83 8 T 103 8 T 123 8" stroke="#b8a7e8" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg>
-  <div class="journal">
-    <div class="note-card">
-      <span class="weather">☀️</span>
-      <h3>在敦煌看壁画的那天</h3>
-      <span class="note-date">晴 · 西北风</span>
-      <p>色彩在黑暗里睡了千年，醒来看见我，还是鲜亮的。站在洞窟里不敢大声呼吸，怕惊扰了飞天的裙摆。回来的路上一直在想：美原来可以这样有耐心。</p>
-    </div>
-    <div class="note-card">
-      <span class="weather">🍜</span>
-      <h3>兰州清晨的牛肉面馆</h3>
-      <span class="note-date">集训日记</span>
-      <p>热气把窗户糊成毛玻璃，辣子油红得像颜料盘里最正的那格朱红。画了一整夜速写的我们，在清晨六点的面馆里满血复活。</p>
-    </div>
-    <div class="note-card">
-      <span class="weather">🏛️</span>
-      <h3>天津老街的午后</h3>
-      <span class="note-date">开学以后</span>
-      <p>转角遇到一栋会讲故事的老房子：砖缝里有百年前的阳光，窗棂上还留着旧时光的秩序感。作为环设学生，我掏出速写本的手比脑子还快。</p>
-    </div>
-  </div>
+<!-- 成长历程 -->
+<section id="exhibitions">
+  <p class="section-title">JOURNEY</p>
+  <h2 class="section-heading">成长历程</h2>
+  <ul class="exhibitions">
+    <li>
+      <span class="exh-year">2016</span>
+      <div class="exh-info">
+        <h3>初识绘笔</h3>
+        <p>小学三年级结缘绘画，种下艺术初心。</p>
+      </div>
+    </li>
+    <li>
+      <span class="exh-year">2023</span>
+      <div class="exh-info">
+        <h3>笃定方向</h3>
+        <p>高一选定美术特长，锚定艺考目标。</p>
+      </div>
+    </li>
+    <li>
+      <span class="exh-year">2025</span>
+      <div class="exh-info">
+        <h3>淬火砺行</h3>
+        <p>兰州集训深耕苦练，省考取得 272 分。</p>
+      </div>
+    </li>
+    <li>
+      <span class="exh-year">2026</span>
+      <div class="exh-info">
+        <h3>逐梦上岸</h3>
+        <p>考入天津美院环设，奔赴环境设计之路。</p>
+      </div>
+    </li>
+  </ul>
 </section>
 
 <!-- 页脚 -->
 <footer id="contact">
-  <h2 class="footer-heading">下一站，一起吗 👣</h2>
+  <h2 class="footer-heading">与我联系</h2>
   <a class="footer-email" href="mailto:cyl2007903@qq.com">cyl2007903@qq.com</a>
   <div class="social-links">
     <a href="#" target="_blank" rel="noopener">微博</a>
