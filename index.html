@@ -11,12 +11,11 @@
 
   body {
     background:
-      radial-gradient(120% 60% at 50% -10%, rgba(201, 169, 106, 0.18) 0%, rgba(80, 130, 190, 0) 55%),
-      url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240' fill='none' stroke='%23987c4b' stroke-width='1.4' stroke-linecap='round'><path d='M70 90 q 22 -28 48 -8 q 26 22 8 44 q -20 22 -44 2 q -14 -12 -12 -38z' stroke-opacity='0.3'/><path d='M90 96 q 10 -14 22 -4 q 12 12 2 22 q -12 10 -20 0 q -6 -7 -4 -18z' stroke-opacity='0.24'/><path d='M160 50 h40 v40 M170 60 h20 v20 h-10 v-10 h-10z' stroke-opacity='0.24'/><path d='M40 160 v40 h40 M50 170 v20 h20 v-10 h-10 v-10z' stroke-opacity='0.24'/><path d='M170 170 q 14 -10 24 4 q 8 16 -10 22 q -18 4 -20 -14 q -1 -16 6 -12z' stroke-opacity='0.27'/><path d='M118 118 q 16 -10 26 4 q 10 18 -8 22 q -20 4 -22 -16 q -2 -14 10 -16 q 12 -2 12 10 q 0 10 -10 8' stroke-opacity='0.21'/><circle cx='120' cy='120' r='3' stroke-opacity='0.19'/></svg>") 0 0 / 240px 240px repeat,
-      linear-gradient(180deg, #1c3558 0%, #13223d 25%, #0c1830 55%, #080f20 80%, #050a14 100%);
+      radial-gradient(120% 60% at 50% -10%, rgba(181, 106, 122, 0.12) 0%, rgba(255, 220, 228, 0) 55%),
+      linear-gradient(180deg, #f5d5dd 0%, #fbe4e9 25%, #fdecef 55%, #fef3f5 80%, #fff8fa 100%);
     background-attachment: fixed;
     min-height: 100vh;
-    color: #f7fbff;
+    color: #4a2d35;
     font-family: "Songti SC", "STSong", "SimSun", "Noto Serif SC", "Source Han Serif SC", serif;
     line-height: 1.8;
     -webkit-font-smoothing: antialiased;
@@ -31,19 +30,20 @@
     justify-content: space-between;
     align-items: center;
     padding: 22px 48px;
-    background: rgba(14, 24, 40, 0.55);
+    background: rgba(255, 245, 247, 0.72);
     backdrop-filter: blur(18px) saturate(160%);
     -webkit-backdrop-filter: blur(18px) saturate(160%);
-    border-bottom: 1px solid rgba(236, 239, 244, 0.1);
+    border-bottom: 1px solid rgba(181, 106, 122, 0.18);
   }
   .nav-logo {
     font-size: 18px;
     letter-spacing: 4px;
     font-weight: 700;
+    color: #4a2d35;
   }
   .nav-links { display: flex; gap: 40px; list-style: none; }
   .nav-links a {
-    color: #f7fbff;
+    color: #4a2d35;
     text-decoration: none;
     font-size: 14px;
     letter-spacing: 3px;
@@ -55,7 +55,7 @@
     position: absolute;
     left: 0; bottom: -6px;
     width: 0; height: 1px;
-    background: #f7fbff;
+    background: #b56a7a;
     transition: width 0.35s ease;
   }
   .nav-links a:hover::after { width: 100%; }
@@ -109,9 +109,9 @@
     margin-top: 28px;
     font-size: clamp(16px, 2vw, 22px);
     letter-spacing: 6px;
-    color: #e8c47c;
+    color: #b56a7a;
     font-weight: 500;
-    text-shadow: 0 0 18px rgba(232, 196, 124, 0.4);
+    text-shadow: 0 0 18px rgba(181, 106, 122, 0.35);
     animation: heroSubReveal 1.4s ease 10.8s forwards;
     opacity: 0;
   }
@@ -123,14 +123,14 @@
     margin-top: 20px;
     font-size: clamp(14px, 1.6vw, 18px);
     letter-spacing: 8px;
-    color: #adc0d8;
+    color: #8a6068;
   }
   .hero .scroll-hint {
     position: absolute;
     bottom: 40px;
     font-size: 12px;
     letter-spacing: 4px;
-    color: #8fa2bb;
+    color: #b08a90;
     writing-mode: vertical-rl;
   }
   @keyframes heroReveal {
@@ -147,7 +147,7 @@
   .section-title {
     font-size: 14px;
     letter-spacing: 8px;
-    color: #adc0d8;
+    color: #8a6068;
     margin-bottom: 16px;
   }
   .section-heading {
@@ -157,7 +157,7 @@
   }
   .divider {
     width: 48px; height: 1px;
-    background: #f7fbff;
+    background: #4a2d35;
     margin-bottom: 64px;
   }
 
@@ -170,7 +170,7 @@
   }
   .about-portrait {
     overflow: hidden;
-    background: #1a2740;
+    background: #f4d8de;
   }
   .about-portrait img {
     width: 100%;
@@ -182,14 +182,14 @@
   .about-text p {
     font-size: 16px;
     margin-bottom: 24px;
-    color: #d6e2f0;
+    color: #6b4850;
     text-align: justify;
   }
   .about-text .signature {
     margin-top: 8px;
     font-size: 20px;
     letter-spacing: 4px;
-    color: #f7fbff;
+    color: #4a2d35;
   }
 
   /* ---------- 作品画廊 ---------- */
@@ -201,7 +201,7 @@
   .work-item { cursor: pointer; }
   .work-img {
     overflow: hidden;
-    background: #1a2740;
+    background: #f4d8de;
     aspect-ratio: 1 / 1;
   }
   .work-img img {
@@ -225,7 +225,7 @@
   }
   .work-meta span {
     font-size: 13px;
-    color: #adc0d8;
+    color: #8a6068;
     letter-spacing: 1px;
   }
 
@@ -236,15 +236,15 @@
     grid-template-columns: 120px 1fr;
     gap: 32px;
     padding: 28px 0;
-    border-bottom: 1px solid rgba(236, 239, 244, 0.12);
+    border-bottom: 1px solid rgba(181, 106, 122, 0.18);
     transition: padding-left 0.4s ease;
   }
   .exhibitions li:hover { padding-left: 12px; }
-  .exhibitions li:first-child { border-top: 1px solid rgba(236, 239, 244, 0.12); }
+  .exhibitions li:first-child { border-top: 1px solid rgba(181, 106, 122, 0.18); }
   .exh-year {
     font-size: 23px;
     letter-spacing: 2px;
-    color: #e6eefa;
+    color: #6b4850;
     font-weight: 700;
   }
   .exh-info h3 {
@@ -255,14 +255,14 @@
   }
   .exh-info p {
     font-size: 16px;
-    color: #cddbec;
+    color: #6b4850;
     letter-spacing: 1px;
     line-height: 1.9;
   }
 
   /* ---------- 页脚 ---------- */
   footer {
-    border-top: 1px solid rgba(236, 239, 244, 0.12);
+    border-top: 1px solid rgba(181, 106, 122, 0.18);
     padding: 96px 48px 48px;
     text-align: center;
   }
@@ -275,9 +275,9 @@
     display: inline-block;
     font-size: 16px;
     letter-spacing: 2px;
-    color: #f7fbff;
+    color: #4a2d35;
     text-decoration: none;
-    border-bottom: 1px solid #f7fbff;
+    border-bottom: 1px solid #4a2d35;
     padding-bottom: 2px;
     margin-bottom: 48px;
     transition: opacity 0.3s;
@@ -290,17 +290,17 @@
     margin-bottom: 64px;
   }
   .social-links a {
-    color: #d6e2f0;
+    color: #6b4850;
     text-decoration: none;
     font-size: 14px;
     letter-spacing: 3px;
     transition: color 0.3s;
   }
-  .social-links a:hover { color: #8fa2bb; }
+  .social-links a:hover { color: #b56a7a; }
   .copyright {
     font-size: 12px;
     letter-spacing: 2px;
-    color: #8fa2bb;
+    color: #b08a90;
   }
 
   /* ---------- 响应式 ---------- */
@@ -736,8 +736,8 @@
           // 名字粒子光晕层
           const r2 = sz * 5;
           const g2 = ctx.createRadialGradient(px, py, 0, px, py, r2);
-          g2.addColorStop(0, `rgba(232,196,124,${0.55 * glow * jump})`);
-          g2.addColorStop(1, 'rgba(232,196,124,0)');
+          g2.addColorStop(0, `rgba(181,106,122,${0.55 * glow * jump})`);
+          g2.addColorStop(1, 'rgba(181,106,122,0)');
           ctx.fillStyle = g2;
           ctx.fillRect(px - r2, py - r2, r2*2, r2*2);
           drawStar(px, py, sz, 1);
@@ -797,7 +797,7 @@
         const p1 = getLibraByIndex(line[0]);
         const p2 = getLibraByIndex(line[1]);
         if (p1 && p2 && a > 0.01) {
-          ctx.strokeStyle = `rgba(232,196,124,${a})`;
+          ctx.strokeStyle = `rgba(181,106,122,${a})`;
           ctx.lineWidth = 1.3 * DPR;
           ctx.beginPath();
           ctx.moveTo(p1.x, p1.y);
@@ -810,8 +810,8 @@
         const p = getLibraByIndex(i);
         if (!p) continue;
         const gr = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 16 * DPR);
-        gr.addColorStop(0, 'rgba(232,196,124,0.6)');
-        gr.addColorStop(1, 'rgba(232,196,124,0)');
+        gr.addColorStop(0, 'rgba(181,106,122,0.6)');
+        gr.addColorStop(1, 'rgba(181,106,122,0)');
         ctx.fillStyle = gr;
         ctx.fillRect(p.x - 18*DPR, p.y - 18*DPR, 36*DPR, 36*DPR);
         drawStar(p.x, p.y, 3.6 * DPR, 1);
@@ -819,7 +819,7 @@
       // 标注「天秤座」
       if (k > 0.7) {
         const at = (k - 0.7) / 0.3;
-        ctx.fillStyle = `rgba(232,196,124,${at * 0.85})`;
+        ctx.fillStyle = `rgba(181,106,122,${at * 0.85})`;
         ctx.font = `${14 * DPR}px "Songti SC",serif`;
         ctx.textAlign = 'center';
         ctx.fillText('天 秤 座', CX, CY + 140 * DPR);
@@ -947,8 +947,8 @@
     else if (ph === 5) haloR = 260 + 20 * Math.sin(pT * 5);
 
     const g = ctx.createRadialGradient(CX, CY, 0, CX, CY, haloR * DPR);
-    g.addColorStop(0, 'rgba(232,196,124,0.18)');
-    g.addColorStop(0.5, 'rgba(80,130,190,0.05)');
+    g.addColorStop(0, 'rgba(181,106,122,0.18)');
+    g.addColorStop(0.5, 'rgba(255,220,228,0.04)');
     g.addColorStop(1, 'rgba(0,0,0,0)');
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, W, H);
