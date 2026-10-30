@@ -934,19 +934,19 @@
   /* ---------- 作品画廊 ---------- */
   .works-grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 240px));
+    grid-template-columns: repeat(4, minmax(0, 176px));
     justify-content: center;
-    gap: 68px 46px;
-    padding: 14px 0 46px;
+    gap: 54px 30px;
+    padding: 10px 0 30px;
   }
   .work-item {
     cursor: pointer;
     transform: translateY(var(--shift, 0));
   }
   /* 错落有致：偶数列轻微下沉，像展览墙上的手贴布局 */
-  .work-item:nth-child(4n+2) { --shift: 26px; }
-  .work-item:nth-child(4n+3) { --shift: 10px; }
-  .work-item:nth-child(4n+4) { --shift: 34px; }
+  .work-item:nth-child(4n+2) { --shift: 18px; }
+  .work-item:nth-child(4n+3) { --shift: 7px; }
+  .work-item:nth-child(4n+4) { --shift: 24px; }
 
   .work-img {
     overflow: hidden;
@@ -966,20 +966,20 @@
   .work-item:hover .work-img img { transform: scale(1.06); }
 
   .work-meta {
-    padding-top: 14px;
+    padding-top: 10px;
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 2px;
   }
   .work-meta h3 {
-    font-size: 15px;
-    letter-spacing: 2px;
+    font-size: 14px;
+    letter-spacing: 1.5px;
     font-weight: 700;
   }
   .work-meta span {
-    font-size: 12px;
+    font-size: 11px;
     color: #8a6068;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
   }
 
   /* ---------- 成长历程 ---------- */
@@ -1062,7 +1062,7 @@
     .nav-links { gap: 20px; }
     section { padding: 80px 24px; }
     .about-wrap { grid-template-columns: 1fr; gap: 40px; }
-    .works-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 46px 28px; }
+    .works-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 20px; }
     .work-item:nth-child(n) { --shift: 0; }
     .exhibitions li { grid-template-columns: 80px 1fr; gap: 16px; }
     .hero-lace-top { top: 58px; }
@@ -1073,7 +1073,9 @@
     .collage-br { right: 3%; bottom: 12%; transform: rotate(5deg) scale(0.8); }
   }
   @media (max-width: 520px) {
-    .works-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 38px 18px; padding: 0 10px; }
+    .works-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px 12px; padding: 0 10px; }
+    .work-meta h3 { font-size: 13px; letter-spacing: 1px; }
+    .work-meta span { font-size: 10px; }
     .collage-bl, .collage-br { display: none; }
     .paper { width: 108px; }
   }
