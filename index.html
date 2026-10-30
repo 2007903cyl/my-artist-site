@@ -948,22 +948,25 @@
   /* 相框：真实法式蕾丝相框底图，中间挖空镶嵌画作 */
   .work-img {
     position: relative;
-    aspect-ratio: 1 / 1;
-    /* 画框内窗口：左右各 15%（窗口宽 70%），上 21% / 下 24%（窗口高 55%） */
-    padding: 21% 15% 24% 15%;
+    /* 与相框图原始比例一致：900 × 1088，保证底图不被裁切 */
+    aspect-ratio: 900 / 1088;
     background: #f7f4ec url("相框1.jpg") center / cover no-repeat;
     box-shadow: 0 16px 30px rgba(92, 64, 50, 0.22);
   }
-  /* 画作：铺满相框内的留白窗口 */
+  /* 画作：精确嵌入蕾丝相框中间的空白窗口
+     左 22% / 右 22% / 上 58% / 下 10%（实测自相框图） */
   .work-img img {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    top: 58%;
+    right: 22%;
+    bottom: 10%;
+    left: 22%;
+    width: auto;
+    height: auto;
     object-fit: cover;
     display: block;
     background: #f7f4ec;
-    box-shadow: inset 0 0 18px rgba(90, 66, 52, 0.22);
+    box-shadow: 0 0 14px rgba(70, 48, 34, 0.35);
   }
   .work-meta {
     padding-top: 22px;
