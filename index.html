@@ -934,53 +934,50 @@
   /* ---------- 作品画廊 ---------- */
   .works-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 76px 68px;
+    grid-template-columns: repeat(auto-fill, 200px);
+    justify-content: center;
+    gap: 52px 44px;
     padding: 0 6px;
   }
   .work-item {
+    width: 200px;
     cursor: pointer;
-    position: relative;
+    display: flex;
+    flex-direction: column;
     transition: transform 0.6s cubic-bezier(0.22, 0.9, 0.28, 1);
   }
   .work-item:hover { transform: translateY(-5px); }
 
-  /* 相框：真实法式蕾丝相框底图，中间挖空镶嵌画作 */
+  /* 每张作品统一尺寸，不变形 */
   .work-img {
-    position: relative;
-    /* 与相框图原始比例一致：900 × 1088，保证底图不被裁切 */
-    aspect-ratio: 900 / 1088;
-    background: #f7f4ec url("相框1.jpg") center / cover no-repeat;
-    box-shadow: 0 16px 30px rgba(92, 64, 50, 0.22);
+    width: 200px;
+    height: 250px;
+    overflow: hidden;
+    background: #f7f4ec;
+    box-shadow: 0 10px 22px rgba(92, 64, 50, 0.18);
   }
-  /* 画作：精确嵌入蕾丝相框中间的空白窗口
-     左 22% / 右 22% / 上 58% / 下 10%（实测自相框图） */
   .work-img img {
-    position: absolute;
-    top: 58%;
-    right: 22%;
-    bottom: 10%;
-    left: 22%;
-    width: auto;
-    height: auto;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     display: block;
-    background: #f7f4ec;
-    box-shadow: 0 0 14px rgba(70, 48, 34, 0.35);
   }
+  /* 图片下方文字：居中、与图片底部对齐 */
   .work-meta {
-    padding-top: 22px;
+    padding-top: 14px;
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 4px;
   }
   .work-meta h3 {
-    font-size: 16px;
+    font-size: 15px;
     letter-spacing: 2px;
     font-weight: 700;
   }
   .work-meta span {
-    font-size: 13px;
+    font-size: 12px;
     color: #8a6068;
     letter-spacing: 1px;
   }
@@ -1065,7 +1062,7 @@
     .nav-links { gap: 20px; }
     section { padding: 80px 24px; }
     .about-wrap { grid-template-columns: 1fr; gap: 40px; }
-    .works-grid { grid-template-columns: repeat(2, 1fr); gap: 60px 40px; }
+    .works-grid { gap: 44px 28px; }
     .exhibitions li { grid-template-columns: 80px 1fr; gap: 16px; }
     .hero-lace-top { top: 58px; }
     .collage-tl { left: 2%; top: 12%; transform: rotate(-6deg) scale(0.8); }
@@ -1075,7 +1072,7 @@
     .collage-br { right: 3%; bottom: 12%; transform: rotate(5deg) scale(0.8); }
   }
   @media (max-width: 520px) {
-    .works-grid { grid-template-columns: 1fr; gap: 56px; padding: 0 10px; }
+    .works-grid { gap: 44px; padding: 0 10px; }
     .collage-bl, .collage-br { display: none; }
     .paper { width: 108px; }
   }
